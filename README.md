@@ -37,7 +37,7 @@ http://www.cnblogs.com/zhongweiv/p/nodejs_environment.html
 <% code %>：JavaScript 代码。
 <%= code %>：显示替换过 HTML 特殊字符的内容。
 <%- code %>：显示原始 HTML 内容。
-注意：  <%= code %> 和  <%- code %> 的区别，当变量 code 为普通字符串时，两者没有区别。当 code 比如为  <h1>hello</h1> 这种字符串时， <%= code %> 会原样输出  <h1>hello</h1> ，而  <%- code %> 则会显示 H1 大的 hello 字符串。
+注意：  <%= code %> 和  <%- code %> 的区别，当变量 code 为普通字符串时，两者没有区别。当 code 比如为  <h1>hello</h1> 这种字符串时， <%= code %> 会原样输出  <h1>hello</h1> ，而  <%- code %> 则会显示 H1里面的 hello 字符串。
 
 ## 页面布局
 这里我们不使用layout进行页面布局，而是使用更为简单灵活的include。include 的简单使用如下：
@@ -60,6 +60,30 @@ this is a.ejs
 
 1. 原则:路由规划是整个网站的骨架部分，因为它处于整个架构的枢纽位置，相当于各个接口之间的粘合剂，所以应该优先考虑。
 2. 我们通过引入会话（session）机制记录用户登录状态
+3. 
+* req.query：我用来接收GET方式提交参数
+* req.body：我用来接收POST提交的参数
+* req.params：两种都能接收到
+
+### 如何字符串加密?
+当我们提交表单后，比如密码这些敏感信息，不做个加密处理那也太不把用户私密信息当回事了，Node.js提供了一个加密模块 `crypto`
+使用方法：
+```
+var express = require('express');
+var router = express.Router();
+var crypto = require('crypto');
+
+router.post('/',function(req, res){
+  var userPwd = req.body.txtUserPwd;
+  //生成口令的散列值
+  var md5 = crypto.createHash('md5');   //crypto模块功能是加密并生成各种散列
+  var en_upwd = md5.update(userPwd).digest('hex');
+  console.log('加密后的密码:'+en_upwd);
+
+});
+
+module.exports = router;
+```
 
 
 

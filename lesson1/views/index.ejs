@@ -1,13 +1,9 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
+<%- include header%>
+
     <h1><%= title %></h1>
     <p>Welcome to haha <%= title %></p>
     <p>现在是北京时间：<%= nowTime %></p>
     <p>新增的数据<%= testData.data1 %></p>
-  </body>
-</html>
+
+<%- include footer%>
+

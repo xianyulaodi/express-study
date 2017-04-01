@@ -15,8 +15,13 @@ router.get('/', function(req, res, next) {
 
 // 新增一个路由
 router.get('/other', function(req, res, next) {
+	res.render('other',{
+		text:'hello world',
+		text2:'this is text 2',
+		supplies: ['mop', 'broom', 'duster']
+	})
 
-  res.send('hello,world!');
+  // res.send('hello,world!');
   
 });
 
