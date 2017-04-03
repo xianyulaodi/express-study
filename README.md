@@ -85,5 +85,27 @@ router.post('/',function(req, res){
 module.exports = router;
 ```
 
+## session的使用
+
+
+// session的使用
+app.use(cookieParser('keyboard cat'));
+
+//使用靠就这个中间件
+app.use(session({
+    secret: "keyboard cat",
+    resave: true,
+    saveUninitialized: true
+}));
+<strong>注意：坑点：！！！！需要注意的是，必须将这几句放在app.use(app.router);之前</strong>
+
+第三步，想session中写入内容
+req.session.name=username;
+req.session.pwd=pwd;
+
+写完后，用下面两句存储一下
+sender.send(req.session);
+sender.end();
+
 
 
