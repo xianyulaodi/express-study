@@ -1,8 +1,9 @@
 # express学习笔记
 
 * 参考文章：
-http://www.open-open.com/lib/view/open1454560780730.html
-http://www.cnblogs.com/zhongweiv/p/nodejs_environment.html
+1. http://www.open-open.com/lib/view/open1454560780730.html
+2. http://www.cnblogs.com/zhongweiv/p/nodejs_environment.html
+3. http://blog.fens.me/series-nodejs/
 ------------------------
 # lesson1
 
