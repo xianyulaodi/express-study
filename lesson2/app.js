@@ -12,6 +12,12 @@ var subform = require('./routes/subform');
 var usesession = require('./routes/usesession');
 var usecookies = require('./routes/usecookies');
 var usecrypto = require('./routes/usecrypto'); 
+
+
+var reg = require('./routes/reg');
+var login = require('./routes/login');
+var logout = require('./routes/logout');
+
 // var settings=require('./settings');
 
 var MongoStore = require('connect-mongo')(session);
@@ -30,6 +36,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// session的使用
+//这里传入了一个密钥加session id
+app.use(cookieParser('keyboard cat'));
+//使用靠就这个中间件
+app.use(session({
+    secret: "keyboard cat",
+    resave: true,
+    saveUninitialized: true
+}));
+
 // 路由配置
 app.use('/', index);
 app.use('/subform', subform);
@@ -37,11 +53,20 @@ app.use('/usesession', usesession);
 app.use('/usecookies', usecookies);
 app.use('/usecrypto', usecrypto);
 
-// session的使用
-//这里传入了一个密钥加session id
-app.use(cookieParser('wilson'));
-//使用靠就这个中间件
-app.use(session({ secret: 'wilson'}));
+// app.use('/reg', reg);
+// app.use('/login', login);
+// app.use('/logout', logout);
+
+ 
+fs.readFile("package.json",'utf-8',function(err,data){  
+    if(err){  
+        console.log("error");  
+    }else{  
+        console.log(data);  
+    }  
+});  
+console.log("READ FILE ASYNC END");  
+
 
 
 // catch 404 and forward to error handler
@@ -50,6 +75,7 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
+
 
 // error handler
 app.use(function(err, req, res, next) {
