@@ -1,9 +1,5 @@
 # node核心模块--fs
 
-[参考](http://www.jb51.net/article/50667.htm)
-[主要参考](http://www.cnblogs.com/starof/p/5038300.html)
-http://frontenddev.org/link/fs-extra-node-module.html
-
 ## 文件系统fs-简介
 > fs模块是文件操作的封装，它提供了文件读取、写入、更名、删除、遍历目录、链接等POSIX文件系统操作。与其它模块不同的是，fs模块中所有的操作都提供了`异步`和`同步`的两个版本。
 
