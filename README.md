@@ -386,3 +386,12 @@ find({"$where":function(){for(var x inthis){//这个函数中的 this 就是文�
 简化版本
 `find( {"$where" :  "this.x + this.y === 10" } )`
 `find( {"$where" : " function(){ return this.x + this.y ===10; } " } )`
+
+** ObjectId **
+
+存储在MongoDB集合中的每个文档（document）都有一个默认的主键_id，这个主键名称是固定的，它可以是mongodb支持的任何数据类型，默认是ObjectId。
+
+**mongoose中的schema.index **
+建索引是为了提高查询速度，要根据实际业务建立索引，太多了也不好，这样更新数据会变慢，因为要更新索引
+`TopicSchema.index({create_at: -1});`
+1是正序， -1是逆序，复合索引是为了提高查询速度。
