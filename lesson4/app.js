@@ -4,10 +4,11 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);  //需要在session的下面
 var ejs = require('ejs');
-
-var index = require('./routes/index');
-var users = require('./routes/users');
+var router=require('./routes');
+var config = require('./config');
 
 // 静态文件目录
 var staticDir = path.join(__dirname,'/public');
@@ -24,11 +25,28 @@ app.set('view engine', 'html');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser(config.session_secret));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/public',express.static(staticDir));
 
-app.use('/', index);
-app.use('/users', users);
+// session 设置
+app.use(session({
+    name:config.name,
+    secret:config.session_secret,
+    store:new MongoStore({
+      url:config.mongodb  // 用来保存数据库的一些session，比如记住登录密码等
+    }),
+    cookie:{
+      path: '/',
+      maxAge: 1000 * 60 * 60 * 24 * 30,
+      signed: true, httpOnly: true
+    }, //cookie 有效期30天,
+	  resave:true,
+	  saveUninitialized:true
+}))
+
+// routes
+app.use('/',router);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

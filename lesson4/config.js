@@ -1,12 +1,12 @@
 /**
 * config
 **/
-
 const path = require('path');
 
-const config = {
+module.exports = {
    port: 3000,
    name: 'xianyulaodi',
-   db:'mongodb://127.0.0.1/dataBase',
-   hostname:'localhost'
+   mongodb:'mongodb://127.0.0.1/dataBase',
+   hostname:'localhost',
+   session_secret:'xianyulaodi'  //存储session的秘钥
 }
