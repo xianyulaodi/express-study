@@ -2,11 +2,18 @@ var express = require('express');
 var router = express.Router();
 const sign = require('../controllers/sign');
 const site = require('../controllers/site');
+const topic = require('../controllers/topic');
 
 // 注册，登录，退出
 router.post('/register',sign.register);  //用户注册提价
 router.post('/login',sign.login);       //用户登录
-router.post('/loginout',sign.loginout);      //用户登出
+router.get('/loginout',sign.loginout);      //用户登出
+
+// 新建主题
+router.post('/post',topic.addNewTopic);
+router.get('/post',(req,res,next) => {
+	return res.render('user/post');
+})
 
 //主页面
 router.get('/',site.index);
@@ -21,7 +28,9 @@ router.get('/signup_succ',(req,res) => {
 
 router.get('/login',(req,res) => {
   return res.render('site/index');   //暂时跳转到首页去登录
-})
+});
+
+router.get('/topic',topic.getTopicDetail);
 
 
 module.exports = router;

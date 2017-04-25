@@ -24,7 +24,7 @@
           <form id="search" action="/search">
             <input class="input search" placeholder="搜索" type="text"/>
           </form>
-          <% if(typeof user!=='undefined'&& user.loginname!==''){%>
+          <% if(typeof user!=='undefined' && user.loginname ){%>
             <input type="hidden" id="logined" value="true"/>
             <input type="hidden" id="userProfile" value="<%= user.profile_image_url%>"/>
             <input type="hidden" id= "userName" value="<%= user.loginname%>"/>

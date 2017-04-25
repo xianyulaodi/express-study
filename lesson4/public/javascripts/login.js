@@ -21,6 +21,7 @@ define(['State'], function(){
 	          $(this).hide();
        		  $('#node-area').animate({top:'-500'},500);
 	      });
+			
 	      $('#loginbutton').click(function(){
             var params= {
              name: $('#name').val(),
@@ -30,10 +31,10 @@ define(['State'], function(){
             $.ajax({
 		          url : '/login',
 		          type: 'POST',
-							data: params,
-							dataType: 'json',
+				      data: params,
+				      dataType: 'json',
 		          success : function(data){
-								console.log(data);
+					    console.log(data);
 		            if(data.mess==='s'){
 		              State.setUser({login:'true',name:data.user.loginname,image:data.user.profile_image_url});
 		              var inhtml = "<div id='nav-user'><img src='"+data.user.profile_image_url+"'/>"

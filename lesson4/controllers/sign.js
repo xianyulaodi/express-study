@@ -3,9 +3,9 @@ const api = require('../api/user');
 
 //注册
  exports.register = (req,res,next) =>{
-   const loginname=validator.trim(req.body.name).toLowerCase();
- 	 const pass=validator.trim(req.body.password);
- 	 const repassword=validator.trim(req.body.repassword);
+  const loginname=validator.trim(req.body.name).toLowerCase();
+ 	const pass=validator.trim(req.body.password);
+ 	const repassword=validator.trim(req.body.repassword);
   //  密码二次确认待处理
    const data = {
       loginname:loginname,
@@ -50,5 +50,7 @@ exports.login = (req,res,next) => {
 
 // 退出
 exports.loginout = (req,res,next) =>{
-
+// req.session.user = null;
+   req.session.destroy()
+   res.redirect('/');
 }
