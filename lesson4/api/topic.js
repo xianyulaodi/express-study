@@ -27,6 +27,10 @@ module.exports = {
         callback(null,doc);
       })
     },
+    // 获取商品总数
+    getCountByQuery(query, callback){
+    	Topic.count(query,callback);
+    },
 
     // 根据id查找主题详细信息
     getTopicById(id) {

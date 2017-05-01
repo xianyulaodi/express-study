@@ -38,6 +38,11 @@ exports.addNewTopic = (req,res,next) => {
 exports.getTopicsByQuery=(query,options,callback) => {
   api.findByQuery(query,options,callback);
 };
+// 获取首页总数,用于分页
+exports.getCountByQuery = (query, callback) => {
+	api.getCountByQuery(query,callback);
+}
+
 
 // 获取列表详情页
 exports.getTopicDetail=(req,res,next) => {
@@ -45,10 +50,10 @@ exports.getTopicDetail=(req,res,next) => {
    api.getTopicById({_id:id})
    .then(result => {
      if(result){
-        // res.render('site/topic',{
-        //   topic:result
-        // });
-        res.send(result);
+        res.render('site/topic',{
+          topic:result
+        });
+        // res.send(result);
      }else{
         res.send('获取详情页数据失败');
      }

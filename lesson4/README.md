@@ -19,6 +19,35 @@ app.set('view engine', 'html');
 1. `req.query`获取到的是一个object，如果要获取具体值，可以`req.query.id`等
 2. `req.params`获取的值是url后面的一部分，比如`GET /topic?id=58ff17984edb452fd0fa2cee&node_cat=node8 200 25.245 ms - 331`,需要自己拆解
 
+## 3. 分页的做法
+1. 可以先获取你要获取的数据的总数，这里需要mongod单独去查一次，比如
+```javascript
+exports.getCountByQuery(query, callback){
+  Topic.count(query,callback);
+}
+```
+2. 分find结合一起使用
+```javascript
+var query = {};
+var limit =Number(req.query.limit) || 10;
+var page = Number(req.query.page) || 1;
+var options = {skip:(page - 1)* limit,limit:limit };  //这里是用来做分页的地方，参数可以从url那里传过来，后面再对其进行优化
+Topic.getTopicsByQuery(query,options,(err,topics) => {
+    ep.emit('topics',topics);
+});
+```
+其中`getTopicsByQuery`里面的内容为
+```javascript
+exports.findByQuery(data,options,callback){
+  Topic.find(data,null,options,(err,doc) => {
+    if(err){
+      return callback(err);
+    }
+    callback(null,doc);
+  })
+}
+```
+
 
 ## todoList:
 网站的架构已经出来了，接下来写一下后面的todo列表
@@ -33,3 +62,11 @@ app.set('view engine', 'html');
 9. 完善代码，添加对错误的处理等
 10. 添加搜索功能
 11. nginx的配置，这个放在最后
+12. 排序
+
+2017/5/1今天的任务
+1. 首页的分页
+2. 评论的生成，回复，删除，统计等。
+就这两个任务
+
+2. 写一篇关于path的文章
