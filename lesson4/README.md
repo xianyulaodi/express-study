@@ -18,6 +18,8 @@ app.set('view engine', 'html');
 ## 2. 获取url传来的参数
 1. `req.query`获取到的是一个object，如果要获取具体值，可以`req.query.id`等
 2. `req.params`获取的值是url后面的一部分，比如`GET /topic?id=58ff17984edb452fd0fa2cee&node_cat=node8 200 25.245 ms - 331`,需要自己拆解
+3. `req.body`获取一些请求参数，解析body不是nodejs默认提供的，你需要载入`body-parser`中间件才可以使用`req.body`
+
 
 ## 3. 分页的做法
 1. 可以先获取你要获取的数据的总数，这里需要mongod单独去查一次，比如
@@ -47,7 +49,6 @@ exports.findByQuery(data,options,callback){
   })
 }
 ```
-
 
 ## todoList:
 网站的架构已经出来了，接下来写一下后面的todo列表
