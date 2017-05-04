@@ -3,6 +3,8 @@ var router = express.Router();
 const sign = require('../controllers/sign');
 const site = require('../controllers/site');
 const topic = require('../controllers/topic');
+const reply = require('../controllers/reply');
+const user  = require('../controllers/user');
 
 // 注册，登录，退出
 router.post('/register',sign.register);  //用户注册提价
@@ -29,8 +31,13 @@ router.get('/signup_succ',(req,res) => {
 router.get('/login',(req,res) => {
   return res.render('site/index');   //暂时跳转到首页去登录
 });
-
 router.get('/topic',topic.getTopicDetail);
 
+// 帖子回复或者评论
+router.post('/addReply',reply.add);
+
+// 个人中心设置,读取
+router.get('/setProfile',user.setProfile);
+router.post('/edit',user.edit);
 
 module.exports = router;

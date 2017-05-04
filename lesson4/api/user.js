@@ -30,5 +30,32 @@ module.exports = {
           }
         })
       })
+    },
+    /**
+    * 获取用户信息
+    **/
+    getUserById(id) {
+      return new Promise((resolve,reject) => {
+        User.findOne({_id:id},(err,doc) => {
+          if(err){
+            reject(err);
+          }else{
+            resolve(doc);
+          }
+        })
+      })
+    },
+
+    /**保存更新数据*/
+    save(){
+      return new Promise((resolve,reject) => {
+        User.save(data,(err,doc) => {
+          if(err){
+            reject(err)
+          }else{
+            resolve(doc);
+          }
+        })
+      })
     }
 }

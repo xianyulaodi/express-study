@@ -1,6 +1,9 @@
 const validator = require('validator');  //用于表单验证
+const EventProxy = require('eventproxy');
 const api = require('../api/topic');
-var config=require('../config');
+const Reply = require('../api/reply');
+// const remarkable = require('remarkable'); // 这个用于代码高亮，1.0版本暂时不用，优化的时候再使用
+const config=require('../config');
 
 // 新增主题,这里有待完善
 exports.addNewTopic = (req,res,next) => {
@@ -43,19 +46,32 @@ exports.getCountByQuery = (query, callback) => {
 	api.getCountByQuery(query,callback);
 }
 
-
-// 获取列表详情页
+// 获取列表详情页，回复内容(或者说评论内容)。  获取同节点下的其他话题待定
 exports.getTopicDetail=(req,res,next) => {
-   var id=req.query.id;
+   const id=req.query.id;
+   const node_cat = req.query.node_cat;
+   const proxy = new EventProxy();
    api.getTopicById({_id:id})
-   .then(result => {
-     if(result){
-        res.render('site/topic',{
-          topic:result
-        });
-        // res.send(result);
+   .then(topic => {
+     if(topic){
+       proxy.emit('topic',topic);
      }else{
         res.send('获取详情页数据失败');
      }
+   });
+   var query ={topic_id:id};
+   var options = {sort:'create_at'};
+   Reply.getRepliesByTopicId(query,options,(err,replies) => {
+      //  replies.forEach(function(reply){
+      //        reply.conent =  reply.content;
+      //  });
+      proxy.emit('replies',replies);
+   });
+   proxy.all('topic','replies',(topic,replies) => {
+       console.log(replies);
+       res.render('site/topic',{
+         topic:topic,
+         replies:replies
+       })
    })
 }

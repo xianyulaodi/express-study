@@ -3,6 +3,7 @@ const _ = require('lodash');
 const Eventproxy = require('eventproxy');
 const Reply = require('../api/reply');
 
+// 新增评论
 exports.add = (req,res,next) => {
     const topicId = req.body.topicId;
     const content = req.body.content;
@@ -29,10 +30,14 @@ exports.add = (req,res,next) => {
       replyer_profile:replyer_profile,
       replyer_name:replyerName
     }
-    Reply.newAndSave(data,(err) => {
-      if(err) return;
-      proxy.emit('reply');
+    console.log(data);
+    Reply.newAndSave(data)
+    .then(result => {
+      if(result){
+        proxy.emit('reply');
+      }
     });
+
     Reply.updateLastReply(topicId,replyerId,replyerName,(err) => {
       if(err) return;
       proxy.emit('topic',topicId);
@@ -40,5 +45,4 @@ exports.add = (req,res,next) => {
     proxy.all('topic','reply',(topicId) => {
       return res.redirect('/topic?id='+topicId+'&node_cat='+topicNode);
     });
-
 }
