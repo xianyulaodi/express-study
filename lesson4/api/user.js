@@ -46,10 +46,10 @@ module.exports = {
       })
     },
 
-    /**保存更新数据*/
-    save(){
+    /**更新数据，三个参数: 查询的条件，更新的数据，options忘了*/
+    updateData(condition,updateData,options){
       return new Promise((resolve,reject) => {
-        User.save(data,(err,doc) => {
+        User.update(condition,updateData,options,(err,doc) => {
           if(err){
             reject(err)
           }else{

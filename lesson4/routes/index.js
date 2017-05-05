@@ -5,6 +5,7 @@ const site = require('../controllers/site');
 const topic = require('../controllers/topic');
 const reply = require('../controllers/reply');
 const user  = require('../controllers/user');
+const load = require('../common/load');
 
 // 注册，登录，退出
 router.post('/register',sign.register);  //用户注册提价
@@ -39,5 +40,8 @@ router.post('/addReply',reply.add);
 // 个人中心设置,读取
 router.get('/setProfile',user.setProfile);
 router.post('/edit',user.edit);
+
+// 图片上传
+router.post('/loadPic',load.loadPic); //图片上传
 
 module.exports = router;

@@ -28,13 +28,16 @@ module.exports = {
           user.location = req.body.address;
           user.loginname = req.body.name;
           user.password = req.body.password;
-          User.newAndSave(user)
-          .then(result =>{
-                req.session.user = result;
-                console.log(88989797);
-                console.log(result);
-                return res.redirect('/setProfile');
-          });
+          User.updateData({_id:id},user,{upsert: true})
+          .then(result => {
+            if(result.ok == 1){
+              req.session.user = user;
+              return res.redirect('/setProfile');
+            }else{
+              return res.send('抱歉，更新数据失败');
+            }
+
+          })
         }
       })
     }

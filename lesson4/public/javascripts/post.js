@@ -2,7 +2,7 @@ define(function(){
 	var post = {
 		run:function(){
          var ele = $('.post .checked');
-         
+
 			   $('#load_button').click(function(){
         		$('#picLoader').click();
       		});
@@ -13,16 +13,21 @@ define(function(){
          });
 
       		$('#picLoader').change(function(){
+						  console.log(123);
           		var form = $('#publish');
-        		var data = new FormData();
-        		var files = $('#picLoader')[0].files[0];
-         		if(files)data.append('codecsv', files);
+        		  var data = new FormData();
+        		  var files = $('#picLoader')[0].files[0];
+         		  if(files){
+								data.append('codecsv', files)
+							};
+
         		$.ajax({
           			url     : '/loadPic',
           			type    : 'post',
           			xhr: function() {  // Custom XMLHttpRequest
             		var myXhr = $.ajaxSettings.xhr();
             		if(myXhr.upload){
+									console.log(myXhr.upload);
               			  // For handling the progress of the upload
             		}
             		return myXhr;
@@ -32,6 +37,7 @@ define(function(){
 		          contentType:false,
 		          processData:false,
 		          success  :function(data){
+								console.log(data);
 		            var url=$('#formarea').val()+'![](..'+data.url+')';
 		            $('#formarea').val(url);
 		          }
@@ -39,5 +45,5 @@ define(function(){
        		 });
 		}
 	}
-    return post; 
+    return post;
 })

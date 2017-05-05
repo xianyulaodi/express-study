@@ -139,6 +139,11 @@ router.get('/', function(req, res) {
 ```
 * `app.locals`与`res.locals`
        locals可能存在于app对象中即：`app.locals`；也可能存在于res对象中，即：`res.locals`。两者都会将该对象传递至所渲染的页面中。不同的是，`app.locals`会在整个生命周期中起作用；而`res.locals`只会有当前请求中起作用。由于`app.locals`在当前应用所有的渲染模中访问，这样我们就可以在该对象中定义一些顶级/全局的数据，并在渲染模板中使用。
+** 注意 ** ：使用的时候，位置应该是放在路由器的前面，这样才会生效。比如
+```javascript
+app.use(local);    // local是我封装了res.locals的函数，位置要在路由器的前面，不然是不行的
+app.use('/',router);
+```
 
 ## mongodb的使用
 1. 参考这篇文章：http://www.cnblogs.com/paul123/p/5396290.html
