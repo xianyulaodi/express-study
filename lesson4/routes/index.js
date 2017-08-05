@@ -32,5 +32,12 @@ router.get('/login',(req,res) => {
 
 router.get('/topic',topic.getTopicDetail);
 
+// 测试接口地址，改为前后端分离的模式，后端只生产数据，前端这样以后前端可以用任何的框架来做，分离解耦
+router.get('/testApi',(req,res,next) => {
+	 res.render('site/testApi',{
+
+	 });
+});
+
 
 module.exports = router;

@@ -4,7 +4,7 @@ const db = require('../lib/mongo');
 
  // 用户信息 -- 数据结构
  const UserSchema = new mongoose.Schema({
-   loginname:{type:String},
+    loginname:{type:String},
     pass : {type:String},
     repassword : {type:String},
     email : {type:String},
