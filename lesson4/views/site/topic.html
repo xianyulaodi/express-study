@@ -40,7 +40,21 @@
       </div>
       <div class="response">
         <div class="number"><%= topic.reply_number%>个回复</div>
-
+          <ul>
+           <%replies.forEach(function(reply,index){%>
+             <li id="reply<%= index+1%>">
+              <img class="avagtar left" src="<%= reply.replyer_profile%>"/>
+              <div class="right">
+                <span><a class="replyer_name" href="/user?id=<%= reply.replyer_id%>"><%= reply.replyer_name%></a>
+                      <i class="time" data-info="<%= reply.create_at%>"></i>
+                      <b><%= index+1%>楼</b>
+                      <i class="icon-comment" style="float:right"></i>
+                </span>
+                <span class="font14"><%- reply.content%></span>
+              </div>
+            </li>
+          <%})%>
+        </ul>
       </div>
 
       <!--隐藏域的文本(该主题下的信息)-->
@@ -50,7 +64,7 @@
 
       <div class="doReply">
         <img class="avagtar left top10" src="<% if(typeof user==='undefined'){%>../public/images/portrait.gif<%} else {%><%= user.profile_image_url%><%}%>"/>
-        <form id="reply_form"action="/doReply" method="post">
+        <form id="reply_form"action="/addReply" method="post">
           <textarea id="doReply_area" rows="8" cols="20" name="content">
           </textarea>
           <input type="hidden" name="topicId" value="<%= topic._id%>">
@@ -67,7 +81,7 @@
     <div class="slidebar">
 
 
-    
+
     </div>
     <!--主体右侧ends-->
   </div>

@@ -24,8 +24,8 @@ exports.index = (req,res,next) => {
    ep.all('topics','topic_count',(topics,topic_count) => {
      return res.render('site/index',{
        topics:topics,
-       topic_count:topic_count,
-       user:data       //暂时跳转到首页去登录
+       topic_count:topic_count
+      //  user:data       //暂时跳转到首页去登录
      })
    })
 }

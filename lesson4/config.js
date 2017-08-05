@@ -12,7 +12,7 @@ module.exports = {
 
    list_topic_count:16,
 
- 	upload: {
+ 	 upload: {
        path: path.join(__dirname, 'public/upload/'),
        url: '/public/upload/'
  	},

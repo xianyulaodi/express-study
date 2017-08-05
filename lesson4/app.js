@@ -4,11 +4,13 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var busboy = require('connect-busboy');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);  //需要在session的下面
 var ejs = require('ejs');
 var router=require('./routes');
 var config = require('./config');
+var local = require('./middlewares/locals').flash;  //这里面使用全局的session,这样的话就可以将登陆信息返回到公共头部
 
 // 静态文件目录
 var staticDir = path.join(__dirname,'/public');
@@ -43,9 +45,15 @@ app.use(session({
     }, //cookie 有效期30天,
 	  resave:true,
 	  saveUninitialized:true
+}));
+app.use(busboy({
+  limits: {
+    fileSize: 10 * 1024 * 1024  // 10MB
+  }
 }))
 
 // routes
+app.use(local);    // 使用必须在router之前
 app.use('/',router);
 
 // catch 404 and forward to error handler
