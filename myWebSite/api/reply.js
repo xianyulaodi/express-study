@@ -16,7 +16,9 @@ module.exports = {
   },
   // 根据topicid来查找相关的回复
   getRepliesByTopicId(query,options,callback){
-    Reply.find(query,null,options,callback);
+    Reply.find(query,null,options,(error,data) => {
+      callback(error,data);
+    });
   },
   // 获取评论总数
   getCountByQuery(query,callback){

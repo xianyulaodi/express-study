@@ -3,6 +3,9 @@ var router = express.Router();
 const sign = require('../controllers/sign');
 const site = require('../controllers/site');
 const topic = require('../controllers/topic');
+const user = require('../controllers/user');
+const reply = require('../controllers/reply');
+const load = require('../common/load');
 
 // 注册，登录，退出
 router.post('/register',sign.register);  //用户注册提价
@@ -36,10 +39,24 @@ router.get('/login',(req,res) => {
 // 根据文章id获取文章详情
 router.get('/getTopicDetailById',topic.getTopicDetail);
 
+// 获取个人数据
+router.get('/getUserInfo',user.getUserInfo);
+
+// 设置个人信息
+router.post('/setUserInfo',user.setUserInfo);
+
+// 新增文章评论
+router.post('/addReply',reply.add);
+// 获取某个文章的所有评论
+router.get('/getRepliesByTopicId',reply.getRepliesByTopicId);
+
+// 图片上传
+router.post('/loadPic',load.loadPic); //图片上传
+
+
 // 测试接口地址，改为前后端分离的模式，后端只生产数据，前端这样以后前端可以用任何的框架来做，分离解耦
 router.get('/testApi',(req,res,next) => {
 	 res.render('site/testApi',{
-
 	 });
 });
 

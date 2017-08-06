@@ -11,13 +11,12 @@
 <script type="text/javascript">
 $(function() {
     var data = {};
-    data.node = "node0";
-    data.title = "这里是文章标题";
-    data.content = "文章内容";
+    data.topicId = "597dfcd21301d6b15862e13a";
+    data.content = "这篇文章不错，双击666777";
     $.ajax({
-      url : '/getAllTopic?page=1&limit=5',
-      type: 'get',
-      //data: JSON.stringify(data),
+      url : '/addReply',
+      type: 'post',
+      data: JSON.stringify(data),
       dataType: 'json',
       contentType: "application/json",
       success : function(data){

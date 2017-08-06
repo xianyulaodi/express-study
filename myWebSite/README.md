@@ -16,9 +16,9 @@ app.engine('.html', ejs.__express);
 app.set('view engine', 'html');
 ```
 ## 2. 获取url传来的参数
-1. `req.query`获取到的是一个object，如果要获取具体值，可以`req.query.id`等
+1. `req.query`获取到的是一个object，如果要获取具体值，可以`req.query.id`等,多用于获取get请求
 2. `req.params`获取的值是url后面的一部分，比如`GET /topic?id=58ff17984edb452fd0fa2cee&node_cat=node8 200 25.245 ms - 331`,需要自己拆解
-3. `req.body`获取一些请求参数，解析body不是nodejs默认提供的，你需要载入`body-parser`中间件才可以使用`req.body`
+3. `req.body`获取一些请求参数，解析body不是nodejs默认提供的，你需要载入`body-parser`中间件才可以使用`req.body`，多用于获取post请求参数
 
 
 ## 3. 分页的做法
@@ -66,7 +66,7 @@ exports.findByQuery(data,options,callback){
 2. 首页的缓存优化，并发请求的处理
 3. 图片的上传
 4. 文章的修改编辑
-5. 添加个人中心==》 功能包括：修改头像、添加座右铭、修改昵称等等
+5. 添加个人中心==》 功能包括：修改头像、添加座右铭、修改昵称等等 done
 6. 新增评论系统
 7. 新增点赞功能
 8. 优化文章的编辑，让其支持markdown的编辑模式
