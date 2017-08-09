@@ -81,3 +81,5 @@ exports.findByQuery(data,options,callback){
 就这两个任务
 
 2. 写一篇关于path的文章
+
+这个脚手架是我需要的，可以参考，就是要这种类似的效果： http://react-china.org/t/react-express4-mongodb/12730
