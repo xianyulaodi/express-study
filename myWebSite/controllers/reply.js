@@ -53,7 +53,7 @@ exports.add = (req,res,next) => {
       proxy.emit('topic',topicId);
     });
     proxy.all('topic','reply',(topicI,result) => {
-      res.json(result) 
+      res.json(result);
     });
 
 }

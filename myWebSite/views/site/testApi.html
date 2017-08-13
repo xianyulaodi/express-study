@@ -3,30 +3,68 @@
   <head>
     <meta charset="utf-8">
     <title>api测试地址</title>
+    <style type="text/css">
+     .upload-button {
+
+     }
+
+     .upload-box {
+       display: none;
+     }
+
+     .upload-info {
+       display: none;
+     }
+
+     .upload-box label {
+       width: 50px;
+       display: inline-block;
+     }
+
+   </style>
   </head>
   <body>
-     这里是专门用来测试api的页面
+    <h1>文件上传</h1>
+    <button class="upload-button" id="showUpload">点击上传</button>
+    <div class="upload-box" id="fileUploadFrom">
+      <label for="name">Name</label>
+      <input type="text" name="name" id="name"/><br/>
+      <label for="file">File</label>
+      <input type="file" name="file" id="file"/><br/>
+      <button id="upload">Upload</button>
+    </div>
+    <div class="upload-info">
+      <progress value="0" max="100"></progress>
+      <span class="progress-value">0</span>
+    </div>
   </body>
 <script src="/public/javascripts/jquery-1.8.3.js" type="text/javascript"></script>
 <script type="text/javascript">
-$(function() {
-    var data = {};
-    data.topicId = "597dfcd21301d6b15862e13a";
-    data.content = "这篇文章不错，双击666777";
+$(document).ready(function() {
+
+  $('#showUpload').on('click', function(e) {
+    $('.upload-box').show(300);
+  });
+
+  $('#upload').on('click', function(e) {
+    var formData = new FormData();
+    formData.append('file', $('#file').prop('files')[0]);
     $.ajax({
-      url : '/addReply',
+      url: "/loadPic",
+      cache: false, //设置为 false 将不会从浏览器缓存中加载请求信息
+      contentType: false, //(默认: "application/x-www-form-urlencoded") 发送信息至服务器时内容编码类型
+      processData: false, //默认情况下，发送的数据将被转换为对象(技术上讲并非字符串) 以配合默认内容类型 "application/x-www-form-urlencoded"。如果要发送 DOM 树信息或其它不希望转换的信息，请设置为 false。
+      data: formData,
       type: 'post',
-      data: JSON.stringify(data),
-      dataType: 'json',
-      contentType: "application/json",
-      success : function(data){
-        document.write(JSON.stringify(data));
+      success: function(xhr) {
+        console.log(xhr);
       },
-      error:function(error){
-            alert(1);
-            console.log(error);
+      error: function(err) {
+        console.log('error');
       }
-    });
+    })
+  });
+  
 });
 </script>
 </html>

@@ -1,11 +1,13 @@
 var express = require('express');
 var router = express.Router();
+const config = require('../config');
 const sign = require('../controllers/sign');
 const site = require('../controllers/site');
 const topic = require('../controllers/topic');
 const user = require('../controllers/user');
 const reply = require('../controllers/reply');
-const load = require('../common/load');
+
+const upload = require('../common/uploadPic');
 
 // 注册，登录，退出
 router.post('/register',sign.register);  //用户注册提价
@@ -23,8 +25,11 @@ router.get('/post',(req,res,next) => {
 
 router.get('/getAllTopic',topic.getAllTopic);
 
+// 测试，记得删掉
+router.get('/getList',topic.getAllTopic);
+
 // 跳转到注册页面
-router.get('/signup',function(req, res){
+router.get('/signup',function(req, res) {
 	return res.render('sign/register'); //这里需要注意的是，sign/register是指 view里面的 register.html
 });
 // 注册成功
@@ -51,7 +56,7 @@ router.post('/addReply',reply.add);
 router.get('/getRepliesByTopicId',reply.getRepliesByTopicId);
 
 // 图片上传
-router.post('/loadPic',load.loadPic); //图片上传
+router.post('/loadPic',upload.uploadPic); //图片上传
 
 
 // 测试接口地址，改为前后端分离的模式，后端只生产数据，前端这样以后前端可以用任何的框架来做，分离解耦
@@ -59,6 +64,5 @@ router.get('/testApi',(req,res,next) => {
 	 res.render('site/testApi',{
 	 });
 });
-
 
 module.exports = router;
