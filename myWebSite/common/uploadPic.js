@@ -4,7 +4,7 @@ const fs  = require('fs');
 
 exports.uploadPic = (req,res,next) => {
 
-  let form = formidable.IncomingForm();
+  var form = formidable.IncomingForm();
   form.encoding = 'utf-8';
   form.uploadDir = config.upload.path;
   form.keepExtensions = true; //保留后缀
@@ -21,8 +21,8 @@ exports.uploadPic = (req,res,next) => {
       res.send(err);
       return;
     };
-    console.log(files);
-    let extName = ''; //后缀名
+    //console.log(files);
+    var extName = ''; //后缀名
     switch (files.file.type) {
         case 'image/pjpeg':
             extName = 'jpg';
@@ -44,8 +44,8 @@ exports.uploadPic = (req,res,next) => {
         });
         return;
     } else {
-        let avatarName = '/' + Date.now() + '.' + extName;
-        let newPath = form.uploadDir + avatarName;
+        var avatarName = '/' + Date.now() + '.' + extName;
+        var newPath = form.uploadDir + avatarName;
         fs.renameSync(files.file.path, newPath); //重命名
         res.json({
             success: 1,
