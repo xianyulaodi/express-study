@@ -86,3 +86,7 @@ exports.findByQuery(data,options,callback){
 
 
 图片的上传用这个模块 formidable
+
+node进程经常挂掉，因为node是单线程的，可以用： 多进程+domain 来解决  待定
+
+
