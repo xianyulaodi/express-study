@@ -2,6 +2,20 @@ import { SERVERADDRESS }from '../constants'
 import { push } from 'react-router-redux'
 
 import { message } from 'antd';
+import axios from 'axios';
+import data from '../mock/mock';
+
+axios.get('/getUserDetail')
+ .then(function (response) {
+  console.log(response.data);
+ })
+.catch(function (error) {
+  console.log(error);
+});
+
+
+
+
 
 export function sendLoginInfo(path,dispatch,data,callback) {
     fetch(SERVERADDRESS + '/' + path, {
