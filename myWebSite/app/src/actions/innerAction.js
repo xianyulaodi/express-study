@@ -5,14 +5,31 @@ import { message } from 'antd';
 import axios from 'axios';
 import data from '../mock/mock';
 
-axios.get('/getUserDetail')
+/**
+axios.get('/getTopicList')
  .then(function (response) {
   console.log(response.data);
  })
 .catch(function (error) {
   console.log(error);
 });
+**/
 
+
+// 获取所有的商品列表
+export function getTopicList(dispatch,callback) {
+
+    axios.get('/getTopicList')
+        .then(function (res) {
+            const data = res.data;
+            if(data.result) {
+                dispatch(callback[0][data])
+            };
+        })
+        .catch(function (error) {
+           console.log(error);
+        });
+}
 
 
 

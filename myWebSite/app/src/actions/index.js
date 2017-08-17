@@ -1,6 +1,21 @@
 import * as constants from '../constants'
 import * as basicAction from './innerAction'
 
+// 获取文本列表
+export function GetTopicList(){
+  return (dispatch, getState) => {
+    return basicAction.getTopicList(dispatch,[updateTopicList]);
+  }
+}
+
+export function updateTopicList(data){
+  return {
+    type:constants.UPDATETOPICLIST,
+    data:data
+  }
+}
+
+
 //sider
 export function isCollapse() {
   return {

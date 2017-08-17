@@ -20,9 +20,11 @@ class Main extends Component {
     console.log('main componentDidMount');
     var data = 'currentPage=1&pageSize=10';
     this.props.actions.GetList(data,'initializePoster');
+    this.props.action.GetTopicList();
   }
   render() {
     console.log('this.props.posterInfo is ',this.props.posterInfo);
+    console.log('this.props.topicList is ',this.props.topicList);
     if(this.props.posterInfo.posterInfo!==null){
       if(this.props.posterInfo.posterInfo.length === 0){
         return (
@@ -53,7 +55,8 @@ class Main extends Component {
 const mapStateToProps = (state) => {
     //console.log('Main.js mapStateToProps,state is ',state);
     return {
-      posterInfo:state.stores.posterInfo
+      posterInfo:state.stores.posterInfo,
+      topicList:state.stores.topicList
     }
 }
 const mapDispatchToProps = (dispatch) => {
