@@ -48,18 +48,24 @@ ReactDOM.render(
         <Header></Header>
         {/*className='ant-layout-has-sider' 没有则无法并排，小蚂蚁金服antd bug？*/}
         <Layout className='ant-layout-has-sider'> 
-          <Sider></Sider>
-          <Content style={{minHeight:600}}>
-            <CSSTransitionGroup transitionName='fade' transitionEnterTimeout={300} transitionLeaveTimeout={300}>
-              <Switch>
-                <Route exact path="/" location={history.location} key={history.location.key} component={Main}/>
-                <Route path="/add" location={history.location} key={history.location.key} component={RecordPost}/>
-                <Route path="/stat" location={history.location} key={history.location.key} component={Stat}/>
-                <Route path="/:title/:date" location={history.location} key={history.location.key} component={Detail}/>
-                <Route location={history.location} key={history.location.key} component={NoMatch}/>
-              </Switch>
-            </CSSTransitionGroup>
-          </Content>
+          <div className="container-main">
+            <div className="container-left">
+              <Content style={{minHeight:600}}>
+                <CSSTransitionGroup transitionName='fade' transitionEnterTimeout={300} transitionLeaveTimeout={300}>
+                  <Switch>
+                    <Route exact path="/" location={history.location} key={history.location.key} component={Main}/>
+                    <Route path="/add" location={history.location} key={history.location.key} component={RecordPost}/>
+                    <Route path="/stat" location={history.location} key={history.location.key} component={Stat}/>
+                    <Route path="/:title/:date" location={history.location} key={history.location.key} component={Detail}/>
+                    <Route location={history.location} key={history.location.key} component={NoMatch}/>
+                  </Switch>
+                </CSSTransitionGroup>
+              </Content>
+            </div>
+            <div className="container-right">
+              <Sider></Sider>
+            </div>
+          </div>
         </Layout>
         <Footer className='footer' style={{ textAlign: 'center',color:'white' }}>
           源码地址：https://github.com/kkltmoyu/NightPost.git，欢迎交流

@@ -20,7 +20,7 @@ class Main extends Component {
     console.log('main componentDidMount');
     var data = 'currentPage=1&pageSize=10';
     this.props.actions.GetList(data,'initializePoster');
-    this.props.action.GetTopicList();
+    this.props.actions.GetTopicList();
   }
   render() {
     console.log('this.props.posterInfo is ',this.props.posterInfo);

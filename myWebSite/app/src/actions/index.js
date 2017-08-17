@@ -8,7 +8,7 @@ export function GetTopicList(){
   }
 }
 
-export function updateTopicList(data){
+export function updateTopicList(data) {
   return {
     type:constants.UPDATETOPICLIST,
     data:data

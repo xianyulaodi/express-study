@@ -4,8 +4,8 @@ import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as actions from '../actions/index'
 
-import { Layout } from 'antd';
-const { Header } = Layout;
+//import { Layout } from 'antd';
+//const { Header } = Layout;
 
 import '../static/scss/header.scss'
 
@@ -44,15 +44,15 @@ class PostHeader extends Component {
   		isLogin = <div className='login'><a className='label_login' onClick={this.showLogin}>登录</a><a className='label_register' onClick={this.showRegister}>注册</a></div>
   	//console.log('Header.js this.props is ',this.props)
     return (
-	        <Header className='post_header'>
-	        	<div className='title'>
-		        	<div className='logo'>NightPost
-		        	</div>
-		        </div>
-	        	<div className='user_login'>
-	        		{isLogin}
+        <header className='post_header' >
+        	<div className='title'>
+	        	<div className='logo'>首页
 	        	</div>
-	        </Header>
+	        </div>
+        	<div className='user_login'>
+        		{ isLogin }
+        	</div>
+        </header>
     );
   }
 }

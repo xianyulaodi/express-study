@@ -22,8 +22,8 @@ export function getTopicList(dispatch,callback) {
     axios.get('/getTopicList')
         .then(function (res) {
             const data = res.data;
-            if(data.result) {
-                dispatch(callback[0][data])
+            if( data.result ) {
+                dispatch(callback[0](data));
             };
         })
         .catch(function (error) {

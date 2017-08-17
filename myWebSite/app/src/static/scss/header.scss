@@ -4,7 +4,14 @@ $headerFontColor : white;
 	font-size: 14px;
     font-family: "微软雅黑";
     color:$headerFontColor;
-    line-height: 1.5;
+    line-height: 60px;
+    background: #fff;
+    position: fixed;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+    height: 60px;
+    border-bottom: 1px solid #f0f0f0;
 
     .title{
     	//display:inline;
