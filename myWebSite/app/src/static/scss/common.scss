@@ -6,6 +6,7 @@ $fs-normal: 14px;
 $fs-large: 16px;
 $fs-super: 18px;
 
+
 // body 颜色
 $bg-body: #f5f5f5;
 $bg-content: #fff;
@@ -33,6 +34,8 @@ $space-normal: 14px;
 $space-large: 20px;
 $space-super: 40px;
 
+$containerW: 960px;
+
 /** const scss END */
 
 
@@ -57,19 +60,19 @@ $space-super: 40px;
 @mixin border-radius($size:5px) {
   border-radius:$size;  //引用：@include border-radius(10px);
 }
-@mixin border($color: #333) {
+@mixin border($color: #f0f0f0) {
   border: 1px solid $color;
 }
-@mixin border-top($color: #333) {
+@mixin border-top($color: #f0f0f0) {
 	border-top: 1px solid $color;
 }
-@mixin border-bottom($color: #333) {
+@mixin border-bottom($color: #f0f0f0) {
 	border-bottom: 1px solid $color;
 }
-@mixin border-left($color: #333) {
+@mixin border-left($color: #f0f0f0) {
 	border-left: 1px solid $color;
 }
-@mixin border-right($color: #333) {
+@mixin border-right($color: #f0f0f0) {
 	border-right: 1px solid $color;
 }
 
@@ -112,6 +115,9 @@ $space-super: 40px;
 		height: 0;
 		clear: both;
 	}
+}
+.ovh {
+	overflow: hidden;
 }
 
 // 间距
@@ -194,7 +200,7 @@ $space-super: 40px;
 }
 
 // 阴影部分
-.bottomShadow() {
+.bottomShadow{
     box-shadow: 0 2px 2px $color-border;
 }
 

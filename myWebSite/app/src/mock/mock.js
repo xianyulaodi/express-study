@@ -43,13 +43,58 @@ Mock.mock(
 	'/getTopicList',{
 		"result": 1,
 		"status" : 200,
-		"list|1-10" : [{
-			'id|+1' : 1,
+		"list|10-15" : [{
+			'_id|+1' : 1654651,
 			'title' : '@ctitle',
 			'content' : '@cparagraph()',
-			'auchor':'@name',
-			'auchorPic':'@Image',
-			'viewNum':'@number|1-1000'
+			'authorInfo':{
+				'name': '@name',
+				'authorPic': 'https://dummyimage.com/96x96/46ebbf/1d1d1d',
+				'authorId|+1': 498798
+			},
+			'commentNum|+1':798798,
+			'contentPic':'https://dummyimage.com/150x150/1d1d1d/fff',
+			'category':'@csentence()',
+			'createTime':"@date('yyyy-MM-dd')",
+			'read|+1':56,
+			'like|+1':56,
+		}]
+	}
+);
+
+// 获取文章详情
+Mock.mock(
+	'/getArticleDetail',{
+		'result': 1,
+		'status' : 200,
+		'data': {
+			'_id|+1' : 1654651,
+			'title' : '@ctitle',
+			'content' : '@cparagraph()',
+			'authorInfo':{
+				'name': '@name',
+				'authorPic': 'https://dummyimage.com/96x96/46ebbf/1d1d1d',
+				'authorId|+1': 498798
+			},
+			'commentNum|+1':798798,
+			'contentPic':'https://dummyimage.com/150x150/1d1d1d/fff',
+			'category':'@csentence()',
+			'createTime':"@date('yyyy-MM-dd')",
+			'read|+1':56,
+			'like|+1':56,
+		}
+	}
+);
+
+
+//获取banner列表
+Mock.mock(
+	'/getBannerList',{
+		"result": 1,
+		"status" : 200,
+		"list" : [{
+			'picUrl': 'https://dummyimage.com/960x270/46ebbf/fff',
+			'url': '@url()'
 		}]
 	}
 )

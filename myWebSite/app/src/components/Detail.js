@@ -44,48 +44,42 @@ class Detail extends Component {
     }
     var showDate = new Date(this.props.detailInfo.detailInfo.date).toLocaleString();
     return (
-	    <div className='detail'>
-        <div className='title'>
-          {this.props.detailInfo.detailInfo.title}
-        </div>
-        <div className='category'>
-          分类：{this.props.detailInfo.detailInfo.category}
-        </div>
-        <div className='author'>
-          作者：{this.props.detailInfo.detailInfo.author}
-        </div>
-        <div className='date'>
-          发布时间：{showDate}
-        </div>
-        {content}
-        <div className='gap'>
-          <hr/>
-        </div>
-        <div className='commented'>
-          <span className='title'>评论区：</span>
-          {commentDom}
+      <div className='container-detail'>
+        <h1 className='title'>
+          这里是文章的标题，大大的标题，这里是文章的标题，大大的标题
+        </h1>
+        <dl className="author-info">
+          <dt>
+            <a className="img-circle author-pic" href="#">
+              <img src="https://dummyimage.com/96x96/46ebbf/1d1d1d" alt="" />
+            </a> 
+          </dt>
+          <dd className="author-detail">
+            <span className="author-name">作者的名字</span>
+            <span className="other-info">2017-08-01  字数：789  阅读：998  喜欢：888   评论：5  赞赏：5
+            22+</span>
+          </dd>
+        </dl>
+        <div className="content">
+           这里是文章的标题，大大的标题，这里是文章的标题，大大的标题内容，吉林省的骄傲老师讲的发链接阿斯兰的激发
         </div>
         <div className='gap'>
           <hr/>
         </div>
-        <div className='to_be_commenting'>
-          <span className='title'>发布评论：</span>
-          <Comment articleId = {this.props.detailInfo.detailInfo._id} history={this.props.history}></Comment>
-        </div>
+        <Comment articleId = {this.props.detailInfo.detailInfo._id} history={this.props.history}></Comment>
       </div>
     );
   }
 }
 
 const mapStateToProps = (state) => {
-  //console.log('Header.js mapStateToProps,state is ',state);
-    return {detailInfo:state.stores.detailInfo}
+  return { detailInfo: state.stores.detailInfo }
 }
 const mapDispatchToProps = (dispatch) => {
   //console.log('mapDispatchToProps');
-    return {
-        actions: bindActionCreators(actions, dispatch),
-    }
+  return {
+    actions: bindActionCreators(actions, dispatch),
+  }
 }
 
 export default connect(

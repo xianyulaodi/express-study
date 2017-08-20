@@ -13,6 +13,29 @@ axios.get('/getTopicList')
 .catch(function (error) {
   console.log(error);
 });
+
+axios.get('/user',{
+  params:{
+    ID:12345
+  }
+})
+.then(function(response){
+  console.log(response);
+})
+.catch(function(err){
+  console.log(err);
+});
+
+axios.post('/user',{
+  firstName:'Fred',
+  lastName:'Flintstone'
+})
+.then(function(res){
+  console.log(res);
+})
+.catch(function(err){
+  console.log(err);
+});
 **/
 
 
@@ -23,12 +46,43 @@ export function getTopicList(dispatch,callback) {
         .then(function (res) {
             const data = res.data;
             if( data.result ) {
-                dispatch(callback[0](data));
+                dispatch(callback[0](data.list));
             };
         })
         .catch(function (error) {
            console.log(error);
         });
+}
+
+//获取banner列表
+export function getBannerList(dispatch,callback) {
+
+    axios.get('/getBannerList')
+        .then(function (res) {
+            const data = res.data;
+            const list = res.data.list || [];
+            if( data.result ) {
+                dispatch(callback[0](list));
+            };
+        })
+        .catch(function (error) {
+           console.log(error);
+        });
+}
+ 
+//获取文章详情
+export function getArticleDetail(id,dispatch,callback) {
+    axios.get('/getArticleDetail',{
+      params:{
+        id:id
+      }
+    })
+    .then(function(res){
+      console.log(res);
+    })
+    .catch(function(err){
+      console.log(err);
+    });
 }
 
 

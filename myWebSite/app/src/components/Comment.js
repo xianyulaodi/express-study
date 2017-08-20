@@ -4,8 +4,40 @@ import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as actions from '../actions/index'
 
-import { Form, Input, Button,Col,Row,message } from 'antd';
-const FormItem = Form.Item;
+class CommentItem extends Component{
+  constructor(props){
+    super(props);
+    this.state={
+      
+    }
+  }
+  componentWillReceiveProps(nextProps){
+    this.setState({
+      //_id:nextProps.posterInfo._id,
+     
+    });
+  }
+  render(){
+    return(
+      <div className="comment-item" >
+        <dl className="replyer-info">
+          <dt>
+            <a className="img-circle replyer-pic" href="#">
+              <img src="https://dummyimage.com/96x96/46ebbf/1d1d1d" alt="" />
+            </a> 
+          </dt>
+          <dd className="replyer-detail">
+            <span className="replyer-name">作者的名字</span>
+            <span className="other-info">1 楼  2017-12-02</span>
+          </dd>
+        </dl>
+        <article className="conment-text">
+            这里是评论的内容
+        </article>
+      </div>
+    )
+  }
+}
 
 class Comment extends Component{
   constructor(props){
@@ -14,6 +46,7 @@ class Comment extends Component{
   }
   handleSubmit(e) {
     e.preventDefault();
+    /**
     const that = this;
     this.props.form.validateFields((err, values) => {
       if (err) {
@@ -28,43 +61,33 @@ class Comment extends Component{
         return;
       }
       //console.log('Comment handleSubmit values of form: ', values);
-    });
+    });**/
   }
   render() {
-    const { getFieldDecorator } = this.props.form;
+
     return (
-      <Form onSubmit={this.handleSubmit} className="login-form" style={{marginTop:'10px'}}>
-        <FormItem>
-          {getFieldDecorator('comment', {
-            rules: [{ required: true, message: '请输入评论内容!' }],
-          })(
-          <Row>
-            <Col span={0}>
-            </Col>
-            <Col span={18}>
-              <Input type='textarea' placeholder="评论内容" />
-            </Col>
-            <Col span={6}>
-            </Col>
-          </Row>
-          )}
-        </FormItem>
-        <FormItem>
-          <Row>
-            <Col span={16}></Col>
-            <Col>
-              <Button type="primary" htmlType="submit" className="login-form-button">
-                 提交评论
-              </Button>
-            </Col>
-          </Row>
-        </FormItem>
-      </Form>
+      <div className="container-comment">
+        <div className="comment-wrap" >
+          <a className="img-circle user-head" href="#">
+            <img src="https://dummyimage.com/96x96/46ebbf/1d1d1d" alt="" />
+          </a>
+          <div className="comment-ipt">
+            <textarea placeholder="评论内容" name="" id="" cols="30" rows="10"></textarea>
+          </div>
+        </div>
+        <div className="ovh mb20">
+          <input type="button" value="提交评论" className="btn login-form-button" />
+        </div>
+        <div className='gap'>
+          <hr/>
+        </div> 
+        <div className="comment-list">
+          <CommentItem />
+        </div>         
+      </div>
     );
   }
 }
-
-Comment =Form.create({})(Comment);
 
 const mapStateToProps = (state) => {
    //console.log('Login:mapStateToProps,state is ',state);

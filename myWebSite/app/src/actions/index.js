@@ -2,18 +2,45 @@ import * as constants from '../constants'
 import * as basicAction from './innerAction'
 
 // 获取文本列表
-export function GetTopicList(){
+export function GetTopicList() {
   return (dispatch, getState) => {
-    return basicAction.getTopicList(dispatch,[updateTopicList]);
+    return basicAction.getTopicList(dispatch,[call_getTopicList]);
   }
 }
 
-export function updateTopicList(data) {
+function call_getTopicList(data) {
   return {
     type:constants.UPDATETOPICLIST,
     data:data
   }
 }
+// 获取banner列表
+export function GetBannerList() {
+  return (dispatch, getState) => {
+    return basicAction.getBannerList(dispatch,[call_getBannerList]);
+  }
+}
+
+function call_getBannerList(data) {
+  return {
+    type:constants.GETBANNERLIST,
+    data:data
+  }
+}
+
+//获取文章详情页
+export function GetArticleDetail(id) {
+  return (dispatch, getState) => {
+    return basicAction.getArticleDetail(id,dispatch,[call_getArticleDetail]);
+  }
+}
+function call_getArticleDetail(data){
+  return {
+    type:constants.UPDATEDETAILINFO,
+    data:data
+  }
+}
+
 
 
 //sider

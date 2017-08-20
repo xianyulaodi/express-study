@@ -39,16 +39,3 @@ li {
   opacity: 0.01;
   transition: opacity 300ms ease-in;
 }
-
-.container-main {
-  width: 960px;
-  display: flex;
-  margin: 60px auto 0;
-}
-.container-left {
-  flex: 1;
-}
-.container-right {
-  width: 280px;
-  margin-left: 40px;
-}

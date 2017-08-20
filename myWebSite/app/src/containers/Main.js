@@ -4,10 +4,9 @@ import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as actions from '../actions/index'
 
-import { Layout } from 'antd';
-
 import PostList from '../components/PostList';
 import Page from '../components/Page';
+import Banner from '../components/Banner';
 
 import '../static/scss/main.scss';
 
@@ -16,47 +15,37 @@ class Main extends Component {
   constructor(props) {
     super(props);
   }
-  componentDidMount(){
-    console.log('main componentDidMount');
+  componentDidMount() {
     var data = 'currentPage=1&pageSize=10';
-    this.props.actions.GetList(data,'initializePoster');
     this.props.actions.GetTopicList();
+    this.props.actions.GetBannerList();
   }
   render() {
-    console.log('this.props.posterInfo is ',this.props.posterInfo);
-    console.log('this.props.topicList is ',this.props.topicList);
-    if(this.props.posterInfo.posterInfo!==null){
-      if(this.props.posterInfo.posterInfo.length === 0){
-        return (
-          <div className='not_found'>
-             无相关记录，真的是NOT FOUND，不是404哦
+    console.log('this.props.posterInfo is ',this.props.indexData);
+    console.log('this.props.topicList is ',this.props.indexData.topicList);
+    return (
+      <div className="container-main">
+        <Banner bannerList = { this.props.indexData.bannerList } />
+        <div className="container">
+          <div className="container-left">
+            <PostList posterInfo = { this.props.indexData.topicList }></PostList>
           </div>
-        );
-      }
-      else{
-        return (
-          <div className='main'>
-            <PostList posterInfo = {this.props.posterInfo.posterInfo}></PostList>
-            <Page></Page>
+          <div className="container-right">
+              内容左侧,内容待定
           </div>
-        );
-      }
-    }
-    else{
-      return (
-        <div className='not_found'>
-             无相关记录，真的是NOT FOUND，不是404哦
         </div>
-        );
-    }   
+      </div>
+    );
   }
 }
 
 const mapStateToProps = (state) => {
-    //console.log('Main.js mapStateToProps,state is ',state);
+    /**
+     * [value]:state.stores.indexData 这里跟reducer/index.js的返回值对应
+     * [key]: indexData 跟页面上的this.props.indexData中的indexData 对应，可替换成其他词语
+     */
     return {
-      posterInfo:state.stores.posterInfo,
-      topicList:state.stores.topicList
+      indexData: state.stores.indexData  
     }
 }
 const mapDispatchToProps = (dispatch) => {

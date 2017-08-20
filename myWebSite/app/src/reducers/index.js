@@ -4,7 +4,7 @@ import changeLoginState from './header'
 import switchModal from './modalDialog'
 import updateUserInfo from './userInfo'
 import changePage from './page'
-import updatePosterInfo from './main'
+import indexData from './main'
 import updateDetailInfo from './detailInfo'
 import updateStatInfo from './stat'
 
@@ -14,7 +14,7 @@ export const stores = combineReducers({
   modalDialog:switchModal,
   userInfo:updateUserInfo,
   page:changePage,
-  posterInfo:updatePosterInfo,
+  indexData:indexData,
   detailInfo:updateDetailInfo,
   stat:updateStatInfo,
 })

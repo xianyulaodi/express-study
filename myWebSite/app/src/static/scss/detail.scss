@@ -1,91 +1,116 @@
-$headerFontColor : #108ee9;
-$subeInfoColor:#aaaaaa;
-$commentBasicInfoColor:#7f7f7f;
+@import "common";
 
-@mixin title{
-	color:$headerFontColor;
-	font-size:20px;
-}
-
-@mixin comment_basic_info{
-	color:$commentBasicInfoColor;
-	//font-size:13px;
-}
-
-.detail{
+.container-detail {
 	padding:50px 80px 20px 80px;
-	font-size: 15px;
 	font-family: "微软雅黑";
-	font-weight:bold;
-	line-height: 1.5;
-	.title{
-		margin: 0 auto;
-		text-align:center;
-		color:$headerFontColor;
-		font-size:30px;
+	font-size: $fs-normal;
+	.title {
+		font-size: 34px;
+		padding: $space-super 0;
+		color: $color-primary;
 	}
-	.category{
-		margin:10px 20px;
-		color:$subeInfoColor;
-		float:left;
+	.author-info {
+		display: flex;
 	}
-	.author{
-		margin:10px 20px;
-		color:$subeInfoColor;
-		float:left;
-	}
-	.date{
-		margin:10px 10px;
-		color:$subeInfoColor;
-		float:right;
-	}
-	.has_pic{
-		clear:both;
-		overflow-x:hidden;
-		width:100%;
-		word-break:break-all;
-
-		.picture{
-			float:right;
-			width:150px;
-			height:150px;
+	.author-pic {
+		img {
+			width: 48px;
+			height: 48px;
 		}
+		width: 48px;
+		height: 48px;
+		display: block;
+		overflow: hidden;
+		margin-right: $space-small;
 	}
-	.has_no_pic{
-		clear:both;
+	.author-detail {
+		flex: 1;
 	}
-
-	.gap{
-		padding:10px 0 10px 0;
+	.author-name {
+		position: relative;
+		padding-left: 40px;
+		display: block;
+		margin-top: 6px;
+		&:before {
+			content:'作者';
+			position: absolute;
+			padding: 0 3px;
+			border: 1px solid #ea6f5a;
+			border-radius: 5px;
+			text-align: center;
+			left: 0;
+			font-size: $fs-small;
+			color: #ea6f5a;
+			height: 20px; 
+    		line-height: 19px;
+    		top: -1px; 
+		};
 	}
-
-	.commented{
-		//margin-bottom:10px;
-		.title{
-			@include title;
-		}
-		.comment_container{
-			font-family: "宋体";
-			margin:8px 0 8px 0;
-			.comment_title{
-				float:left;
-				@include comment_basic_info;
-			}
-			.comment_no{
-				float:right;
-				margin-right:20px;
-				@include comment_basic_info;
-			}
-			.comment_body{
-				clear:both;
-				//font-weight:none;
-			}
-		}
+	.other-info {
+		color: $color-gray;
+		font-size: $fs-small;
+		text-align: left;
+		font-weight: normal;
+	}
+	.content {
+		font-size: $fs-normal;
+		color: $color-primary;
+		text-align: left;
+		padding: $space-large 0;
 	}
 
-	.to_be_commenting{
-		.title{
-			@include title;
-		}
-	}
 }
+
+.container-comment {
+	overflow: hidden;
+	padding: $space-super 0;
+	.comment-wrap,
+	.replyer-info {
+		display: flex;
+	}
+	.user-head,
+	.replyer-pic {
+		width: 38px;
+		height: 38px;
+		overflow: hidden;
+		display: block;
+		margin-right: $space-normal;
+	}
+	.comment-ipt {
+		flex: 1;
+		textarea {
+			width: 100%;
+			height: 80px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			box-sizing: border-box;
+			padding: 5px;
+			resize: none;
+		}
+	}
+	.login-form-button {
+		float: right;
+		margin-top: $space-normal;
+	}
+	.replyer-detail {
+		flex: 1;
+	}
+	.replyer-name {
+		font-size: $fs-small;
+		display: block;
+	}
+	.conment-text {
+		font-size: $fs-normal;
+		color: $color-primary;
+		padding-top: $space-normal;
+	}
+	.comment-list {
+		padding-top: $space-large;
+	}
+	.mb20 {
+		margin-bottom: 20px;
+	}
+
+}
+
+

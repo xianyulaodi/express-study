@@ -1,15 +1,21 @@
-import { UPDATEPOSTERINFO,UPDATETOPICLIST } from '../constants'
+import { UPDATEPOSTERINFO,UPDATETOPICLIST,GETBANNERLIST } from '../constants'
 
-function updatePosterInfo(state = { posterInfo : null }, action) {
+function indexData(state = { posterInfo : null }, action) {
     //console.log('updatePosterInfo in reducers,state is ', state, 'action is ', action);
-    if (action.type === UPDATEPOSTERINFO) {
-
-    	return Object.assign({},state,{ posterInfo:action.data });
-
-    } else if (action.type === UPDATETOPICLIST) {
-        return Object.assign({},state,{ topicList : action.data });
+    switch(action.type) {
+    	case UPDATEPOSTERINFO:
+    		  return Object.assign({},state,{ posterInfo: action.data });
+    	    break;
+    	case UPDATETOPICLIST:
+    		  return Object.assign({},state,{ topicList : action.data });
+    	    break;
+    	case GETBANNERLIST:
+    		  return Object.assign({},state,{ bannerList : action.data });
+    	    break; 
+    	default:
+    	  return state;
     }
-    return state;
+    console.log('state',state);
 }
 
-export default updatePosterInfo;
+export default indexData;
