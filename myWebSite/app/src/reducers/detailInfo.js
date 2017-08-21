@@ -1,10 +1,16 @@
-import { UPDATEDETAILINFO } from '../constants'
+import { UPDATEDETAILINFO,UPDATECOMMENTLIST } from '../constants'
 
-function updateDetailInfo(state = {detailInfo:''}, action){
-	//console.log('changeLoginState in reducers,state is ',state,'action is ',action);
-  if(action.type === UPDATEDETAILINFO)
-    return { detailInfo: action.data }
-  return state
+function updateDetailInfo(state = {detailInfo:'',commentList:[]}, action){
+	switch(action.type) {
+		case UPDATEDETAILINFO:
+			  return Object.assign({},state,{ detailInfo: action.data });
+		    break;
+		case UPDATECOMMENTLIST:
+			  return Object.assign({},state,{ commentList : action.data });
+		    break; 
+		default:
+		  return state;
+	}
 }
 
 export default updateDetailInfo

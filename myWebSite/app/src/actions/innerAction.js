@@ -72,13 +72,25 @@ export function getBannerList(dispatch,callback) {
  
 //获取文章详情
 export function getArticleDetail(id,dispatch,callback) {
-    axios.get('/getArticleDetail',{
-      params:{
-        id:id
-      }
-    })
+    //console.log(这里记得传id)
+    axios.get('/getArticleDetail')
     .then(function(res){
-      console.log(res);
+        if( res.data.result ) {
+            dispatch(callback[0](res.data.data));
+        };
+    })
+    .catch(function(err){
+      console.log(err);
+    });
+}
+
+export function getComments(id,dispatch,callback){
+    //console.log(这里记得传id)
+    axios.get('/getComments')
+    .then(function(res){
+        if( res.data.result ) {
+            dispatch(callback[0](res.data.list));
+        };
     })
     .catch(function(err){
       console.log(err);

@@ -34,9 +34,23 @@ export function GetArticleDetail(id) {
     return basicAction.getArticleDetail(id,dispatch,[call_getArticleDetail]);
   }
 }
+
 function call_getArticleDetail(data){
   return {
     type:constants.UPDATEDETAILINFO,
+    data:data
+  }
+}
+
+//获取文章评论
+export function GetComments(id){
+  return (dispatch, getState) => {
+    return basicAction.getComments(id,dispatch,[call_getComments]);
+  }
+}
+function call_getComments(data){
+  return {
+    type:constants.UPDATECOMMENTLIST,
     data:data
   }
 }

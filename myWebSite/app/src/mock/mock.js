@@ -4,6 +4,18 @@ Mock.setup({
     timeout: '200-600'
 });
 
+/**
+Mock.mock( rurl?, rtype?, template|function(options) )
+根据数据模板生成模拟数据。
+
+参数的含义和默认值如下所示：
+参数 rurl：可选。表示需要拦截的 URL，可以是 URL 字符串或 URL 正则。例如 /\/domain\/list.json/、'/domian/list.json'。
+参数 rtype：可选。表示需要拦截的 Ajax 请求类型。例如 GET、POST、PUT、DELETE 等。
+参数 template：可选。表示数据模板，可以是对象或字符串。例如 { 'data|1-10':[{}] }、'@EMAIL'。
+参数 function(options)：可选。表示用于生成响应数据的函数。
+参数 options：指向本次请求的 Ajax 选项集。
+Mock.mockjax(library)
+**/
 Mock.mock(
 	'/getUserDetail', {
 	    'list|1-10': [{      //数据模板，随机生成一个对象数组
@@ -38,7 +50,7 @@ Mock.mock(
 	}
 );
 
-//获取列表
+//获取文章列表
 Mock.mock(
 	'/getTopicList',{
 		"result": 1,
@@ -64,7 +76,7 @@ Mock.mock(
 
 // 获取文章详情
 Mock.mock(
-	'/getArticleDetail',{
+	'/getArticleDetail','get',{
 		'result': 1,
 		'status' : 200,
 		'data': {
@@ -99,3 +111,21 @@ Mock.mock(
 	}
 )
 
+
+//获取评论列表
+Mock.mock(
+	'/getComments',{
+		"result": 1,
+		"status" : 200,
+		"list|10-15" : [{
+			'_id|+1' : 1654651, //评论id
+			'content' : '@cparagraph()',
+			'replyerInfo':{
+				'name': '@name',
+				'replyerPic': 'https://dummyimage.com/96x96/46ebbf/1d1d1d',
+				'replyerId|+1': 498798
+			},
+			'createTime':"@date('yyyy-MM-dd')",
+		}]
+	}
+);

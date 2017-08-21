@@ -98,11 +98,19 @@
 	.replyer-name {
 		font-size: $fs-small;
 		display: block;
+		font-weight: bold;
 	}
 	.conment-text {
 		font-size: $fs-normal;
 		color: $color-primary;
 		padding-top: $space-normal;
+	}
+	.comment-item {
+		border-bottom: 1px solid $color-gray;
+		padding: $space-normal 0;
+		&:last-child {
+			border-bottom: none;
+		};
 	}
 	.comment-list {
 		padding-top: $space-large;

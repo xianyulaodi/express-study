@@ -12,27 +12,25 @@ class CommentItem extends Component{
     }
   }
   componentWillReceiveProps(nextProps){
-    this.setState({
-      //_id:nextProps.posterInfo._id,
-     
-    });
+  
   }
   render(){
+    
     return(
       <div className="comment-item" >
         <dl className="replyer-info">
           <dt>
             <a className="img-circle replyer-pic" href="#">
-              <img src="https://dummyimage.com/96x96/46ebbf/1d1d1d" alt="" />
+              <img src={ this.props.item.replyerInfo.replyerPic } alt="" />
             </a> 
           </dt>
           <dd className="replyer-detail">
-            <span className="replyer-name">作者的名字</span>
-            <span className="other-info">1 楼  2017-12-02</span>
+            <span className="replyer-name">{ this.props.item.replyerInfo.name }</span>
+            <span className="other-info">1楼  { this.props.item.createTime }</span>
           </dd>
         </dl>
         <article className="conment-text">
-            这里是评论的内容
+            { this.props.item.content }
         </article>
       </div>
     )
@@ -64,7 +62,7 @@ class Comment extends Component{
     });**/
   }
   render() {
-
+    let comments = this.props.comments;
     return (
       <div className="container-comment">
         <div className="comment-wrap" >
@@ -82,7 +80,11 @@ class Comment extends Component{
           <hr/>
         </div> 
         <div className="comment-list">
-          <CommentItem />
+           {
+            comments.map((item,index) => {
+              return ( <CommentItem key={ index } item={ item } /> )
+            })
+           }
         </div>         
       </div>
     );
