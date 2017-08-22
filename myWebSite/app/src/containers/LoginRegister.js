@@ -1,0 +1,67 @@
+/** 登录和注册的地方 **/
+import React,{Component} from "react"
+import {render} from 'react-dom'
+import {connect} from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as actions from '../actions/index'
+
+import Login from '../components/Login';
+import Register from '../components/Register';
+import { Link } from 'react-router-dom'
+
+import '../static/scss/loginRegister.scss';
+import { browserHistory } from 'react-router';
+
+class LoginRegister extends Component {
+  constructor(props){
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  componentDidMount () {
+
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+  }
+  render() {
+    let type = this.props.location.pathname; // 获取当前路由 sign_in or sign_up
+    let innerComponent;
+    if(/sign_in/g.test(type)) {
+
+       innerComponent = <Login></Login>
+
+    } else if(/sign-up/g.test(type)) {
+    	
+       innerComponent = <Register></Register>
+    }
+    return (
+      <div className="container-login-register">
+        <ul className="login-tab">
+        	<li className="active"><Link to="/sign_in">登录</Link></li>
+        	<li><Link to="/sign_up">注册</Link></li>
+        </ul>
+        { innerComponent }  	
+      </div>
+    );
+  }	
+}
+
+
+const mapStateToProps = (state) => {
+  //console.log('Login:mapStateToProps,state is ',state);
+  return { login: state.stores.modalDialog }
+}
+const mapDispatchToProps = (dispatch) => {
+  //console.log('mapDispatchToProps');
+  return {
+    actions: bindActionCreators(actions, dispatch),
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LoginRegister)
+
+
