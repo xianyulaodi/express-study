@@ -40,13 +40,34 @@ Mock.mock(
 	}
 );
 
-// 注册
+/**
+ * 注册
+ * param userName  {String} 用户名
+ * email email  {String} 用户名
+ * param password  {String} 用户名
+ */
+
 Mock.mock(
-	'/register', {
-	    "result" : 1,
-	    "status"  : 200,     
-	    "userName" : '@name',
-	    "email" : "@url()"
+	'/register', 'post',{
+	    'result' : 1,
+	    'status'  : 200
+	}
+);
+
+/**
+ * 登录
+ * email email  {String} 用户名
+ * param password  {String} 用户名
+ */
+Mock.mock(
+	'/register', 'post',{
+	    'result' : 1,
+	    'status'  : 200,
+	    'data': {
+	    	'userName': '@name',
+	    	'id': 565656, //用户id
+	    	'userPic':'@Image',
+	    }
 	}
 );
 

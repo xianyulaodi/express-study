@@ -14,6 +14,8 @@ import  * as reducers from './reducers/index' // Or wherever you keep your reduc
 
 import RecordPost from 'components/RecordPost'
 import Main from 'containers/Main'
+import LoginRegister from 'containers/LoginRegister'
+
 import Stat from 'components/Stat'
 import Detail from 'components/Detail'
 import NoMatch from 'components/Page404'
@@ -47,6 +49,8 @@ ReactDOM.render(
                 <Switch>
                   <Route exact path="/" location={history.location} key={history.location.key} component={Main}/>
                   <Route path="/detail/:id" location={history.location} key={history.location.key} component={Detail}/>
+                  <Route path="/sign_in" location={history.location} key={history.location.key} component={LoginRegister} />
+                  <Route path="/sign_up" location={history.location} key={history.location.key} component={LoginRegister} />
                   <Route path="/add" location={history.location} key={history.location.key} component={RecordPost}/>
                   <Route path="/stat" location={history.location} key={history.location.key} component={Stat}/>
                   <Route location={history.location} key={history.location.key} component={NoMatch}/>

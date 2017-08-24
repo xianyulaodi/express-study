@@ -4,6 +4,8 @@ import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as actions from '../actions/index'
 
+import { Link } from 'react-router-dom'
+
 //import { Layout } from 'antd';
 //const { Header } = Layout;
 
@@ -41,7 +43,10 @@ class PostHeader extends Component {
   		  isLogin = <div className='login'>欢迎您，{this.props.userInfo.userInfo.username}<a href='#' className ='logout' onClick={this.logout}>登出</a></div>
   	}
     else
-  		isLogin = <div className='login'><a className='label_login' onClick={this.showLogin}>登录</a><a className='label_register' onClick={this.showRegister}>注册</a></div>
+  		isLogin = <div className="login">\
+                  <Link className="label_login" to="/sign_in" >登录</Link>\
+                  <Link className="label_register" to="/sign_up">注册</Link>\
+                </div>;
   	//console.log('Header.js this.props is ',this.props)
     return (
         <header className='post_header' >
