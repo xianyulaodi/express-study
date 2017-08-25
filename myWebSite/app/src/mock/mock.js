@@ -150,3 +150,35 @@ Mock.mock(
 		}]
 	}
 );
+
+
+/**
+ * 添加新文章
+ * @title     新增文章标题 
+ * @content   文章内容
+ * @coverPic  封面图片 
+ * @type      文章类型
+ * 需要登录
+ */
+Mock.mock(
+	'/addNewTopic',{
+		"result": 1,
+		"status" : 200
+	}
+);
+
+/**
+ * 添加评论
+ * @articleId    文章id
+ */
+Mock.mock(
+	'/addCommentByArticleId',{
+		"result": 1,
+		"status" : 200
+	}
+);
+
+/**
+ * 获取用户信息
+ * 
+ */
