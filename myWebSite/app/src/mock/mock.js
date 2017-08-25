@@ -60,7 +60,7 @@ Mock.mock(
  * param password  {String} 用户名
  */
 Mock.mock(
-	'/register', 'post',{
+	'/login', 'post',{
 	    'result' : 1,
 	    'status'  : 200,
 	    'data': {

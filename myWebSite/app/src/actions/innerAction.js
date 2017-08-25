@@ -84,6 +84,7 @@ export function getArticleDetail(id,dispatch,callback) {
     });
 }
 
+// 获取文章评论
 export function getComments(id,dispatch,callback){
     //console.log(这里记得传id)
     axios.get('/getComments')
@@ -97,6 +98,19 @@ export function getComments(id,dispatch,callback){
     });
 }
 
+// 注册
+export function sendRegisterInfo(dispatch,data,callback){
+    axios.post('/register',data)
+    .then(function(res){
+        if( res.data.result ) {
+            dispatch(callback[0](res.data));
+        } else if(res.data.result == "1000") {
+           console.log('该用户名已存在');
+        } else {
+           console.log('注册失败');
+        }
+    })
+}
 
 
 
@@ -129,42 +143,6 @@ export function sendLoginInfo(path,dispatch,data,callback) {
         .catch(function(e) {
             console.error('expection is ',e);
             message.error("登录过程中发生异常");
-        });
-}
-
-// export function sendRegisterInfo(dispatch,data){
-export function sendRegisterInfo(path,dispatch, data,callback){
-	fetch(SERVERADDRESS + '/' + path, {
-            method: 'POST',
-            mode: 'cors',
-            credentials: 'include',
-            headers: {
-                 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-            },
-            body:  data
-        }).then(function(res) {
-            //console.log('res is ',res);
-            return res.json();
-        }).then(function(result) {
-        	//console.log('result is ',result);
-            result = result.result;
-            if(result.code === '1004'||result.code === '1007'){
-                console.log(result.msg);
-                dispatch(callback());
-                message.success(result.msg);
-            }
-            else if(result.code === '1010'){
-                console.log('该用户名已存在');
-                message.error('注册失败,'+result.msg); 
-            }
-            else{
-                console.log('注册失败,原因:',result.msg);
-                message.error('注册失败,'+result.msg);
-            }
-        })
-        .catch(function(e) {
-            console.error('expection is ',e);
-            message.error('注册过程中发生异常');
         });
 }
 

@@ -18,114 +18,62 @@ class Register extends Component{
       passwordDirty: false
     }
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handlePasswordBlur = this.handlePasswordBlur.bind(this);
-    this.checkPassowrd = this.checkPassowrd.bind(this);
     this.checkConfirm = this.checkConfirm.bind(this);
   }
   handleSubmit(e) {
     e.preventDefault();
-
-    this.props.form.validateFields((err, values) => {
-      if (err) {
-        return;
-      }
-      console.log('Register handleSubmit values of form: ', values);
-      const data = 'username='+values.userName+'&password='+values.password
+    if(this.checkConfirm()) {
+      var data = {
+        userName: this.this.refs.userName.value,
+        email: this.this.refs.email.value,
+        password: this.this.refs.password.value,
+      };
       this.props.actions.SubmitData('register',data);
-      //this.props.actions.HideModal();
-      //console.log('Received values of form: ', values);
-    });
-  }
-  handlePasswordBlur(e) {
-    const value = e.target.value;
-    this.setState({ passwordDirty: this.state.passwordDirty || !!value });
-  }
-  checkPassowrd(rule, value, callback) {
-    const form = this.props.form;
-    if (value && value !== form.getFieldValue('password')) {
-      callback('两次输入的密码不一致');
-    } else {
-      callback();
     }
   }
-  checkConfirm(rule, value, callback) {
-    const form = this.props.form;
-    if (value && this.state.passwordDirty) {
-      form.validateFields(['confirm'], { force: true });
+
+  checkConfirm() {
+    // 这里到时候要查询用户名是否重复 
+    const userName = this.refs.userName.value;
+    const email = this.refs.email.value;
+    const password = this.refs.password.value;
+    const repaddword = this.refs.repaddword.value;
+    if( userName == "" ) {
+      alert('用户名不能为空');
+      return false;
+    } else if ( email == "" ) {
+      alert('邮箱不能为空');
+      return false;
+    } else if ( password == "" || password !== repaddword  ) {
+      alert('密码不能为空，且两次输入的密码要一致');
+      return false;
     }
-    callback();
+    return true;
   }
+
   render() {
-    const { getFieldDecorator } = this.props.form;
-    const formItemLayout = {
-      labelCol: { span: 6 },
-      wrapperCol: { span: 14 },
-    };
+
     return (
-      <Form onSubmit={this.handleSubmit}>
-        <FormItem
-          {...formItemLayout}
-          label={(
-            <span>
-              用户名
-            </span>
-          )}
-          hasFeedback>
-          {getFieldDecorator('userName', {
-            rules: [{ required: true, message: '请输入用户名!' }],
-          })(
-            <Input />
-          )}
-        </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label={(
-            <span>
-              密码
-            </span>
-          )}
-          hasFeedback>
-          {getFieldDecorator('password', {
-            rules: [{
-              required: true, message: '请输入密码',
-            }, {
-              validator: this.checkConfirm,
-            }],
-          })(
-            <Input type="password" onBlur={this.handlePasswordBlur} />
-          )}
-        </FormItem>
-        <FormItem
-          {...formItemLayout}
-           label={(
-            <span>
-              密码确认
-            </span>
-          )}
-          hasFeedback>
-          {getFieldDecorator('confirm', {
-            rules: [{
-              required: true, message: '请再次输入密码!',
-            }, {
-              validator: this.checkPassowrd,
-            }],
-          })(
-            <Input type="password" />
-          )}
-        </FormItem>
-        <FormItem>
-          <Row>
-            <Col span={24} offset={16}>
-              <Button type="primary" htmlType="submit" size="large">注册</Button>
-            </Col>
-          </Row>
-        </FormItem>
-      </Form>
+      <div className="container-login">
+        <form action="">
+          <p className="ipt">
+            <input type="text" placeholder="请输入用户名" ref="userName" />
+          </p>          
+          <p className="ipt">
+            <input type="text" placeholder="请输入邮箱" ref="email" />
+          </p>
+          <p className="ipt">
+            <input type="password" placeholder="请输入密码" ref="password" />
+          </p>
+          <p className="ipt">
+            <input type="password" placeholder="请再次输入密码" ref="repaddword" />
+          </p>            
+          <a href="javascript:void(0);" onClick = { this.handleSubmit } className="login-btn">注 册</a>
+        </form>
+      </div>
     );
   }
 }
-
-Register =Form.create({})(Register);
 
 const mapStateToProps = (state) => {
   //console.log('mapStateToProps,state is ',state);
