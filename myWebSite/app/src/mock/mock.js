@@ -172,7 +172,7 @@ Mock.mock(
  * @articleId    文章id
  */
 Mock.mock(
-	'/addCommentByArticleId',{
+	'/addCommentByArticleId','post',{
 		"result": 1,
 		"status" : 200
 	}

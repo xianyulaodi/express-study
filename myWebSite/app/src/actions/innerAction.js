@@ -84,6 +84,7 @@ export function getArticleDetail(id,dispatch,callback) {
     });
 }
 
+/**获取评论列表**/
 export function getComments(id,dispatch,callback){
     //console.log(这里记得传id)
     axios.get('/getComments')
@@ -96,6 +97,23 @@ export function getComments(id,dispatch,callback){
       console.log(err);
     });
 }
+
+// 添加评论
+export function addComment(id,dispatch,callback){
+    //console.log(这里记得传id)
+    axios.post('/addCommentByArticleId',{
+        articleId: id
+    })
+    .then(function(res){
+        if( res.data.result ) {
+            dispatch(callback[0](res.data.list));
+        };
+    })
+    .catch(function(err){
+      console.log(err);
+    });
+}
+
 
 
 
