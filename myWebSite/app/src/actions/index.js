@@ -55,6 +55,29 @@ function call_getComments(data){
   }
 }
 
+// 各种表单提交: 登录，注册，发表文章，评论提交
+export const SubmitData = (type, data) => {
+  return (dispatch, getState) => {
+    switch (type) {
+      case 'login':
+        return basicAction.sendLoginInfo(type,dispatch,data,[HideModal,UpdateUserInfo,UpdateLoginState]);
+      case 'register':
+        return basicAction.sendRegisterInfo(type,dispatch,[call_register]);
+      case 'recordPost':
+        return basicAction.recordPost(type,dispatch,data,source,ChangeSiderCurrent);
+      case 'submitComment':
+        return basicAction.submitComment(type,dispatch,null,data,source);
+      default:
+        return
+    }
+  }
+}
+
+//注册成功回调
+function call_register() {
+
+}
+
 
 
 //sider
@@ -99,7 +122,7 @@ export function ShowModal(innerComponentType,title){
   }
 }
 
-export function HideModal(){
+export function HideModal() {
   return {
     type :constants.HIDEMODAL
   }
@@ -125,23 +148,7 @@ export function ChangeSiderCurrent(key){
   }
 }
 
-// export function SubmitData(type,data){
-export const SubmitData = (type, data,source=null) => {
-  return (dispatch, getState) => {
-            switch (type) {
-                case 'login':
-                    return basicAction.sendLoginInfo(type,dispatch,data,[HideModal,UpdateUserInfo,UpdateLoginState]);
-                case 'register':
-                    return basicAction.sendRegisterInfo(type,dispatch,data,HideModal);
-                case 'recordPost':
-                    return basicAction.recordPost(type,dispatch,data,source,ChangeSiderCurrent);
-                case 'submitComment':
-                    return basicAction.submitComment(type,dispatch,null,data,source);
-                default:
-                    return
-            }
-        }
-}
+
 
 export function GetList(data,type){
   var callback;

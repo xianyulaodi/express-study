@@ -15,32 +15,42 @@ import { browserHistory } from 'react-router';
 class LoginRegister extends Component {
   constructor(props){
     super(props);
+    this.state = {
+      
+    }
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  componentWillMount() { 
+
   }
   componentDidMount () {
 
   }
-
   handleSubmit(e) {
     e.preventDefault();
   }
   render() {
     let type = this.props.location.pathname; // 获取当前路由 sign_in or sign_up
     let innerComponent;
+    var isLoginActive = true;
     if(/sign_in/g.test(type)) {
-
        innerComponent = <Login></Login>
+       isLoginActive = true;
 
-    } else if(/sign-up/g.test(type)) {
-    	
+    } else if(/sign_up/g.test(type)) {
        innerComponent = <Register></Register>
+       isLoginActive = false;
     }
     return (
       <div className="container-login-register">
         <ul className="login-tab">
-        	<li className="active"><Link to="/sign_in">登录</Link></li>
-        	<li><Link to="/sign_up">注册</Link></li>
-        </ul>
+        	<li className={ isLoginActive ? "active" : " " } >
+            <Link to="/sign_in">登录</Link>
+          </li>
+        	<li className={ isLoginActive ? " " : "active" } >
+            <Link to="/sign_up">注册</Link>
+          </li>
+        </ul>   
         { innerComponent }  	
       </div>
     );
