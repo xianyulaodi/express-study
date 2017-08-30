@@ -180,5 +180,12 @@ Mock.mock(
 
 /**
  * 获取用户信息
- * 
+ * userId
  */
+Mock.mock(
+	'/getUserDetail',{
+		"result": 1,
+		"status" : 200
+	}
+);
+

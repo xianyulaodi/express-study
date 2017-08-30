@@ -84,11 +84,8 @@ export function getArticleDetail(id,dispatch,callback) {
     });
 }
 
-<<<<<<< HEAD
+
 /**获取评论列表**/
-=======
-// 获取文章评论
->>>>>>> 9a0202f8888456b3cecaaf7e4b76c55c7e0e8cf3
 export function getComments(id,dispatch,callback){
     //console.log(这里记得传id)
     axios.get('/getComments')
@@ -102,7 +99,8 @@ export function getComments(id,dispatch,callback){
     });
 }
 
-<<<<<<< HEAD
+/**往后的页面都还没做**/
+
 // 添加评论
 export function addComment(id,dispatch,callback){
     //console.log(这里记得传id)
@@ -120,13 +118,16 @@ export function addComment(id,dispatch,callback){
 }
 
 
-=======
 // 注册
-export function sendRegisterInfo(dispatch,data,callback){
+/* param userName  {String} 用户名
+ * email email  {String} 邮箱
+ * param password  {String} 密码
+ * */
+export function sendRegisterInfo(data,dispatch,callback){
     axios.post('/register',data)
     .then(function(res){
-        if( res.data.result ) {
-            dispatch(callback[0](res.data));
+        if( res.data.result == 1 ) {
+           dispatch(callback[0](res.data));
         } else if(res.data.result == "1000") {
            console.log('该用户名已存在');
         } else {
@@ -134,274 +135,104 @@ export function sendRegisterInfo(dispatch,data,callback){
         }
     })
 }
->>>>>>> 9a0202f8888456b3cecaaf7e4b76c55c7e0e8cf3
 
-
-
-export function sendLoginInfo(path,dispatch,data,callback) {
-    fetch(SERVERADDRESS + '/' + path, {
-            method: 'POST',
-            mode: 'cors',
-            credentials: 'include',
-            headers: {
-                 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-            },
-            body:  data
-        }).then(function(res) {
-            return res.json();
-        }).then(function(result) {
-            //console.log('result is ',result);
-            if(result.code==='1003'){
-                //console.log(result.messgage);
-                dispatch(callback[0]());
-                dispatch(callback[1](result.userInfo));
-                dispatch(callback[2](path));
-
-                message.success(result.msg);
-            }
-            else{
-                console.log('登录失败,原因:',result.msg);
-                message.error('登录失败，'+result.msg);
-            }
-        })
-        .catch(function(e) {
-            console.error('expection is ',e);
-            message.error("登录过程中发生异常");
-        });
+/** 添加新文章 
+* @title     新增文章标题 
+* @content   文章内容
+* @coverPic  封面图片 
+* @type      文章类型
+* 需要登录
+* **/
+export function addNewTopic(dispatch,data,callback){
+    axios.post('/addNewTopic',data)
+    .then(function(res){
+        if( res.data.result ) {
+            dispatch(callback[0](res.data));
+        } else {
+           console.log('新增文章失败');
+        }
+    })
 }
 
-export function checkIsLogin(path,dispatch,callback,key){
-    fetch(SERVERADDRESS + '/' + path, {
-            method: 'POST',
-            mode: 'cors',
-            credentials: 'include',
-            headers: {
-                 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-            }
-        }).then(function(res) {
-            return res.json();
-        }).then(function(result) {
-            //console.log('result is ',result);
-            if(result.code ==='1005'){
-                dispatch(callback[0](key));
-                dispatch(callback[1](result.userInfo));
-                //console.log(result.code,result.code);
-            }
-            else if(result.code === '0015'){
-                console.log(result.msg);
-                //console.log(result.code,result.code);
-            }
-            else{
-                console.log('未知错误代码');
-            }
-        })
-        .catch(function(e) {
-            console.log('expection is ',e);
-
-        });
+// 判断是否登录了
+export function checkIsLogin(dispatch,callback) {
+    axios.get('/checkIsLogin')
+    .then(function(res){
+        if( res.data.result ) {
+            dispatch(callback[0](res.data));
+        }
+    })
 }
 
-export function logOut(path,dispatch,callback){
-    fetch(SERVERADDRESS + '/' + path, {
-            method: 'POST',
-            mode: 'cors',
-            credentials: 'include',
-            headers: {
-                 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-            }
-        }).then(function(res) {
-            return res.json();
-        }).then(function(result) {
-            //console.log('result is ',result);
-            if(result.code === '1006' ){
-                dispatch(callback[0](path));
-                dispatch(callback[1](null));  
-            }
-        })
-        .catch(function(e) {
-            console.log('expection is ',e);
-            message.error('注销过程中发生异常');
-        });
+/**
+ * 登录
+ * email email  {String} 用户名
+ * param password  {String} 用户名
+ */
+export function login(dispatch,data,callback){
+    axios.post('/login',data)
+    .then(function(res){
+        if( res.data.result ) {
+            dispatch(callback[0](res.data));
+        } else {
+           console.log('登录失败');
+        }
+    });
 }
 
-export function recordPost(path,dispatch,data,source,callback){
-    console.log('data is ',data);
-    fetch(SERVERADDRESS + '/' + path, {
-            method: 'POST',
-            mode: 'cors',
-            credentials: 'include',
-            headers: {
-                 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-            },
-            body:data
-        }).then(function(res) {
-            return res.json();
-        }).then(function(result) {
-            console.log('result is ',result);
-            result = result.result;
-            if(result.code === '1007'){
-               source.props.history.push("/");
-               dispatch(callback('1'));
-               message.success(result.msg);
-            }
-            else
-                message.error(result.msg);
-        })
-        .catch(function(e) {
-            console.log('expection is ',e);
-            message.error('保存过程中发生异常');
-        });
+/**
+ * 获取用户信息，需登录
+ * userId 用户id
+ */
+export function getUserDetail(id,dispatch,callback) {
+    axios.get('/getUserDetail')
+    .then(function(res){
+        if( res.data.result ) {
+            dispatch(callback[0](res.data));
+        } else {
+           console.log('获取用户信息失败');
+        }
+    });
 }
 
-export function getList(path,dispatch,callback,data,type){
-    fetch(SERVERADDRESS + '/' + path, {
-            method: 'GET',
-            mode: 'cors',
-            credentials: 'include',
-            headers: {
-                 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-            },
-        }).then(function(res) {
-            return res.json();
-        }).then(function(result) {
-            console.log(2);
-            console.log('result is ',result);
-            /**
-            var result = result.result;
-            if(type === 'initializePoster'){
-                //初始化总页数
-                dispatch(callback[1](result.data));
-                dispatch(callback[0](result.page.count));
-            }
-            else if(type === 'pageSizeChange'){
-                dispatch(callback[1](result.data));
-                dispatch(callback[0](result.page.pageSize));
-            }
-            else if(type === 'pageNoChange'){
-                dispatch(callback[1](result.data));
-                dispatch(callback[0](result.page.currentPage));
-            }**/
-        })
-        .catch(function(e) {
-            console.log('expection is ',e);
-        });
+/**
+ * 设置个人信息
+ * sigature  个性签名
+ * introdece  个人简介
+ * sex   性别
+ * profile_image_url 个人头像
+ * location 坐标  比如:广州
+ */
+export function setPersonalInfo(data,dispatch,callback) {
+  axios.post('/setPersonalInfo',data)
+    .then(function(res){
+        if( res.data.result ) {
+            dispatch(callback[0](res.data));
+        } else {
+           console.log('设置个人信息失败');
+        }
+    })
 }
 
-export function getComment(path,dispatch,callback,data){
-    fetch(SERVERADDRESS + path, {
-            method: 'POST',
-            mode: 'cors',
-            credentials: 'include',
-            headers: {
-                 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-            },
-            body:data
-        }).then(function(res) {
-            return res.json();
-        }).then(function(result) {
-            //console.log('result is ',result);
-            if(result.code === '1008'){
-                dispatch(callback[0](result.detail));
-            }
-            
-            
-        })
-        .catch(function(e) {
-            console.log('expection is ',e);
-        });
+/**
+ * 退出登录
+ */
+export function logout() {
+    axios.post('/logout')
+    .then(function(res){
+        if( res.data.result ) {
+            dispatch(callback[0](res.data));
+        } else {
+           console.log('退出失败');
+        }
+    })
 }
 
-export function submitComment(path,dispatch,callback,data,source){
-    fetch(SERVERADDRESS + '/' + path, {
-            method: 'POST',
-            mode: 'cors',
-            credentials: 'include',
-            headers: {
-                 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-            },
-            body:data
-        }).then(function(res) {
-            return res.json();
-        }).then(function(result) {
-            //console.log('result is ',result);
-            if(result.code === '1007'){
-                source.push("/");
-                message.success(result.msg);
-            }
-            else if(result.code === '0016'){
-                message.error(result.msg);
-            }   
-        })
-        .catch(function(e) {
-            console.log('expection is ',e);
-        });
-}
 
-export function countCategoryData(path,dispatch,callback,data){
-    fetch(SERVERADDRESS + '/' + path, {
-            method: 'POST',
-            mode: 'cors',
-            credentials: 'include',
-            headers: {
-                 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-            }
-        }).then(function(res) {
-            return res.json();
-        }).then(function(result) {
-            if(result.code === '0017'){
-                //查询失败
-                console.log('countCategoryData fail');
-                message.error('查询发帖分类相关记录失败');
-                dispatch(callback[0](null));
-            }
-            else if(result.code === '1009'){
-                //未找到记录
-                //message.warning('无法找到发帖分类相关记录');
-                dispatch(callback[0](null));
+/**
+ * todo list
+ * 1. 收藏
+ * 2. 点赞
+ * 3. 搜索
+ */
 
-            }
-            else if(result.code === '1008'){
-                //查询成功
-                dispatch(callback[0](result.data));
-            }
-            dispatch(callback[1]());
-        })
-        .catch(function(e) {
-            console.log('expection is ',e);
-        });
-}
-
-export function getPostNoByDate(path,dispatch,callback,interval){
-    fetch(SERVERADDRESS + '/' + path, {
-            method: 'POST',
-            mode: 'cors',
-            credentials: 'include',
-            headers: {
-                 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-            },
-            body:'interval='+interval,
-        }).then(function(res) {
-            return res.json();
-        }).then(function(result) {
-            if(result.code === '0017'){
-                //查询失败
-                console.log('getPostNoByDate fail');
-                message.error('查询发帖时间相关记录失败');
-                dispatch(callback[0](null));
-            }
-            else if(result.code === '1009'){
-                //未找到记录
-                //message.warning('无法找到发帖分类相关记录');
-                dispatch(callback[0](null));
-
-            }
-            else if(result.code === '1008'){
-                //查询成功
-                dispatch(callback[0](result.data));
-            }
-
-        })
-        .catch(function(e) {
-            console.log('expection is ',e);
-        });
-}
