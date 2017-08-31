@@ -60,13 +60,13 @@ export const SubmitData = (type, data) => {
   return (dispatch, getState) => {
     switch (type) {
       case 'login':
-        return basicAction.sendLoginInfo(type,dispatch,data,[HideModal,UpdateUserInfo,UpdateLoginState]);
+        return basicAction.sendLoginInfo(data,dispatch,[UpdateLoginState]);
       case 'register':
-        return basicAction.sendRegisterInfo(type,dispatch,[call_register]);
-      case 'recordPost':
-        return basicAction.recordPost(type,dispatch,data,source,ChangeSiderCurrent);
-      case 'submitComment':
-        return basicAction.submitComment(type,dispatch,null,data,source);
+        return basicAction.sendRegisterInfo(data,dispatch,[call_register]);
+      case 'addNewTopic':
+        return basicAction.addNewTopic(data,dispatch,[call_addNewTopic]);
+      case 'addCommentByArticleId':
+        return basicAction.addComment(data,dispatch,[call_addComment]);
       default:
         return
     }
@@ -74,11 +74,22 @@ export const SubmitData = (type, data) => {
 }
 
 //注册成功回调
-function call_register() {
-
+function call_register(data) {
+  return {
+    type:constants.REGISTER,
+    data:data.status
+  }  
 }
 
+// 添加评论成功
+function call_addComment() {
+  alert('添加评论成功');
+}
 
+// 添加评论成功
+function call_addNewTopic() {
+  alert('添加文章成功');
+}
 
 //sider
 export function isCollapse() {
@@ -96,12 +107,11 @@ export function isNotCollapse() {
 
 //header
 export function UpdateLoginState(key) {
-  //console.log('send action LoginIn');
-  if(key === 'login')
+  if(key === 'login') {
     return {
       type: constants.LOGIN
     }
-  else if(key === 'logOut'){
+  } else if (key === 'logOut'){
     return {
       type : constants.LOGOUT
     }

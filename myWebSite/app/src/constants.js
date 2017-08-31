@@ -8,6 +8,7 @@ export const ISCOLLAPSE = 'ISCOLLAPSE';
 export const ISNOTCOLLAPSE = 'ISNOTCOLLAPSE';
 export const LOGIN = 'LOGIN';  // 登录
 export const LOGOUT = 'LOGOUT';//登出
+export const REGISTER = 'REGISTER'; //注册成功
 export const SHOWMODAL = 'SHOWMODAL'; // 展示弹窗
 export const HIDEMODAL = 'HIDEMODAL' ;//关闭弹窗
 export const UPDATETOPICLIST = 'UPDATETOPICLIST'; // 获取所有的文章列表

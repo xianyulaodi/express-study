@@ -7,6 +7,7 @@ import changePage from './page'
 import indexData from './main'
 import updateDetailInfo from './detailInfo'
 import updateStatInfo from './stat'
+import register from './register'
 
 export const stores = combineReducers({
   sider:changeSider,
@@ -17,6 +18,7 @@ export const stores = combineReducers({
   indexData:indexData,
   detailInfo:updateDetailInfo,
   stat:updateStatInfo,
+  register: register
 })
 
 

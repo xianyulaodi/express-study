@@ -6,6 +6,22 @@ import axios from 'axios';
 import data from '../mock/mock';
 
 /**
+返回的格式统一为：
+{
+    status: "", 200 成功
+    message: "",
+    data: {}
+}
+
+如果是返回数组，则为：
+{
+    status: "", 200 成功
+    message: "",
+    list: []
+}
+
+**/
+/**
 axios.get('/getTopicList')
  .then(function (response) {
   console.log(response.data);
@@ -38,14 +54,15 @@ axios.post('/user',{
 });
 **/
 
-
-// 获取所有的商品列表
+/**
+ * 获取所有的商品列表
+ */
 export function getTopicList(dispatch,callback) {
 
     axios.get('/getTopicList')
         .then(function (res) {
             const data = res.data;
-            if( data.result ) {
+            if( res.data.status == '200' ) {
                 dispatch(callback[0](data.list));
             };
         })
@@ -54,14 +71,16 @@ export function getTopicList(dispatch,callback) {
         });
 }
 
-//获取banner列表
+/**
+ * 获取banner列表
+ */
 export function getBannerList(dispatch,callback) {
 
     axios.get('/getBannerList')
         .then(function (res) {
             const data = res.data;
             const list = res.data.list || [];
-            if( data.result ) {
+            if( res.data.status == '200' ) {
                 dispatch(callback[0](list));
             };
         })
@@ -70,12 +89,14 @@ export function getBannerList(dispatch,callback) {
         });
 }
  
-//获取文章详情
-export function getArticleDetail(id,dispatch,callback) {
-    //console.log(这里记得传id)
+ /**
+  * 获取文章详情
+  * @param {string} [articleId] 文章id
+  */
+export function getArticleDetail(articleId,dispatch,callback) {
     axios.get('/getArticleDetail')
     .then(function(res){
-        if( res.data.result ) {
+        if( res.data.status == '200' ) {
             dispatch(callback[0](res.data.data));
         };
     })
@@ -84,13 +105,15 @@ export function getArticleDetail(id,dispatch,callback) {
     });
 }
 
-
-/**获取评论列表**/
-export function getComments(id,dispatch,callback){
-    //console.log(这里记得传id)
+/**
+ * 获取评论列表
+ * @param {string} [articleId] 文章id
+ */
+/****/
+export function getComments(articleId,dispatch,callback){
     axios.get('/getComments')
     .then(function(res){
-        if( res.data.result ) {
+        if( res.data.status == '200' ) {
             dispatch(callback[0](res.data.list));
         };
     })
@@ -101,14 +124,17 @@ export function getComments(id,dispatch,callback){
 
 /**往后的页面都还没做**/
 
-// 添加评论
-export function addComment(id,dispatch,callback){
-    //console.log(这里记得传id)
+
+/**
+ * 添加文章评论
+ * @param articleId {string} 文章id
+ */
+export function addComment(articleId,dispatch,callback){
     axios.post('/addCommentByArticleId',{
-        articleId: id
+        articleId: articleId
     })
     .then(function(res){
-        if( res.data.result ) {
+        if( res.data.status == '200' ) {
             dispatch(callback[0](res.data.list));
         };
     })
@@ -118,17 +144,18 @@ export function addComment(id,dispatch,callback){
 }
 
 
-// 注册
-/* param userName  {String} 用户名
- * email email  {String} 邮箱
- * param password  {String} 密码
+
+/* 注册
+ * @param userName  {String} 用户名
+ * @param email  {String} 邮箱
+ * @param password  {String} 密码
  * */
 export function sendRegisterInfo(data,dispatch,callback){
     axios.post('/register',data)
     .then(function(res){
-        if( res.data.result == 1 ) {
+       if( res.data.status == '200' ) {
            dispatch(callback[0](res.data));
-        } else if(res.data.result == "1000") {
+        } else if(res.data.status == "201") {
            console.log('该用户名已存在');
         } else {
            console.log('注册失败');
@@ -137,16 +164,16 @@ export function sendRegisterInfo(data,dispatch,callback){
 }
 
 /** 添加新文章 
-* @title     新增文章标题 
-* @content   文章内容
-* @coverPic  封面图片 
-* @type      文章类型
+* @param  title    {String}    新增文章标题 
+* @param  content  {String}  文章内容
+* @param  coverPic {String}  封面图片 
+* @param  type     {String}     文章类型
 * 需要登录
 * **/
-export function addNewTopic(dispatch,data,callback){
+export function addNewTopic(data,dispatch,callback){
     axios.post('/addNewTopic',data)
     .then(function(res){
-        if( res.data.result ) {
+        if( res.data.status == '200' ) {
             dispatch(callback[0](res.data));
         } else {
            console.log('新增文章失败');
@@ -154,11 +181,13 @@ export function addNewTopic(dispatch,data,callback){
     })
 }
 
-// 判断是否登录了
+/**
+ * 判断是否登录了
+ */
 export function checkIsLogin(dispatch,callback) {
     axios.get('/checkIsLogin')
     .then(function(res){
-        if( res.data.result ) {
+        if( res.data.status == '200' ) {
             dispatch(callback[0](res.data));
         }
     })
@@ -166,13 +195,13 @@ export function checkIsLogin(dispatch,callback) {
 
 /**
  * 登录
- * email email  {String} 用户名
- * param password  {String} 用户名
+ * @param email  {String} 用户名
+ * @param password  {String} 密码
  */
-export function login(dispatch,data,callback){
+export function sendLoginInfo(data,dispatch,callback){
     axios.post('/login',data)
     .then(function(res){
-        if( res.data.result ) {
+        if( res.data.status == '200' ) {
             dispatch(callback[0](res.data));
         } else {
            console.log('登录失败');
@@ -182,12 +211,12 @@ export function login(dispatch,data,callback){
 
 /**
  * 获取用户信息，需登录
- * userId 用户id
+ * @param userId  {String}  用户id
  */
 export function getUserDetail(id,dispatch,callback) {
     axios.get('/getUserDetail')
     .then(function(res){
-        if( res.data.result ) {
+        if( res.data.status == '200' ) {
             dispatch(callback[0](res.data));
         } else {
            console.log('获取用户信息失败');
@@ -197,16 +226,16 @@ export function getUserDetail(id,dispatch,callback) {
 
 /**
  * 设置个人信息
- * sigature  个性签名
- * introdece  个人简介
- * sex   性别
- * profile_image_url 个人头像
- * location 坐标  比如:广州
+ * @param  sigature  个性签名
+ * @param  introdece  个人简介
+ * @param  sex   性别
+ * @param  profile_image_url 个人头像
+ * @param  location 坐标  比如:广州
  */
 export function setPersonalInfo(data,dispatch,callback) {
   axios.post('/setPersonalInfo',data)
     .then(function(res){
-        if( res.data.result ) {
+       if( res.data.status == '200' ) {
             dispatch(callback[0](res.data));
         } else {
            console.log('设置个人信息失败');
@@ -220,7 +249,7 @@ export function setPersonalInfo(data,dispatch,callback) {
 export function logout() {
     axios.post('/logout')
     .then(function(res){
-        if( res.data.result ) {
+        if( res.data.status == '200' ) {
             dispatch(callback[0](res.data));
         } else {
            console.log('退出失败');

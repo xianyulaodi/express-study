@@ -2,20 +2,15 @@ import React,{Component} from "react"
 import {render} from 'react-dom'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { Link } from 'react-router-dom'
 import * as actions from '../actions/index'
 
-// import '../static/scss/modalDialog.scss';
-
-import SERVERADDRESS from '../constants'
-
-import { Form, Icon, Input, Button,Col,Row } from 'antd';
-const FormItem = Form.Item;
 
 class Register extends Component{
   constructor(props){
     super(props);
     this.state={
-      passwordDirty: false
+      showSuccessWrap: false
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.checkConfirm = this.checkConfirm.bind(this);
@@ -24,20 +19,28 @@ class Register extends Component{
     e.preventDefault();
     if(this.checkConfirm()) {
       var data = {
-        userName: this.this.refs.userName.value,
-        email: this.this.refs.email.value,
-        password: this.this.refs.password.value,
+        userName: this.refs.userName.value,
+        email: this.refs.email.value,
+        password: this.refs.password.value,
       };
       this.props.actions.SubmitData('register',data);
     }
   }
+  componentWillReceiveProps(nextProps) { 
+
+    if(nextProps.register.registerStatus == 200) {
+       this.setState({
+        showSuccessWrap: true
+       })
+    } 
+  }  
 
   checkConfirm() {
     // 这里到时候要查询用户名是否重复 
-    const userName = this.refs.userName.value;
-    const email = this.refs.email.value;
-    const password = this.refs.password.value;
-    const repaddword = this.refs.repaddword.value;
+    const userName = this.refs.userName.value,
+        email = this.refs.email.value,
+        password = this.refs.password.value,
+        repaddword = this.refs.repaddword.value;
     if( userName == "" ) {
       alert('用户名不能为空');
       return false;
@@ -52,7 +55,7 @@ class Register extends Component{
   }
 
   render() {
-
+    var isShow = this.state.showSuccessWrap ? 'block' : 'none';
     return (
       <div className="container-login">
         <form action="">
@@ -70,6 +73,10 @@ class Register extends Component{
           </p>            
           <a href="javascript:void(0);" onClick = { this.handleSubmit } className="login-btn">注 册</a>
         </form>
+        <div className="register-success" style={{ display:isShow }} >
+          <p>恭喜您，注册成功</p>
+          <Link to="/sign_in">去登录</Link>
+        </div>
       </div>
     );
   }
@@ -77,7 +84,7 @@ class Register extends Component{
 
 const mapStateToProps = (state) => {
   //console.log('mapStateToProps,state is ',state);
-    return { register: state.stores.modalDialog }
+    return { register: state.stores.register }
 }
 const mapDispatchToProps = (dispatch) => {
   //console.log('mapDispatchToProps');

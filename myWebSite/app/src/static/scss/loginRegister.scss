@@ -55,5 +55,15 @@
 	    text-align: center;
 	    text-decoration: none;  	
     }
+    .register-success {
+        text-align: center;
+        p {
+            padding: 12px;
+            color: red;
+        }
+        a {
+            display: block;
+        }
+    }
         
 }

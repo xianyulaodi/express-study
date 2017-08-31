@@ -49,8 +49,9 @@ Mock.mock(
 
 Mock.mock(
 	'/register', 'post',{
-	    'result' : 1,
-	    'status'  : 200
+	    'status'  : 200,
+	    "message" : "success"
+
 	}
 );
 
@@ -61,21 +62,21 @@ Mock.mock(
  */
 Mock.mock(
 	'/login', 'post',{
-	    'result' : 1,
 	    'status'  : 200,
 	    'data': {
 	    	'userName': '@name',
 	    	'id': 565656, //用户id
 	    	'userPic':'@Image',
-	    }
+	    },
+	    "message" : "success"
 	}
 );
 
 //获取文章列表
 Mock.mock(
 	'/getTopicList',{
-		"result": 1,
 		"status" : 200,
+		"message" : "success",
 		"list|10-15" : [{
 			'_id|+1' : 1654651,
 			'title' : '@ctitle',
@@ -98,8 +99,8 @@ Mock.mock(
 // 获取文章详情
 Mock.mock(
 	'/getArticleDetail','get',{
-		'result': 1,
 		'status' : 200,
+		"message" : "success",
 		'data': {
 			'_id|+1' : 1654651,
 			'title' : '@ctitle',
@@ -123,8 +124,8 @@ Mock.mock(
 //获取banner列表
 Mock.mock(
 	'/getBannerList',{
-		"result": 1,
 		"status" : 200,
+		"message" : "success",
 		"list" : [{
 			'picUrl': 'https://dummyimage.com/960x270/46ebbf/fff',
 			'url': '@url()'
@@ -136,8 +137,8 @@ Mock.mock(
 //获取评论列表
 Mock.mock(
 	'/getComments',{
-		"result": 1,
 		"status" : 200,
+		"message" : "success",
 		"list|10-15" : [{
 			'_id|+1' : 1654651, //评论id
 			'content' : '@cparagraph()',
@@ -162,8 +163,8 @@ Mock.mock(
  */
 Mock.mock(
 	'/addNewTopic',{
-		"result": 1,
-		"status" : 200
+		"status" : 200,
+		"message" : "success"
 	}
 );
 
@@ -173,8 +174,8 @@ Mock.mock(
  */
 Mock.mock(
 	'/addCommentByArticleId','post',{
-		"result": 1,
-		"status" : 200
+		"status" : 200,
+		"message" : "success"
 	}
 );
 
@@ -184,8 +185,8 @@ Mock.mock(
  */
 Mock.mock(
 	'/getUserDetail',{
-		"result": 1,
-		"status" : 200
+		"status" : 200,
+		"message" : "success",
 	}
 );
 
