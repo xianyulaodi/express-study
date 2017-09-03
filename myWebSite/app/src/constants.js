@@ -13,6 +13,7 @@ export const SHOWMODAL = 'SHOWMODAL'; // 展示弹窗
 export const HIDEMODAL = 'HIDEMODAL' ;//关闭弹窗
 export const UPDATETOPICLIST = 'UPDATETOPICLIST'; // 获取所有的文章列表
 export const GETBANNERLIST = 'GETBANNERLIST'; //获取banner列表
+export const ADDTOPIC = 'ADDTOPIC'; //添加新文章
 export const UPDATEUSERINFO	= 'UPDATEUSERINFO';
 export const CHANGESIDERCURRENT	= 'CHANGESIDERCURRENT';
 export const CHANGEPAGENO = 'CHANGEPAGENO';

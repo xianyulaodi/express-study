@@ -60,7 +60,7 @@ export const SubmitData = (type, data) => {
   return (dispatch, getState) => {
     switch (type) {
       case 'login':
-        return basicAction.sendLoginInfo(data,dispatch,[UpdateLoginState]);
+        return basicAction.sendLoginInfo(data,dispatch,[UpdateLoginState,UpdateUserInfo]);
       case 'register':
         return basicAction.sendRegisterInfo(data,dispatch,[call_register]);
       case 'addNewTopic':
@@ -86,9 +86,12 @@ function call_addComment() {
   alert('添加评论成功');
 }
 
-// 添加评论成功
-function call_addNewTopic() {
-  alert('添加文章成功');
+// 添加文章
+function call_addNewTopic(data) {
+  return {
+    type: constants.ADDTOPIC,
+    data: data.status
+  }
 }
 
 //sider
@@ -105,8 +108,8 @@ export function isNotCollapse() {
   }
 }
 
-//header
-export function UpdateLoginState(key) {
+//更新登录状态
+function UpdateLoginState(key) {
   if(key === 'login') {
     return {
       type: constants.LOGIN
@@ -118,9 +121,24 @@ export function UpdateLoginState(key) {
   }
 }
 
+// 判断是否登录成功
+export function CheckIsLogin(){
+  return (dispatch, getState) => {
+    return basicAction.checkIsLogin(dispatch,[UpdateLoginState,UpdateUserInfo]);
+  }
+}
+
+// 更新用户信息
+function UpdateUserInfo(userInfo){
+  return {
+      type:constants.UPDATEUSERINFO,
+      data:userInfo
+  }
+}
+
 export function LogOut() {
   return (dispatch, getState) => {
-    return basicAction.logOut('logOut',dispatch,[UpdateLoginState,UpdateUserInfo]);
+    return basicAction.logOut(dispatch,[UpdateLoginState,UpdateUserInfo]);
   }
 }
 
@@ -138,18 +156,6 @@ export function HideModal() {
   }
 }
 
-export function CheckIsLogin(){
-  return (dispatch, getState) => {
-    return basicAction.checkIsLogin('checkIsLogin',dispatch,[UpdateLoginState,UpdateUserInfo],'login');
-  }
-}
-
-export function UpdateUserInfo(userInfo){
-  return {
-      type:constants.UPDATEUSERINFO,
-      data:userInfo
-  }
-}
 
 export function ChangeSiderCurrent(key){
   return {
@@ -157,8 +163,6 @@ export function ChangeSiderCurrent(key){
       data:key
   }
 }
-
-
 
 export function GetList(data,type){
   var callback;

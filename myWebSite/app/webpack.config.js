@@ -55,6 +55,10 @@ module.exports = {
             test: /\.(woff|woff2|svg|eot|ttf)\??.*$/,
            // loader: 'file-loader!'
             loader: 'url?name=./[name].[ext]',
+        },
+        {
+          test: /\.json$/,
+          loader: 'json-loader'
         }]
 
         // postLoaders: [{ 

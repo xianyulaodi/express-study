@@ -165,16 +165,14 @@ export function sendRegisterInfo(data,dispatch,callback){
 
 /** 添加新文章 
 * @param  title    {String}    新增文章标题 
-* @param  content  {String}  文章内容
-* @param  coverPic {String}  封面图片 
-* @param  type     {String}     文章类型
+* @param  content  {String}    文章内容
 * 需要登录
 * **/
 export function addNewTopic(data,dispatch,callback){
     axios.post('/addNewTopic',data)
     .then(function(res){
         if( res.data.status == '200' ) {
-            dispatch(callback[0](res.data));
+           dispatch(callback[0](res.data));
         } else {
            console.log('新增文章失败');
         }
@@ -188,7 +186,8 @@ export function checkIsLogin(dispatch,callback) {
     axios.get('/checkIsLogin')
     .then(function(res){
         if( res.data.status == '200' ) {
-            dispatch(callback[0](res.data));
+            dispatch(callback[0]('login'));
+            dispatch(callback[1](res.data.data));
         }
     })
 }
@@ -202,7 +201,10 @@ export function sendLoginInfo(data,dispatch,callback){
     axios.post('/login',data)
     .then(function(res){
         if( res.data.status == '200' ) {
-            dispatch(callback[0](res.data));
+
+            dispatch(callback[0]('login'));
+            dispatch(callback[1](res.data.data));
+
         } else {
            console.log('登录失败');
         }
@@ -246,11 +248,12 @@ export function setPersonalInfo(data,dispatch,callback) {
 /**
  * 退出登录
  */
-export function logout() {
+export function logOut(dispatch,callback) {
     axios.post('/logout')
     .then(function(res){
         if( res.data.status == '200' ) {
-            dispatch(callback[0](res.data));
+           dispatch(callback[0]('logOut'));
+           dispatch(callback[1]({}));
         } else {
            console.log('退出失败');
         }

@@ -17,7 +17,7 @@ Mock.mock( rurl?, rtype?, template|function(options) )
 Mock.mockjax(library)
 **/
 Mock.mock(
-	'/getUserDetail', {
+	'/getUserDetailTest', {
 	    'list|1-10': [{      //数据模板，随机生成一个对象数组
             'id|+1': 1,   //1开始，递增
             'email': '@EMAIL',
@@ -71,6 +71,17 @@ Mock.mock(
 	    "message" : "success"
 	}
 );
+
+/**
+ * 退出
+ */
+Mock.mock(
+	'/logout', 'post',{
+	    'status'  : 200,
+	    "message" : "success"
+	}
+);
+
 
 //获取文章列表
 Mock.mock(
@@ -157,8 +168,6 @@ Mock.mock(
  * 添加新文章
  * @title     新增文章标题 
  * @content   文章内容
- * @coverPic  封面图片 
- * @type      文章类型
  * 需要登录
  */
 Mock.mock(
@@ -187,6 +196,29 @@ Mock.mock(
 	'/getUserDetail',{
 		"status" : 200,
 		"message" : "success",
+		"data": {
+			"articleList": { //文章列表
+
+			}, 
+			"sigature": "", //个性签名
+			"introdece":" ",  //个人简介
+			"focus": "", //关注
+			"fans": "", //粉丝
+		}
 	}
 );
 
+/**
+ * 判断用户是否已登录
+ */
+Mock.mock(
+	'/checkIsLogin',{
+		"status" : 200,
+		"message" : "success",
+		'data': {
+	    	'userName': '@name',
+	    	'id': 565656, //用户id
+	    	'userPic':'@Image',
+	    }
+	}
+);

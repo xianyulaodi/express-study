@@ -12,7 +12,7 @@ import { HashRouter as Router,Route,Link,Switch} from 'react-router-dom'
 import {syncHistoryWithStore} from 'react-router-redux'
 import  * as reducers from './reducers/index' // Or wherever you keep your reducers
 
-import RecordPost from 'components/RecordPost'
+import AddTopic from 'components/addTopic'
 import Main from 'containers/Main'
 import LoginRegister from 'containers/LoginRegister'
 
@@ -51,7 +51,7 @@ ReactDOM.render(
                   <Route path="/detail/:id" location={history.location} key={history.location.key} component={Detail}/>
                   <Route path="/sign_in" location={history.location} key={history.location.key} component={LoginRegister} />
                   <Route path="/sign_up" location={history.location} key={history.location.key} component={LoginRegister} />
-                  <Route path="/add" location={history.location} key={history.location.key} component={RecordPost}/>
+                  <Route path="/add_topic" location={history.location} key={history.location.key} component={AddTopic}/>
                   <Route path="/stat" location={history.location} key={history.location.key} component={Stat}/>
                   <Route location={history.location} key={history.location.key} component={NoMatch}/>
                 </Switch>
