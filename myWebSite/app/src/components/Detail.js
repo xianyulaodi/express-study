@@ -58,6 +58,12 @@ class Detail extends Component {
   render(){
     //console.log(this.props.detailInfo);
     let comments = this.props.detailInfo.commentList || [];
+    let addCommentStatus = this.props.detailInfo.addCommentStatus;
+    if(addCommentStatus == 200) {
+      alert('添加评论成功');
+      window.location.reload();
+    }
+    // console.log(addCommentStatus);
     return (
       <div className='container-detail'>
         <h1 className='title'>
@@ -80,7 +86,7 @@ class Detail extends Component {
         <div className='gap'>
           <hr/>
         </div>
-        <Comment comments = { comments } history={this.props.history}></Comment>
+        <Comment comments = { comments } articleId = { this.state._id } history={this.props.history}></Comment>
       </div>
     );
   }

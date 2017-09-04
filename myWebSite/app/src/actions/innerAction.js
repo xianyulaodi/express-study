@@ -128,14 +128,13 @@ export function getComments(articleId,dispatch,callback){
 /**
  * 添加文章评论
  * @param articleId {string} 文章id
+ * @param content  {string}  评论内容
  */
-export function addComment(articleId,dispatch,callback){
-    axios.post('/addCommentByArticleId',{
-        articleId: articleId
-    })
+export function addComment(data,dispatch,callback){
+    axios.post('/addCommentByArticleId',data)
     .then(function(res){
         if( res.data.status == '200' ) {
-            dispatch(callback[0](res.data.list));
+            dispatch(callback[0](res.data));
         };
     })
     .catch(function(err){

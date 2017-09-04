@@ -38,29 +38,34 @@ class CommentItem extends Component{
 }
 
 class Comment extends Component{
+
   constructor(props){
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
   handleSubmit(e) {
     e.preventDefault();
-    /**
     const that = this;
-    this.props.form.validateFields((err, values) => {
-      if (err) {
-        return;
-      }
-      if(that.props.userInfo.userInfo!==null&&that.props.userInfo.userInfo!==undefined){
-         const data = 'articleId='+that.props.articleId+'&comment='+values.comment+'&user='+that.props.userInfo.userInfo.username;
-         that.props.actions.SubmitData('submitComment',data,that.props.history);
-      }
-      else{
-        message.warning('未登录不能发表评论，请先登录');
-        return;
-      }
-      //console.log('Comment handleSubmit values of form: ', values);
-    });**/
+    if( that.props.header.isLogin ) {
+        const   commentContent = this.refs.commentIpt.value,
+                articleId = this.props.articleId,       
+                data = {
+                    content: commentContent,
+                    articleId: articleId
+                };
+        if(commentContent == '') {
+            alert('评论内容不能为空');
+            return false;
+        }
+        that.props.actions.SubmitData('addCommentByArticleId',data);
+    } else {
+
+      alert('请先登录');
+      
+    }   
   }
+
   render() {
     let comments = this.props.comments;
     return (
@@ -70,11 +75,11 @@ class Comment extends Component{
             <img src="https://dummyimage.com/96x96/46ebbf/1d1d1d" alt="" />
           </a>
           <div className="comment-ipt">
-            <textarea placeholder="评论内容" name="" id="" cols="30" rows="10"></textarea>
+            <textarea placeholder="评论内容" ref="commentIpt" name="" id="" cols="30" rows="10"></textarea>
           </div>
         </div>
         <div className="ovh mb20">
-          <input type="button" value="提交评论" className="btn login-form-button" />
+          <input type="button" value="提交评论" onClick={ this.handleSubmit } className="btn login-form-button" />
         </div>
         <div className='gap'>
           <hr/>
@@ -92,11 +97,10 @@ class Comment extends Component{
 }
 
 const mapStateToProps = (state) => {
-   //console.log('Login:mapStateToProps,state is ',state);
-    return { userInfo: state.stores.userInfo }
+
+    return { header: state.stores.header }
 }
 const mapDispatchToProps = (dispatch) => {
-  //console.log('mapDispatchToProps');
     return {
         actions: bindActionCreators(actions, dispatch),
     }

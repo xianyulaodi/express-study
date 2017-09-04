@@ -55,7 +55,13 @@ function call_getComments(data){
   }
 }
 
-// 各种表单提交: 登录，注册，发表文章，评论提交
+/**
+ * 各种表单提交
+ * 登录
+ * 注册
+ * 发表文章
+ * 评论提交
+ */
 export const SubmitData = (type, data) => {
   return (dispatch, getState) => {
     switch (type) {
@@ -82,8 +88,11 @@ function call_register(data) {
 }
 
 // 添加评论成功
-function call_addComment() {
-  alert('添加评论成功');
+function call_addComment(data) {
+  return {
+    type: constants.ADDCOMMENT,
+    data: data.status
+  }
 }
 
 // 添加文章
