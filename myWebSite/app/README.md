@@ -32,34 +32,8 @@
 ![NightPost](https://raw.githubusercontent.com/kkltmoyu/night/master/tongji.PNG) 
 
 
-# In English
-
-This is a post-bar-project for Web,you can publish your topics ,query your topics,submit your comment,user register login and logout,it will generate your statistical chart automatically.This project is built by ReactJs stack + NodeJS + MongoDB.Actually you can use the project as your startkit or biolerplate if you want.
-
-## Major knowledge used:
-* 1.front-end development
-	>ReactJS-15.5 + React-router-4 + redux + react-redux + antd lib + recharts-1.0 + ES6 + webpack + sass + redux DEVTOOLS（closed default，you can open it in index.js）<br/>
-	antd lib and recharts lib is set to just load what they need.
-* 2.server
-	>NodeJS + express4 + MongoDB（you need to intall MongoDB by yourself）<br/>
-	
-
-## In development stage
-	I use nodeJS 7.9 for server environment,the front-end's debugger uses chrom 51，server's debugger uses devtool
-
-## In running stage
-	If you want to run this project, you should follow this steps:
-### 1.config DB 
-	you need to follow the db.sh and modify the mongoDB parh to yourself 
-### 2.running
-    git clone https://github.com/kkltmoyu/NightPost.git
-    npm install
-    start MongoDB：./db.sh
-    start nodeJS server:node server/index.js
-
-##### develop environment:
-    npm run dev
-    in explorer: localhost:7000
-
-##### publish environment:
-    npm run dist
+todoList:
+1. [x] 首页左侧列表 推荐用户
+2. [] 用户中心
+3. [] 个人中心设置
+4. [] 关注
