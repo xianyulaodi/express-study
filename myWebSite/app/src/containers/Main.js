@@ -14,21 +14,65 @@ import '../static/scss/main.scss';
 class Main extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      currentPage: 1,
+      pageSize: 15,
+      renderData: [],
+      isNoData: false
+    }
+    this.changePageNo = this.changePageNo.bind(this);
   }
   componentDidMount() {
-    var data = 'currentPage=1&pageSize=10';
-    this.props.actions.GetTopicList();
+    var data = {
+      pageSize: this.state.pageSize,
+      pageNo: this.state.currentPage
+    }
+    this.props.actions.GetTopicList(data);
     this.props.actions.GetBannerList();
   }
+  componentWillReceiveProps(nextProps) {
+    const nextList = nextProps.indexData.topicList;
+    if(nextList.length > 0  && nextList != this.props.indexData.topicList) {
+
+      var newRenderData = this.state.renderData.concat(nextList);
+      this.setState({
+        renderData: newRenderData
+      });
+
+    } else if (nextList.length == 0 && this.currentPage > 1) {
+
+      this.setState({
+        isNoData: true
+      });   
+
+    }
+  }  
+
+  changePageNo(pageNo) {
+    let that = this,
+        currentPage  = this.state.currentPage;
+    currentPage +=1;
+    const data = {
+      pageSize: this.state.pageSize,
+      pageNo: this.state.currentPage      
+    }
+    that.props.actions.GetTopicList(data);
+    this.setState({
+      currentPage: currentPage
+    });
+  }
   render() {
-    console.log('this.props.posterInfo is ',this.props.indexData);
-    console.log('this.props.topicList is ',this.props.indexData.topicList);
+    var loadText = this.props.indexData.noMoreData 
+                  ? <span>没有更多数据啦</span>
+                  : <a href="javascript:void(0);" onClick={ this.changePageNo } >点击查看更多</a>;
+    // console.log('this.props.topicList is ',this.props.indexData.topicList);
     return (
       <div className="container-main">
         <Banner bannerList = { this.props.indexData.bannerList } />
         <div className="container">
           <div className="container-left">
-            <PostList posterInfo = { this.props.indexData.topicList }></PostList>
+            <PostList posterInfo = { this.state.renderData }></PostList>
+            { loadText }
           </div>
           <div className="container-right">
               内容左侧,内容待定

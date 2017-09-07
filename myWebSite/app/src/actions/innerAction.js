@@ -56,14 +56,20 @@ axios.post('/user',{
 
 /**
  * 获取所有的商品列表
+ * @param { string} pageNo 页码
+ * @param { string} pageSize 每页多少数据
  */
-export function getTopicList(dispatch,callback) {
+export function getTopicList(data,dispatch,callback) {
 
-    axios.get('/getTopicList')
+    axios.get('/getTopicList',data)
         .then(function (res) {
-            const data = res.data;
+            const resData = res.data;
             if( res.data.status == '200' ) {
-                dispatch(callback[0](data.list));
+
+                if(data.pageNo > 5) { // 模拟没有数据时的场景
+                   dispatch(callback[1](true));
+                } 
+                dispatch(callback[0](resData.list));
             };
         })
         .catch(function (error) {

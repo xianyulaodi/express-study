@@ -1,6 +1,6 @@
-import { UPDATEPOSTERINFO,UPDATETOPICLIST,GETBANNERLIST } from '../constants'
+import { UPDATEPOSTERINFO,UPDATETOPICLIST,GETBANNERLIST,NOMOREDATA } from '../constants'
 
-function indexData(state = { posterInfo : null }, action) {
+function indexData(state = { posterInfo : null, bannerList:[], topicList:[],noMoreData: false }, action) {
     //console.log('updatePosterInfo in reducers,state is ', state, 'action is ', action);
     switch(action.type) {
     	case UPDATEPOSTERINFO:
@@ -12,6 +12,9 @@ function indexData(state = { posterInfo : null }, action) {
     	case GETBANNERLIST:
     		  return Object.assign({},state,{ bannerList : action.data });
     	    break; 
+        case NOMOREDATA:
+              return Object.assign({},state,{ noMoreData : action.data });
+            break;         
     	default:
     	  return state;
     }

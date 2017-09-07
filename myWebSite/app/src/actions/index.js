@@ -2,9 +2,11 @@ import * as constants from '../constants'
 import * as basicAction from './innerAction'
 
 // 获取文本列表
-export function GetTopicList() {
+// pageNo
+// pageSize
+export function GetTopicList(data) {
   return (dispatch, getState) => {
-    return basicAction.getTopicList(dispatch,[call_getTopicList]);
+    return basicAction.getTopicList(data,dispatch,[call_getTopicList,isNoMoreData]);
   }
 }
 
@@ -14,6 +16,14 @@ function call_getTopicList(data) {
     data:data
   }
 }
+function isNoMoreData(isNoData) {
+  return {
+    type:constants.NOMOREDATA,
+    data:isNoData    
+  }
+}
+
+
 // 获取banner列表
 export function GetBannerList() {
   return (dispatch, getState) => {
@@ -189,12 +199,12 @@ export function GetList(data,type){
   }
 }
 
-export function changePageNo(data){
-  return {
-    type:constants.CHANGEPAGENO,
-    data:data
-  }
-}
+// export function changePageNo(data){
+//   return {
+//     type:constants.CHANGEPAGENO,
+//     data:data
+//   }
+// }
 
 export function changePageSize(data){
   return {
