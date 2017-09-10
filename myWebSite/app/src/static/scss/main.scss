@@ -19,8 +19,7 @@
     flex: 1;
   }
   .container-right {
-    width: 280px;
-    margin-left: 40px;
+    width: 320px;
   }
   .list-item {
     padding:$space-normal 0;
@@ -83,6 +82,35 @@
     padding-top: $space-normal;
   }
  
+}
+
+.container-leftBar {
+  margin: $space-normal 0 $space-normal $space-normal;
+  padding: $space-normal;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  min-height: 500px;
+
+  .left-bar {
+    display: block;
+    overflow: hidden;
+    li {
+      float: left;
+      color: #4f93ff;
+      margin-right: 15px;
+    }
+  }
+  .hot-list {
+    padding: $space-normal 0; 
+  }
+  .hot-list a{
+    max-width: 300px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    padding-bottom: 10px; 
+  }
 }
 
 

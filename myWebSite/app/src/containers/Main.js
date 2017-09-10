@@ -7,6 +7,7 @@ import * as actions from '../actions/index'
 import PostList from '../components/PostList';
 import Page from '../components/Page';
 import Banner from '../components/Banner';
+import LeftBar from '../components/LeftBar';
 
 import '../static/scss/main.scss';
 
@@ -75,7 +76,7 @@ class Main extends Component {
             { loadText }
           </div>
           <div className="container-right">
-              内容左侧,内容待定
+              <LeftBar />
           </div>
         </div>
       </div>
