@@ -189,21 +189,40 @@ Mock.mock(
 );
 
 /**
- * 获取用户信息
- * userId
+ * 获取作者信息
+ * authorId
  */
 Mock.mock(
-	'/getUserDetail',{
+	'/getAuthorDetail',{
 		"status" : 200,
 		"message" : "success",
 		"data": {
-			"articleList": { //文章列表
-
-			}, 
-			"sigature": "", //个性签名
-			"introdece":" ",  //个人简介
-			"focus": "", //关注
-			"fans": "", //粉丝
+			"articleList|10-15" : [{ //文章列表
+				'_id|+1' : 1654651,
+				'title' : '@ctitle',
+				'content' : '@cparagraph()',
+				'authorInfo':{
+					'name': '@name',
+					'authorPic': 'https://dummyimage.com/96x96/46ebbf/1d1d1d',
+					'authorId|+1': 498798
+				},
+				'commentNum|+1':798798,
+				'contentPic':'https://dummyimage.com/150x150/1d1d1d/fff',
+				'category':'@csentence()',
+				'createTime':"@date('yyyy-MM-dd')",
+				'read|+1':56,
+				'like|+1':56,
+			}],
+			"userInfo": {
+				"sigature": "@csentence()", //个性签名
+				"introdece":"@cparagraph()",  //个人简介
+				"focus": "1592", //关注
+				"fans": "89790", //粉丝
+				"name":"咸鱼老弟",
+				"userPic":'@Image'
+			},
+			"isFocus": false
+			
 		}
 	}
 );
@@ -218,7 +237,41 @@ Mock.mock(
 		'data': {
 	    	'userName': '@name',
 	    	'id': 565656, //用户id
-	    	'userPic':'@Image',
+	    	'userPic':'http://upload.jianshu.io/users/upload_avatars/3343569/65efd19a-8a5a-47d3-bfd3-c7cee81b280e.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240',
+	    	"sigature": "@csentence()", //个性签名
+	    	"email":"@email",
+			"introdece":"@cparagraph()"  //个人简介
 	    }
 	}
 );
+
+/**
+ * 获取用户信息
+ */
+Mock.mock(
+	'/getPersonalInfo',{
+		"status" : 200,
+		"message" : "success",
+		'data': {
+	    	'userName': '@name',
+	    	'id': 565656, //用户id
+	    	'userPic':'http://upload.jianshu.io/users/upload_avatars/3343569/65efd19a-8a5a-47d3-bfd3-c7cee81b280e.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240',
+	    	"sigature": "@csentence()", //个性签名
+	    	"email":"@email",
+			"introdece":"@cparagraph()"  //个人简介
+	    }
+	}
+);
+
+/**
+ * 关注用户
+ * authorId
+ */
+Mock.mock(
+	'/focus','post',{
+		"status" : 200,
+		"message" : "success"
+	}
+);
+
+

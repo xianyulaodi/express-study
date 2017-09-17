@@ -27,6 +27,7 @@ class PostHeader extends Component {
   		  isLogin = <div className='hadlogin login'>
                     <span>欢迎您，{ this.props.userInfo.userInfo.userName }  </span>
                     <Link className="label_login" to="/add_topic" >发文章</Link>
+                    <Link  to="/setting" >设置</Link>
                     <a href='javascript:void(0);' className ='logout' onClick={ this.logout }>退出</a>
                   </div>;
       }

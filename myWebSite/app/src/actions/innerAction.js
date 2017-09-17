@@ -217,14 +217,29 @@ export function sendLoginInfo(data,dispatch,callback){
 }
 
 /**
- * 获取用户信息，需登录
- * @param userId  {String}  用户id
+ * 获取作者信息
+ * @param authorId  {String}  作者id
  */
-export function getUserDetail(id,dispatch,callback) {
-    axios.get('/getUserDetail')
+export function getAuthorDetail(id,dispatch,callback) {
+    axios.get('/getAuthorDetail')
     .then(function(res){
         if( res.data.status == '200' ) {
-            dispatch(callback[0](res.data));
+            dispatch(callback[0](res.data.data));
+        } else {
+           console.log('获取作者信息失败');
+        }
+    });
+}
+
+/**
+ * 获取用户信息
+ * 需登录
+ */
+export function getPersonalInfo(dispatch,callback) {
+    axios.get('/getPersonalInfo')
+    .then(function(res){
+        if( res.data.status == '200' ) {
+            dispatch(callback[0](res.data.data));
         } else {
            console.log('获取用户信息失败');
         }
@@ -261,6 +276,19 @@ export function logOut(dispatch,callback) {
            dispatch(callback[1]({}));
         } else {
            console.log('退出失败');
+        }
+    })
+}
+
+// 关注
+// authorId 作者id
+export function focus(authorId,dispatch,callback) {
+    axios.post('/focus',{authorId,authorId})
+    .then(function(res) {
+        if(res.data.status == '200') {
+            dispatch(callback[0](true));
+        } else {
+            console.log('关注失败');
         }
     })
 }

@@ -15,23 +15,17 @@ import  * as reducers from './reducers/index' // Or wherever you keep your reduc
 import AddTopic from 'components/addTopic'
 import Main from 'containers/Main'
 import LoginRegister from 'containers/LoginRegister'
-
-import Stat from 'components/Stat'
+import AuthorCenter from 'containers/AuthorCenter'
 import Detail from 'components/Detail'
+import UserSetting from 'components/UserSetting'
 import NoMatch from 'components/Page404'
 
 //import DevTools from './containers/DevTools'
 
 import myCreateStores from './store'
 const browserHistory = createHistory()
-
 import { CSSTransitionGroup } from 'react-transition-group'
-
-
 import Header from './components/Header'
-import Sider from './components/Sider'
-import ModalDialog from './containers/ModalDialog'
-
 import './static/scss/common.scss';
 import './static/scss/index.scss'
 
@@ -42,7 +36,6 @@ ReactDOM.render(
   <Provider store={stores}>
     <Router history={history}>
       <div>
-        <ModalDialog></ModalDialog>
         <Header></Header>
         <div className="container-main">
               <CSSTransitionGroup transitionName='fade' transitionEnterTimeout={300} transitionLeaveTimeout={300}>
@@ -52,7 +45,8 @@ ReactDOM.render(
                   <Route path="/sign_in" location={history.location} key={history.location.key} component={LoginRegister} />
                   <Route path="/sign_up" location={history.location} key={history.location.key} component={LoginRegister} />
                   <Route path="/add_topic" location={history.location} key={history.location.key} component={AddTopic}/>
-                  <Route path="/stat" location={history.location} key={history.location.key} component={Stat}/>
+                  <Route path="/setting" location={history.location} key={history.location.key} component={UserSetting}/>
+                  <Route path="/author_center/:authorId" location={history.location} key={history.location.key} component={AuthorCenter}/>
                   <Route location={history.location} key={history.location.key} component={NoMatch}/>
                 </Switch>
               </CSSTransitionGroup>

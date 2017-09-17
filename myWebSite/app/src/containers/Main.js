@@ -3,9 +3,7 @@ import {render} from 'react-dom'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as actions from '../actions/index'
-
-import PostList from '../components/PostList';
-import Page from '../components/Page';
+import PostList from '../components/PostList';;
 import Banner from '../components/Banner';
 import LeftBar from '../components/LeftBar';
 

@@ -113,19 +113,6 @@ function call_addNewTopic(data) {
   }
 }
 
-//sider
-export function isCollapse() {
-  return {
-    type: constants.ISCOLLAPSE, 
-  }
-}
-
-
-export function isNotCollapse() {
-  return {
-    type: constants.ISNOTCOLLAPSE, 
-  }
-}
 
 //更新登录状态
 function UpdateLoginState(key) {
@@ -161,108 +148,60 @@ export function LogOut() {
   }
 }
 
-export function ShowModal(innerComponentType,title){
-  return {
-    type :constants.SHOWMODAL,
-    data :innerComponentType,
-    title:title
-  }
-}
 
-export function HideModal() {
-  return {
-    type :constants.HIDEMODAL
-  }
-}
-
-
-export function ChangeSiderCurrent(key){
-  return {
-      type:constants.CHANGESIDERCURRENT,
-      data:key
-  }
-}
-
-export function GetList(data,type){
-  var callback;
-  if (type === 'initializePoster'){
-    callback=[changePageTotal,updatePosterinfo];
-  }
-  else if(type === 'pageSizeChange'){
-    callback=[changePageSize,updatePosterinfo];
-  }
-  else if(type === 'pageNoChange'){
-    callback=[changePageNo,updatePosterinfo];
-  }
+// 获取作者详情，包括文章列表，粉丝数量，关注等
+export function getAuthorDetail(userId) {
   return (dispatch, getState) => {
-    return basicAction.getList('getList',dispatch,callback,data,type);
+    return basicAction.getAuthorDetail(userId,dispatch,[call_getAuthorDetail]);
   }
 }
 
-// export function changePageNo(data){
-//   return {
-//     type:constants.CHANGEPAGENO,
-//     data:data
-//   }
-// }
-
-export function changePageSize(data){
+function call_getAuthorDetail(data) {
   return {
-    type:constants.CHANGEPAGESIZE,
-    data:data
+      type:constants.GETAUTHORDETAIL,
+      data:data
   }
 }
 
-export function changePageTotal(data){
+// 关注
+export function focus(authorId) {
+  return (dispatch,getState) => {
+    return basicAction.focus(authorId,dispatch,[call_focus])
+  }
+}
+
+function call_focus(boolean) {
   return {
-    type:constants.CHANGEPAGETOTAL,
-    data:data
+       type:constants.FOCUS,
+       data:boolean
   }
 }
 
-export function updatePosterinfo(data){
-  return {
-    type:constants.UPDATEPOSTERINFO,
-    data:data
-  }
-}
 
-export function updateDetailInfo(data){
-  return {
-    type:constants.UPDATEDETAILINFO,
-    data:data
-  }
-}
-
-export function getComment(data){
-  var path = '/'+encodeURI(data.title)+'/'+encodeURI(data.date)
+//获取用户个人信息
+export function getPersonalInfo() {
   return (dispatch, getState) => {
-    return basicAction.getComment(path,dispatch,[updateDetailInfo],data);
+    return basicAction.getPersonalInfo(dispatch,[call_getPersonalInfo]);
   }
 }
 
-export function countCategoryData(){
-  return(dispatch,getState)=>{
-    return basicAction.countCategoryData('countCategoryData',dispatch,[updateCategoryData,getPostNoByDate]);
-  }
-}
-
-export function updateCategoryData(data){
+function call_getPersonalInfo(data) {
   return {
-    type:constants.UPDATECATEGORYDATA,
-    data:data
+       type:constants.UPDATEUSERINFO,
+       data:data
   }
 }
 
-export function getPostNoByDate(interval=7){
-  return(dispatch,getState)=>{
-    return basicAction.getPostNoByDate('getPostNoByDate',dispatch,[updatePostNoData],interval);
+//设置个人信息
+export function setPersonalInfo(data) {
+  return (dispatch, getState) => {
+    return basicAction.setPersonalInfo(data,dispatch,[call_setPersonalInfo]);
   }
 }
 
-export function updatePostNoData(data){
+function call_setPersonalInfo(data) {
   return {
-    type:constants.UPDATEPOSTNODATA,
-    data:data
+       type:constants.UPDATEUSERINFO,
+       data:data
   }
 }

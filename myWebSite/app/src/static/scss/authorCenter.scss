@@ -1,0 +1,73 @@
+@import "common";
+
+.container-user {
+  width: $containerW;
+  margin:0 auto;
+  font-family: "微软雅黑";
+  background: $bg-content;
+  overflow: hidden;
+  padding: 100px 0 0;
+  .col-l {
+  	width: 630px;
+  	float: left;
+  }
+  .header {
+  	overflow: hidden;
+  	padding-bottom: 12px;
+    border-bottom: 1px solid #ccc;
+  }
+  .user-pic {
+  	width: 80px;
+  	height: 80px;
+  	overflow: hidden;
+  	border-radius: 50%;
+  	float: left;
+  	margin-right: 10px;
+  	img {
+  		width: 100%;
+  		height: auto;
+  	}
+  }
+  .user-detail {
+  	float: left;
+  }
+  .user-name {
+  	font-size: 14px;
+  	margin: 10px 0 5px;
+  }
+  .col-r {
+  	width: 280px;
+  	float: right;
+  }
+  .other-info {
+  	overflow: hidden;
+  	font-size: 12px;
+  	li {
+  		float: left;
+  		margin-right: 10px;
+  		text-align: center;
+  	}
+  	span {
+  		display: block;
+  		&:first-child{
+  			color: #ccc;
+  		};
+  	}
+  }
+  .focusBtn {
+  	float: right;
+  	width: 100px;
+  	height: 38px;
+    margin-top: 20px;
+  	line-height: 38px;
+  	text-align: center;
+  	color: #fff;
+  	text-align: center;
+  	background: #3db922;
+  	border-radius: 38px;
+  	cursor: pointer;
+  }
+}
+
+
+

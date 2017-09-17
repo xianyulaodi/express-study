@@ -51,7 +51,7 @@ class Poster extends Component{
               <a className="author-pic img-circle" href="#">
                 <img src={ this.state.authorInfo.authorPic } alt="" />
               </a> 
-              <span className="author-name">{ this.state.authorInfo.name }</span>
+              <Link className="author-name" to={ '/author_center/'+encodeURI(this.state.authorInfo.authorId) }>{ this.state.authorInfo.name }</Link>
               <span className="create-time">{ this.state.createTime }</span>
             </div>
             <Link className="title" to={'/detail/'+encodeURI(this.state._id) }>{ this.state.title }</Link>
