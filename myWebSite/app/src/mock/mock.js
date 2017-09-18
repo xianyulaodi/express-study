@@ -108,6 +108,7 @@ Mock.mock(
 );
 
 // 获取文章详情
+// articleId
 Mock.mock(
 	'/getArticleDetail','get',{
 		'status' : 200,
@@ -168,6 +169,7 @@ Mock.mock(
  * 添加新文章
  * @title     新增文章标题 
  * @content   文章内容
+ * @type      文章类型
  * 需要登录
  */
 Mock.mock(

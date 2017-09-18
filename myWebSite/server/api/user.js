@@ -8,24 +8,24 @@ module.exports = {
     **/
     newAndSave(data) {
       return new Promise((resolve,reject) => {
-         User.create(data,(err,doc) => {
-           if(err){
-             reject(err);
-           }else{
-             resolve(doc)
-           }
+        User.create(data,(err,doc) => {
+          if(err){
+            reject(err);
+          } else {
+            resolve(doc)
+          }
          })
       })
     },
     /**
     * 登录
     */
-    login(loginName,passWord) {
+    login(email,password) {
       return new Promise((resolve,reject) => {
-        User.findOne({'loginname':loginName,'pass' : passWord },(err,doc) => {
-          if(err){;
+        User.findOne({'email':email,'password' : password },(err,doc) => {
+          if(err) {;
             reject(err);
-          }else{
+          } else {
             resolve(doc);
           }
         })

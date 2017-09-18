@@ -47,17 +47,18 @@ $(document).ready(function() {
   });
 
   $('#upload').on('click', function(e) {
-    var formData = new FormData();
-    formData.append('file', $('#file').prop('files')[0]);
+    var data = {};
+    data.content = "这是一篇文章，违章内容abc";  
+    data.title = "文章标题";  
+    data.type = "nodejs";
+    // 59bfe053a433ca17e0922fe1
     $.ajax({
-      url: "/loadPic",
-      cache: false, //设置为 false 将不会从浏览器缓存中加载请求信息
-      contentType: false, //(默认: "application/x-www-form-urlencoded") 发送信息至服务器时内容编码类型
-      processData: false, //默认情况下，发送的数据将被转换为对象(技术上讲并非字符串) 以配合默认内容类型 "application/x-www-form-urlencoded"。如果要发送 DOM 树信息或其它不希望转换的信息，请设置为 false。
-      data: formData,
-      type: 'post',
-      success: function(xhr) {
-        console.log(xhr);
+      url: "/getArticleDetail?articleId=59bfe053a433ca17e0922fe1",
+      // data: data,
+      type: 'get',
+      dataType:'json',
+      success: function(res) {
+        console.log(res);
       },
       error: function(err) {
         console.log('error');

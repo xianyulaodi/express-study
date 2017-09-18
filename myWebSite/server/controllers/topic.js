@@ -4,46 +4,40 @@ const validator = require('validator');  //用于表单验证
 const api = require('../api/topic');
 var config=require('../config');
 
-// 新增主题,这里有待完善
+// 新增主题
 exports.addNewTopic = (req,res,next) => {
-   if(!req.session.user._id) {
-     res.json({
-       success: 0,
-       msg: 'no login'
-     });
-     return false;
-   }
-   var node_cat=req.body.node;
-   var node = config.nodes[node_cat].name;
-   var title = req.body.title;
-   var content = req.body.content;
-   var author = {};
-   author.avatar = req.session.user.profile_image_url ? req.session.user.profile_image_url : '';
-   author.name = req.session.user.loginname ? req.session.user.loginname : '';
-   author.authorId = req.session.user._id ? req.session.user._id : '';
-   var data={
-      node_cat: node_cat,
-      node: node,
-      title: title,
-      content: content,
-      author: author
-   }
-   api.newAndSave(data)
-   .then(result => {
-     if(result){
-        res.json({
-          success: 1,
-          data: result
-        })
-     }else {
-       res.json({
-         success: 0,
-         msg: "save topic fail"
-       });
-        // 到时候需要跳转到错误提示页
-        console.log('存入主题失败');
-     }
-   })
+  if(!req.session.user._id) {
+    res.json({
+      status: 201, // 201 
+      message: "no login"
+    });
+    return false;
+  }
+  const data={
+    title: req.body.title,
+    content: req.body.content,
+    type: req.body.type, //文章类型
+    authorInfo: {
+      name: req.session.user.userName, 
+      authorId: req.session.user._id, 
+      authorPic: req.session.user.profile_image_url || "" 
+    }
+  }
+  api.newAndSave(data)
+  .then(result => {
+    if(result){
+      res.json({
+        "status" : 200,
+        "message" : "success",
+        "result":result
+      });
+    } else {
+      res.json({
+        "status" : 100,
+        "message" : "save topic fail"
+      });
+    }
+  })
 }
 
 // 根据查询条件获取主题,一次性返回20条数据
@@ -55,21 +49,22 @@ const getCountByQuery = (query, callback) => {
 	api.getCountByQuery(query,callback);
 }
 
-// 获取列表详情页
-exports.getTopicDetail=(req,res,next) => {
-   var id=req.query.id;
-   api.getTopicById({_id:id})
+// 获取文章情页
+exports.getArticleDetail=(req,res,next) => {
+   var articleId = req.query.articleId;
+   api.getTopicById({ _id: articleId })
    .then(result => {
      if(result){
-        res.json({
-          success: 1,
-          result: result
-        });
-     }else{
-       res.json({
-         success: 0,
-         result: "get detail fail"
-       })
+      res.json({
+        "status" : 200,
+        "message" : "success",
+        "data": result
+      });
+     } else {
+      res.json({
+        "status" : 100,
+        "message" : "get artile detail fail",
+      });
      }
    })
 }

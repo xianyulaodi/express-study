@@ -90,3 +90,15 @@ exports.findByQuery(data,options,callback){
 node进程经常挂掉，因为node是单线程的，可以用： 多进程+domain 来解决  待定
 
 
+todoList
+[x] 登陆
+[x] 注册
+[x] 退出
+[x] 新增文章
+[x] 获取文章详情
+[] 获取所有文章
+[] 新增评论，获取文章评论
+[] 头像上传
+
+ 201 未登陆
+ 200 成功

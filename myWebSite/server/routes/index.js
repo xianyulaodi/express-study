@@ -10,12 +10,14 @@ const reply = require('../controllers/reply');
 const upload = require('../common/uploadPic');
 
 // 注册，登录，退出
-router.post('/register',sign.register);  //用户注册提价
+router.post('/register',sign.register);  //用户注册
 router.post('/login',sign.login);       //用户登录
-router.get('/loginout',sign.loginout);      //用户登出
+router.post('/logout',sign.logout);      //用户登出
 
-// 新建主题
+// 新建文章
 router.post('/addNewTopic',topic.addNewTopic);
+router.get('/getArticleDetail',topic.getArticleDetail);  //获取文章详情
+
 router.get('/post',(req,res,next) => {
 	return res.render('user/post');
 })
@@ -42,7 +44,6 @@ router.get('/login',(req,res) => {
 });
 
 // 根据文章id获取文章详情
-router.get('/getTopicDetailById',topic.getTopicDetail);
 
 // 获取个人数据
 router.get('/getUserInfo',user.getUserInfo);
