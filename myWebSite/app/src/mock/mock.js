@@ -84,6 +84,8 @@ Mock.mock(
 
 
 //获取文章列表
+//page      页码
+//pageSize  每页数量
 Mock.mock(
 	'/getTopicList',{
 		"status" : 200,
@@ -103,7 +105,8 @@ Mock.mock(
 			'createTime':"@date('yyyy-MM-dd')",
 			'read|+1':56,
 			'like|+1':56,
-		}]
+		}],
+		"total": 5454  //文章总数
 	}
 );
 
@@ -147,6 +150,7 @@ Mock.mock(
 
 
 //获取评论列表
+//articleId 文章id
 Mock.mock(
 	'/getComments',{
 		"status" : 200,
@@ -161,6 +165,16 @@ Mock.mock(
 			},
 			'createTime':"@date('yyyy-MM-dd')",
 		}]
+	}
+);
+
+// 删除评论
+// replyerId  评论者id
+// replyId    评论id
+Mock.mock(
+	'/delComment',{
+		"status" : 200,
+		"message" : "success"
 	}
 );
 
@@ -182,6 +196,7 @@ Mock.mock(
 /**
  * 添加评论
  * @articleId    文章id
+ * @content      评论内容
  */
 Mock.mock(
 	'/addCommentByArticleId','post',{

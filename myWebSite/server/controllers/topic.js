@@ -70,16 +70,16 @@ exports.getArticleDetail=(req,res,next) => {
 }
 
 // 获取所有的文章列表
-exports.getAllTopic = (req,res,next) => {
-   var ep=new eventproxy();
-   var data={};
-   if(req.session.user){
-   	  data=req.session.user;
-   }
+exports.getTopicList = (req,res,next) => {
+   var ep = new eventproxy();
+   // var data = {};
+   // if(req.session.user) {
+   // 	  data = req.session.user;
+   // }
    var query = {};
-   var limit =Number(req.query.limit) || 10;
+   var limit =Number(req.query.pageSize) || 10;
    var page = Number(req.query.page) || 1;
- 	 var options = {skip:(page - 1)* limit,limit:limit };  //这里是用来做分页的地方，参数可以从url那里传过来，后面再对其进行优化
+ 	 var options = { skip:(page - 1)* limit,limit:limit };  //这里是用来做分页的地方，参数可以从url那里传过来，后面再对其进行优化
    //  获取主题数据
    getTopicsByQuery(query,options,(err,topics) => {
        ep.emit('topics',topics);
@@ -90,10 +90,11 @@ exports.getAllTopic = (req,res,next) => {
    });
 
    ep.all('topics','topic_count',(topics,topic_count) => {
-     res.json({
-       topics:topics,
-       topic_count:topic_count,
-       user:data       //暂时跳转到首页去登录
-     });
+      res.json({
+        "status" : 200,
+        "message" : "success",  
+        "list": topics,
+        "total": topic_count 
+      });
    })
 }

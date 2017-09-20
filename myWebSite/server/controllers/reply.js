@@ -3,90 +3,98 @@ const _ = require('lodash');
 const Eventproxy = require('eventproxy');
 const Reply = require('../api/reply');
 
+// 添加评论
 exports.add = (req,res,next) => {
-    const topicId = req.body.topicId;
-    const content = req.body.content;
-    const topicNode = req.body.topicNode;
-    const topicTitle = req.body.topicTitle;
-    // const con = validator.trim(content);
-    const replyerId = req.session.user._id;
-    const replyer_profile = req.session.user.profile_image_url;
-    const replyerName = req.session.user.loginname;
-    const attached ={
-      topicTitle:topicTitle,
-      topicNode:topicNode,
-      topicId:topicId,
-      replyerId:replyerId,
-      replyerName:replyerName,
-      replyer_profile:replyer_profile
-    };
+  if(!req.session.user._id) {
+    res.json({
+      status: 201,
+      message: "no login"
+    });
+  }
+  const 
+    articleId = req.body.articleId,
+    content = req.body.content,
+    replyerId = req.session.user._id,
+    replyer_name = req.session.user.userName,
+    replyer_profile = req.session.user.profile_image_url || '';
     const proxy = new Eventproxy();
     var data={
-      content:content,
-      replyer_id:replyerId,
-      topic_id:topicId,
-      topic_title:topicTitle,
-      replyer_profile:replyer_profile,
-      replyer_name:replyerName
+      content: content,
+      replyer_id: replyerId,
+      article_id: articleId,
+      replyer_profile: replyer_profile,
+      replyer_name: replyer_name
     };
 
     Reply.newAndSave(data)
     .then(result => {
-      var obj = {};
+      var obj = '';
       if(result) {
         obj = {
-          success: 1,
-          data:result
+          "status" : 200,
+          "message" : "success"
         }
       } else {
         obj = {
-          success: 0,
-          msg: "add replies fail"
+          "status" : 100,
+          "message" : "add replies fail"
         }
       }
       proxy.emit('reply',obj);
     });
 
-
-    Reply.updateLastReply(topicId,replyerId,replyerName,(err) => {
+    // 更新文章的评论
+    Reply.updateLastReply(articleId,replyerId,replyer_name,(err) => {
       if(err) return;
-      proxy.emit('topic',topicId);
+      proxy.emit('topic',articleId);
     });
-    proxy.all('topic','reply',(topicI,result) => {
+
+    proxy.all('topic','reply',(articleId,result) => {
       res.json(result);
     });
-
 }
+
 // 根据文章id获取该文章下的所有评论信息
-exports.getRepliesByTopicId = (req,res,next) => {
-  var topicId=req.query.topicId;
-  Reply.getRepliesByTopicId({topic_id:topicId},{},(error,data) => {
+exports.getComments = (req,res,next) => {
+  var articleId=req.query.articleId;
+  Reply.getRepliesByArticleId({article_id:articleId },{},(error,data) => {
     if(error) {
       res.json({
-        success: 0,
-        msg: 'get replies fail'
+        success: 100,
+        message: 'get replies fail'
       });
       return false;
     }
     res.json({
-       success: 1,
-       data: data
-    })
+      "status": 200,
+      "message": "success",  
+      "list": data    
+    });
   });
-  /**
-  Reply.getRepliesByTopicId({_id:id})
-  .then(result => {
-    console.log(888);
-    if(result){
-       res.json({
-         success: 1,
-         result: result
-       });
-    }else{
+}
+
+exports.delComment = (req,res,next) => {
+  var replyId = req.query.replyId; // 评论id
+  var replyerId = req.query.replyerId; // 评论者id
+  if(req.session.user._id != replyerId ) {
+    res.json({
+      success: 100,
+      message: 'not your article'
+    });
+    return false;    
+  }
+  Reply.delReplyByReplyId({ _id:replyId },(error,data) => {
+    if(error) {
       res.json({
-        success: 0,
-        result: "get detail fail"
-      })
+        success: 100,
+        message: 'del reply fail'
+      });
+      return false;
     }
-  });**/
+    res.json({
+      "status": 200,
+      "message": "success",     
+    });
+  });  
+ 
 }

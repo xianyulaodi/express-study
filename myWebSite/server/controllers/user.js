@@ -4,8 +4,6 @@ module.exports = {
   // 获取用户个人信息
   getUserInfo(req,res,next) {
        var id = req.query.userId;
-       console.log(8899);
-       console.log(id);
        User.getUserById(id)
        .then(user => {
           if(user) {

@@ -15,7 +15,7 @@ module.exports = {
     })
   },
   // 根据topicid来查找相关的回复
-  getRepliesByTopicId(query,options,callback){
+  getRepliesByArticleId(query,options,callback) {
     Reply.find(query,null,options,(error,data) => {
       callback(error,data);
     });
@@ -24,10 +24,16 @@ module.exports = {
   getCountByQuery(query,callback){
     Reply.count(query,callback);
   },
+
+  // 删除评论
+  delReplyByReplyId(query,callback) {
+    Reply.remove(query,callback);
+  },  
+
   // 更新文章的最近回复信息
-  updateLastReply(topicId,replerId,replyName,callback){
-    Topic.getTopicById({_id:topicId})
-    .then(topic =>{
+  updateLastReply(articleId,replerId,replyName,callback) {
+    Topic.getTopicById({ _id: articleId })
+    .then( (topic) => {
       if(topic){
         topic.last_reply_id = replerId; //回复人的id
         topic.last_reply_at = new Date();
