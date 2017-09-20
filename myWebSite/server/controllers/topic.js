@@ -98,3 +98,27 @@ exports.getTopicList = (req,res,next) => {
       });
    })
 }
+
+exports.delArticleById = (req,res,nex) => {
+  var articleId = req.query.articleId;
+  api.delArticleById({ _id: articleId },(err,data) => {
+    res.json({
+      "status" : 200,
+      "message" : "success"
+    })
+  }) 
+}
+
+// 更新文章
+exports.updateArticle = (req,res,nex) => {
+  var articleId = req.body.articleId;
+  var content = req.body.content;
+  console.log(articleId,content);
+  api.updateArticle({_id: articleId},{content: content},(err,data) => {
+    res.json({
+      "status" : 200,
+      "message" : "success999",
+      "data": data
+    })
+  }) 
+}

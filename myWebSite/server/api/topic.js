@@ -44,5 +44,29 @@ module.exports = {
           }
         })
       })
+    },
+
+    //删除某篇文章
+    delArticleById(query,callback) {
+      Topic.remove(query,callback);
+    },
+
+    // 更新文章
+    updateArticle(conditions,data) {
+      return new Promise((resolve,reject) => {
+        // Model.update(conditions, data, [options], [callback])
+        // conditions 更新条件
+        //data 更新内容
+        //option 更新选项
+        console.log(99)
+        Topic.update(conditions,data,{multi : true},(err,data) => {
+          if(err) {
+            reject(err);
+          } else {
+            resolve(data);
+          }
+        })
+      })
     }
+
 }

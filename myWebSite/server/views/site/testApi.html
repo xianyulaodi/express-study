@@ -48,21 +48,23 @@ $(document).ready(function() {
 
   $('#upload').on('click', function(e) {
     var data = {};
-    data.content = "这里是评论，评论啊评论";  
-    data.title = "文章标题";  
-    data.articleId = "59c0e2e2e452f221ac998da1";
+    data.content = "这个是新的文章内容哦5666";  
+    // data.title = "文章标题";  
+    data.articleId = "59bfdd305b2b682ab820448a";
     // data.userName = "123";
     // data.email = "1009140297@qq.com";
     // data.password = "123";
     // replyId = 59c22a7fb565b717a0cf924a
     // replyerId = 59c0e21cc33cb9048058ecee
+    // 59bfdd305b2b682ab820448a  articleId
     $.ajax({
-      url: "/getComments?articleId=59c0e2e2e452f221ac998da1",
-      // url: "/delComment?replyId=59c22a7fb565b717a0cf924a&replyerId=59c0e21cc33cb9048058ecee",
-      // url: "/getArticleDetail?articleId=59c0e2e2e452f221ac998da1",
       // url: "/getTopicList",
-      // data: data,
-      type: 'get',
+      // url: "/delComment?replyId=59c22a7fb565b717a0cf924a&replyerId=59c0e21cc33cb9048058ecee",
+      url: "/updateArticle",
+      // url: "/getTopicList",
+      // url: "/delArticleById?articleId=59bfdd305b2b682ab820448a",
+      data: data,
+      type: 'post',
       dataType:'json',
       success: function(res) {
         console.log(res);

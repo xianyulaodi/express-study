@@ -17,6 +17,8 @@ router.post('/logout',sign.logout);      //用户登出
 router.post('/addNewTopic',topic.addNewTopic); // 新建文章
 router.get('/getArticleDetail',topic.getArticleDetail);  //获取文章详情
 router.get('/getTopicList',topic.getTopicList);  //获取所有文章列表
+router.get('/delArticleById',topic.delArticleById);  //删除选中的文章
+router.post('/updateArticle',topic.updateArticle);  //更新文章
 // 评论类
 router.post('/addCommentByArticleId',reply.add); // 新增文章评论
 router.get('/getComments',reply.getComments);  // 获取某偏文章的所有评论
