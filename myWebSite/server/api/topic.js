@@ -58,12 +58,12 @@ module.exports = {
         // conditions 更新条件
         //data 更新内容
         //option 更新选项
-        console.log(99)
-        Topic.update(conditions,data,{multi : true},(err,data) => {
+        Topic.update(conditions,data,{multi : true},(err, numberAffected, raw) => {
+          // numberAffected:{ n: 0, nModified: 0, ok: 1 }
           if(err) {
             reject(err);
           } else {
-            resolve(data);
+            resolve(numberAffected.ok);
           }
         })
       })

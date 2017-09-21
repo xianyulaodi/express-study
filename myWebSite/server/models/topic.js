@@ -30,6 +30,7 @@ const TopicSchema = new mongoose.Schema({
 	good: {type: Boolean, default: false},           //是否为精华帖
 	reply_ornot: {type: Boolean, default: false},  // **   是否有人回复
 	reply_number: {type: Number, default: 0},
+	collect_number: {type: Number, default: 0}, // 收藏人数
 	visit_number: {type: Number, default: 0},
 	create_at: {type: Date, default: Date.now},
 	update_at: {type: Date},
@@ -37,8 +38,8 @@ const TopicSchema = new mongoose.Schema({
 	last_reply_name: {type: String},					 //最后回复人的name
 	last_reply_at: {type: Date},
 	watched_fellow: [{type: ObjectId}],               //关注的人们的id
-	favored_fellow: [{type: ObjectId}]                //该文章的喜欢人数[这里为什么弄成数组不分表
-											 //造成索引灾难]
+	favored_fellow: [{type: ObjectId}]                //该文章的喜欢人数[这里为什么弄成数组不分表造成索引灾难]
+											 
 });
 
 TopicSchema.index({create_at: -1});                  //查看:"最新创建"

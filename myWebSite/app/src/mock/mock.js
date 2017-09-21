@@ -172,7 +172,7 @@ Mock.mock(
 // replyerId  评论者id
 // replyId    评论id
 Mock.mock(
-	'/delComment',{
+	'/delComment','post',{
 		"status" : 200,
 		"message" : "success"
 	}
@@ -286,6 +286,31 @@ Mock.mock(
  */
 Mock.mock(
 	'/focus','post',{
+		"status" : 200,
+		"message" : "success"
+	}
+);
+
+/**
+ * 更新文章内容
+ * articleId  文章id
+ * content    内容
+ * title      标题
+ */
+Mock.mock(
+	'/updateArticle','post',{
+		"status" : 200,
+		"message" : "success"
+	}
+);
+
+/**
+ * 删除文章
+ * articleId  文章id
+ * authorId   作者id
+ */
+Mock.mock(
+	'/delArticleById','post',{
 		"status" : 200,
 		"message" : "success"
 	}

@@ -1,7 +1,7 @@
 const eventproxy=require('eventproxy'); // eventproxy 模块控制并发, 使用方法可以参考：http://www.cnblogs.com/zichi/p/4913133.html#top
-//const Topic = require('../controllers/topic');
 const validator = require('validator');  //用于表单验证
 const api = require('../api/topic');
+const common = require('../common/common');
 var config=require('../config');
 
 // 新增主题
@@ -25,17 +25,10 @@ exports.addNewTopic = (req,res,next) => {
   }
   api.newAndSave(data)
   .then(result => {
-    if(result){
-      res.json({
-        "status" : 200,
-        "message" : "success",
-        "result":result
-      });
+    if(result) {
+      common.succRes(res,{data: result});
     } else {
-      res.json({
-        "status" : 100,
-        "message" : "save topic fail"
-      });
+      common.failRes(res,'save topic fail');
     }
   })
 }
@@ -54,17 +47,10 @@ exports.getArticleDetail=(req,res,next) => {
    var articleId = req.query.articleId;
    api.getTopicById({ _id: articleId })
    .then(result => {
-     if(result){
-      res.json({
-        "status" : 200,
-        "message" : "success",
-        "data": result
-      });
+     if(result) {
+      common.succRes(res,{data:result});
      } else {
-      res.json({
-        "status" : 100,
-        "message" : "get artile detail fail",
-      });
+      common.failRes(res,'get artile detail fail');
      }
    })
 }
@@ -72,10 +58,6 @@ exports.getArticleDetail=(req,res,next) => {
 // 获取所有的文章列表
 exports.getTopicList = (req,res,next) => {
    var ep = new eventproxy();
-   // var data = {};
-   // if(req.session.user) {
-   // 	  data = req.session.user;
-   // }
    var query = {};
    var limit =Number(req.query.pageSize) || 10;
    var page = Number(req.query.page) || 1;
@@ -90,22 +72,19 @@ exports.getTopicList = (req,res,next) => {
    });
 
    ep.all('topics','topic_count',(topics,topic_count) => {
-      res.json({
-        "status" : 200,
-        "message" : "success",  
-        "list": topics,
-        "total": topic_count 
-      });
+      common.succRes(res,{"list":topics,"total":topic_count});
    })
 }
-
+// 删除文章
 exports.delArticleById = (req,res,nex) => {
-  var articleId = req.query.articleId;
+  var articleId = req.body.articleId;
+  var authorId = req.body.authorId;
+  if(req.session.user._id != authorId ) {
+    common.failRes(res,'not your article');
+    return false;
+  }
   api.delArticleById({ _id: articleId },(err,data) => {
-    res.json({
-      "status" : 200,
-      "message" : "success"
-    })
+    common.succRes(res);
   }) 
 }
 
@@ -113,12 +92,13 @@ exports.delArticleById = (req,res,nex) => {
 exports.updateArticle = (req,res,nex) => {
   var articleId = req.body.articleId;
   var content = req.body.content;
-  console.log(articleId,content);
-  api.updateArticle({_id: articleId},{content: content},(err,data) => {
-    res.json({
-      "status" : 200,
-      "message" : "success999",
-      "data": data
-    })
-  }) 
+  var title = req.body.title;
+  api.updateArticle({_id: articleId},{ content: content,title: title })
+   .then(result => {
+     if(result){
+        common.succRes(res);
+     } else {
+        common.failRes(res,'update article fail');
+     }
+   })  
 }

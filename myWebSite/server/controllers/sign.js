@@ -1,4 +1,5 @@
 const validator = require('validator');  //用于表单验证
+const common = require('../common/common');
 const api = require('../api/user');
 
 //注册
@@ -17,15 +18,9 @@ const api = require('../api/user');
   .then(result => {
     if (result) {
       req.session.user = result;
-      res.json({  
-        "status"  : 200,
-        "message" : "success"
-      });
+      common.succRes(res);
     } else {
-      res.json({  
-        'status'  : 100,
-        'message' : "register fail"
-      });
+      common.failRes(res,'register fail');
     }
    })
  }
@@ -38,20 +33,14 @@ exports.login = (req,res,next) => {
   .then(result => {
     if(result) {
       req.session.user = result;
-      res.json({  
-        "status"  : 200,
-        "message" : "success",
-        "data": {
-          "userName": result.userName,
-          "id": result._id,
-          "userPic": result.profile_image_url || " "
-        },
-      });
+      var data = {
+        "userName": result.userName,
+        "id": result._id,
+        "userPic": result.profile_image_url || " "
+      }
+      common.succRes(res,{"data": data});
      }else{
-      res.json({  
-        "status"  : 100,
-        "message" : "login fail"
-      });
+      common.failRes(res,'login fail');
      }
   });
 }
@@ -60,8 +49,5 @@ exports.login = (req,res,next) => {
 // 退出
 exports.logout = (req,res,next) => {
   req.session.destroy();
-  res.json({  
-    "status"  : 200,
-    "message" : "success"
-  });
+  common.succRes(res);
 }
