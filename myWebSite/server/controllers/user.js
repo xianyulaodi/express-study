@@ -31,10 +31,10 @@ exports.setUserInfo = (req,res,next) => {
    User.updateData({_id: id},data,{upsert: true})
    .then(result => {
      if(result.ok == 1) {
-       req.session.user.userName = userName;
-       req.session.user.sigature = sigature;
-       req.session.user.email = email;
-       req.session.user.location = location;
+       req.session.user.userName = data.userName;
+       req.session.user.sigature = data.sigature;
+       req.session.user.email = data.email;
+       req.session.user.location = data.location;
        common.succRes(res);
      } else {
        common.failRes(res,'update info fail');

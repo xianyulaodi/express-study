@@ -13,7 +13,7 @@ exports.addNewTopic = (req,res,next) => {
     });
     return false;
   }
-  const data={
+  const data = {
     title: req.body.title,
     content: req.body.content,
     type: req.body.type || '', //文章类型
