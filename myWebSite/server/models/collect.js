@@ -4,9 +4,9 @@ const db = require('../lib/mongo');
 
 const CollectSchema = new mongoose.Schema({
     user_id: { type: ObjectId }, 
-    article_id: { type: ObjectId },     							    	
-    author_id: { type: ObjectId },     							    	
-    title: { type: String },     							    	
+    article_id: { type: ObjectId },
+    author_id: { type: ObjectId },
+    title: { type: String },
     create_at:{type:Date, default:Date.now}
 });
 

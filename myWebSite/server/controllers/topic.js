@@ -8,7 +8,7 @@ var config=require('../config');
 exports.addNewTopic = (req,res,next) => {
   if(!req.session.user._id) {
     res.json({
-      status: 201, // 201 
+      status: 201, // 201
       message: "no login"
     });
     return false;
@@ -16,11 +16,12 @@ exports.addNewTopic = (req,res,next) => {
   const data={
     title: req.body.title,
     content: req.body.content,
-    type: req.body.type, //文章类型
+    type: req.body.type || '', //文章类型
+    author_id: req.session.user._id,
     authorInfo: {
-      name: req.session.user.userName, 
-      authorId: req.session.user._id, 
-      authorPic: req.session.user.profile_image_url || "" 
+      name: req.session.user.userName,
+      authorId: req.session.user._id,
+      authorPic: req.session.user.profile_image_url || ""
     }
   }
   api.newAndSave(data)
@@ -85,7 +86,7 @@ exports.delArticleById = (req,res,nex) => {
   }
   api.delArticleById({ _id: articleId },(err,data) => {
     common.succRes(res);
-  }) 
+  })
 }
 
 // 更新文章
@@ -100,5 +101,5 @@ exports.updateArticle = (req,res,nex) => {
      } else {
         common.failRes(res,'update article fail');
      }
-   })  
+   })
 }

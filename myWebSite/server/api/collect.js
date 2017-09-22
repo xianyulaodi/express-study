@@ -34,9 +34,14 @@ module.exports = {
       }
     });
   },
-  // 获取所有收藏
-  getAllCollects() {
-
+  // 根据某些条件查找收藏信息
+  findByQuery(data,options,callback) {
+    Collect.find(data,null,options,(err,doc) => {
+      if(err) {
+        return callback(err);
+      }
+      callback(null,doc);
+    })
   },
   // 是否已经收藏该文章
   findCollectExist(data,callback) {
@@ -44,6 +49,6 @@ module.exports = {
       if(err) return callback(err);
       callback(null,result);
     });
-  }  
+  }
 
 }

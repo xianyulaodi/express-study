@@ -7,8 +7,8 @@ const topic = require('../controllers/topic');
 const user = require('../controllers/user');
 const reply = require('../controllers/reply');
 const collect = require('../controllers/collect');
-
-const upload = require('../common/uploadPic');
+const author = require('../controllers/author');
+const upload = require('../common/uploadPic'); // 图片上传
 
 // 注册，登录，退出
 router.post('/register',sign.register);  //用户注册
@@ -28,30 +28,13 @@ router.post('/delComment',reply.delComment);  // 删除某条评论
 router.post('/addCollect',collect.addCollect);  // 添加收藏
 router.get('/hadCollect',collect.hadCollect);  // 判断是否已收藏
 router.get('/unCollect',collect.unCollect);  // 取消收藏
-
-
-router.get('/post',(req,res,next) => {
-	return res.render('user/post');
-})
-
-//主页面
-//router.get('/',site.index);
-
-
-
-// 测试，记得删掉
-router.get('/getList',topic.getTopicList);
-
-
-// 获取个人数据
-router.get('/getUserInfo',user.getUserInfo);
-
-// 设置个人信息
-router.post('/setUserInfo',user.setUserInfo);
-
-
-// 图片上传
-router.post('/loadPic',upload.uploadPic); //图片上传
+//作者中心
+router.get('/getAuthorCenter',author.getAuthorCenter); //获取作者中心
+router.get('/getCollectList',author.getCollectList); // 获取作者收藏的列表
+// 个人信息
+router.post('/getUserInfo',user.getUserInfo); //获取个人信息
+router.post('/setUserInfo',user.setUserInfo); // 设置个人信息
+router.post('/uploadPic',user.uploadHeadPic); //图片上传
 
 
 // 测试接口地址，改为前后端分离的模式，后端只生产数据，前端这样以后前端可以用任何的框架来做，分离解耦

@@ -45,31 +45,60 @@ $(document).ready(function() {
   $('#showUpload').on('click', function(e) {
     $('.upload-box').show(300);
   });
+  // 图像上传案例
+  $('#upload2').on('click',function(e) {
+		var formdata = new FormData();
+		var fileObj = $('#file').get(0).files;
+		formdata.append("imgFile", fileObj[0]);
+		$.ajax({
+			url : '/uploadPic',
+			type : 'post',
+			data : formdata,
+			cache : false,
+			enctype:"multipart/form-data",
+			contentType : false,
+			processData : false,
+			dataType : "json",
+			success : function(data) {
+				console.log(data);
+			}
+		});
+  });
 
   $('#upload').on('click', function(e) {
     var data = {};
-    // data.content = "这个是新的文章内容哦5666999";  
-    data.title = "收藏文章的标题";  
-    data.articleId = "59c0e2e2e452f221ac998da1";
-    data.authorId = "59c0e21cc33cb9048058ecee";
+    // data.content = "新添加另外一篇文章";
+    // data.title = "收藏文章的标题";
+    // data.type = "css";
+    // data.articleId = "59c0e2e2e452f221ac998da1";
+    // data.authorId = "59c0e21cc33cb9048058ecee";
     // data.userName = "123";
     // data.email = "1009140297@qq.com";
     // data.password = "123";
     // replyId = 59c22a7fb565b717a0cf924a
     // replyerId = 59c0e21cc33cb9048058ecee
     // 59bfdd305b2b682ab820448a  articleId
+    data.userName = "咸鱼老弟";
+    data.sigature = "个性签名，这里是新的内容，哈哈哈";
+    data.email = "1009140297@qq.com";
+    data.location = "广东.广州";
     $.ajax({
-      url: "/getTopicList",
+      // url: "/getTopicList",
+      // url: "/getAuthorCenter?authorId=59c0e21cc33cb9048058ecee",
+      // url: "/getCollectList?authorId=59c0e21cc33cb9048058ecee",
+      url: "/getUserInfo",
+      // url: "/setUserInfo",
       // url: "/delComment?replyId=59c22a7fb565b717a0cf924a&replyerId=59c0e21cc33cb9048058ecee",
       // url: "/updateArticle",
       // url: "/getArticleDetail?articleId=59c0e2e2e452f221ac998da1",
+      // url: "/addNewTopic",
       // url: "/hadCollect?articleId=59c0e2e2e452f221ac998da1",
       // url: "/unCollect?articleId=59c0e2e2e452f221ac998da1",
       // url: "/addCollect",
       // url: "/delArticleById",
       // data: data,
-      // type: 'post',
-      type: 'get',
+      type: 'post',
+      // type: 'get',
       dataType:'json',
       success: function(res) {
         console.log(res);
@@ -79,7 +108,7 @@ $(document).ready(function() {
       }
     })
   });
-  
+
 });
 </script>
 </html>
