@@ -1,5 +1,6 @@
 const eventproxy=require('eventproxy'); // eventproxy 模块控制并发, 使用方法可以参考：http://www.cnblogs.com/zichi/p/4913133.html#top
 const validator = require('validator');  //用于表单验证
+const ip = require('ip');
 const api = require('../api/topic');
 const common = require('../common/common');
 var config=require('../config');
@@ -44,12 +45,13 @@ const getCountByQuery = (query, callback) => {
 }
 
 // 获取文章情页
-exports.getArticleDetail=(req,res,next) => {
+exports.getArticleDetail=(req,res,next) => { 
    var articleId = req.query.articleId;
    api.getTopicById({ _id: articleId })
    .then(result => {
      if(result) {
       common.succRes(res,{data:result});
+      countArticleRead(result); //更新文章阅读量
      } else {
       common.failRes(res,'get artile detail fail');
      }
@@ -63,11 +65,11 @@ exports.getTopicList = (req,res,next) => {
    var limit =Number(req.query.pageSize) || 10;
    var page = Number(req.query.page) || 1;
  	 var options = { skip:(page - 1)* limit,limit:limit };  //这里是用来做分页的地方，参数可以从url那里传过来，后面再对其进行优化
-   //  获取主题数据
+   // 获取主题数据
    getTopicsByQuery(query,options,(err,topics) => {
        ep.emit('topics',topics);
    });
-  //  获取话题总数，用于分页
+   // 获取话题总数，用于分页
    getCountByQuery({},(err,tcount) => {
       ep.emit('topic_count',tcount);
    });
@@ -94,12 +96,34 @@ exports.updateArticle = (req,res,nex) => {
   var articleId = req.body.articleId;
   var content = req.body.content;
   var title = req.body.title;
-  api.updateArticle({_id: articleId},{ content: content,title: title })
-   .then(result => {
+  api.updateArticle({_id: articleId},{ 
+    content: content,
+    title: title 
+  }).then(result => {
      if(result){
         common.succRes(res);
      } else {
         common.failRes(res,'update article fail');
      }
    })
+}
+
+// 统计文章阅读量
+function countArticleRead(data) {
+  var readerIp = ip.address(); // 获取读者的ip地址，统计文章阅读量，一个ip地址统计一次
+  var readerIps = data.reader_ips || [];
+  var isRead = readerIps.indexOf(readerIp) > -1; 
+  if(isRead) {
+    return false;
+  }
+  api.updateArticle({_id: data._id},{ 
+    $inc:{ visit_number: 1 },
+    $push:{ reader_ips: readerIp }
+  }).then(result => {
+    if(result){
+      common.succRes(res);
+    } else {
+      common.failRes(res,'count read num fail');
+    }
+  });  
 }

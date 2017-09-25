@@ -73,3 +73,22 @@ exports.uploadHeadPic = (req,res,next) => {
     });
   });
 }
+
+// 修改密码
+// 参数: oldPass,newPass --> 旧密码，新密码
+exports.changePass = (req,res,next) => {
+  var oldPass = req.body.oldPass;
+  var newPass = req.body.newPass;
+  if(req.session.user.password != oldPass ) {
+    common.failRes(res,'old password not correct');
+    return false;
+  }
+  User.updateData({_id: req.session.user._id },{ password: newPass },{upsert: true})
+    .then(result => {
+      if(result.ok == 1) {
+        common.succRes(res);
+      } else {
+        common.failRes(res,'update password fail');
+      }
+  });  
+}

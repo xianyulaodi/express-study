@@ -54,11 +54,114 @@ function getAuthorInfo(authorId) {
       var data = {
         userName: result.userName,
         sigature: result.sigature,
-        profile_image_url: result.profile_image_url
+        profile_image_url: result.profile_image_url,
+        fansNum : result.fans_num,
+        foucsNum: result.focus_num,
+        fans_ids: result.fans_ids
       }
       proxy.emit('authorInfo',data);
     } else {
       proxy.emit('authorInfo',{});
     }
   });
+}
+
+// 关注作者
+exports.focusAuthor = (req,res,next) => {
+  var authorId = req.body.authorId;
+  var userId = req.session.user._id;
+  if(!common.isLogin(req)) {
+    common.noLoginRes(res);
+    return false;
+  }     
+  if(authorId == userId) {
+    common.failRes(res,'can not foucs yourself');
+    return false;
+  }
+  updataAuthorFans(authorId,userId,true);
+  updateUserFocus(authorId,userId,true);
+  proxy.all('upFans','upFocus',(result1,result2) => {
+    if(result1.fail || result2.fail) {
+      common.failRes(res,'focus fail');
+      return false;
+    }
+    common.succRes(res);
+  });  
+}
+
+// 更新作者粉丝数
+function updataAuthorFans(authorId,userId,isAdd) {
+  var options = {
+    $inc:{ fans_num:1 },
+    $push:{ fans_ids: userId }
+  };
+  if(!isAdd) {
+    options = {
+      $inc:{ fans_num: -1 },
+      $pull:{ fans_ids: userId }
+    }
+  }
+  User.updateData({ _id: authorId },options,{}).then(result => {
+    if(result) {
+      proxy.emit('upFans',result);
+    } else {
+      proxy.emit('upFans',{fail: 1});
+    }
+  });  
+}
+
+// 更新用户关注数
+function updateUserFocus(authorId,userId,isAdd) {
+  var options = {
+    $inc:{ focus_num:1 },
+    $push:{ focus_ids: authorId }
+  };
+  if(!isAdd) {
+    options = {
+      $inc:{ focus_num: -1 },
+      $pull:{ focus_ids: authorId }
+    }    
+  }
+  User.updateData({ _id: userId },options,{}).then(result => {
+    if(result) {
+      proxy.emit('upFocus',result);
+    } else {
+      proxy.emit('upFocus',{fail: 1});
+    }
+  }); 
+}
+
+//取消关注作者
+exports.unfocusAuthor = (req,res,next) => {
+  var authorId = req.body.authorId;
+  var userId = req.session.user._id;
+  if(!common.isLogin(req)) {
+    common.noLoginRes(res);
+    return false;
+  }
+  updataAuthorFans(authorId,userId,false);
+  updateUserFocus(authorId,userId,false);
+  proxy.all('upFans','upFocus',(result1,result2) => {
+    if(result1.fail || result2.fail) {
+      common.failRes(res,'un focus fail');
+      return false;
+    }
+    common.succRes(res);
+  });    
+} 
+
+// 判断是否已关注了该作者
+exports.hadFocus = (req,res,next) => {
+  const uesrId = req.session.user._id;
+  const authorId = req.body.authorId;
+  User.getUserById(uesrId)
+  .then(result => {  
+    var focusList = result.focus_ids;
+    // 已关注
+    if(focusList.indexOf(authorId) > -1) {
+      common.succRes(res,{"isFocus": 1});
+      return;
+    } 
+    common.succRes(res,{"isFocus": 0});
+  });  
 }

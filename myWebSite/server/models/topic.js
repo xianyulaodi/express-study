@@ -37,6 +37,7 @@ const TopicSchema = new mongoose.Schema({
 	last_reply_id: {type: ObjectId},					 //最后回复人的id
 	last_reply_name: {type: String},					 //最后回复人的name
 	last_reply_at: {type: Date},
+	reader_ips:[],  //阅读者的ip
 	watched_fellow: [{type: ObjectId}],               //关注的人们的id
 	favored_fellow: [{type: ObjectId}]                //该文章的喜欢人数[这里为什么弄成数组不分表造成索引灾难]
 
