@@ -121,15 +121,18 @@ todoList
 [x]  修改密码
 [x]  阅读量的统计,出去重复统计
 [x]  关注作者、取消关注作者
+[x]   搜索
+[]   引入nginx   
 []   进程管理  process,自动重启，某个进程如果有问题，kill掉。负载均衡
 []   为服务的运行记录日志或者错误日志  关注这篇文章:https://github.com/nomiddlename/log4js-node
-[]   搜索
-[]   文章排序:  根据：1. 评论 2.阅读量 3.最新
+[]   文章排序:  根据：1. 评论 2.阅读量 3.最新   http://blog.csdn.net/wangliqiang1014/article/details/16861337
 []   根据某个分类查找某篇文章
-[]   引入nginx
 []   密码加密
 []   web socket 来进行用户反馈的聊天
 
+9月31号任务:
+(1).引入nginx
+(2).用socket进行聊天反馈信息
 
 后台管理
 []  banner广告图，新增广告的后端管理系统

@@ -67,6 +67,16 @@ module.exports = {
           }
         })
       })
+    },
+    
+    // 搜索文章，模糊匹配
+    search(q,sq,page,callback) {
+      Topic.find(q).sort(sq).find((err,docs) => {
+        if(err) {
+          return callback('match fail');
+        } 
+        return callback(err, docs.slice((page-1)*20,page*20), docs.length);
+      })
     }
 
 }

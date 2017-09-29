@@ -127,3 +127,24 @@ function countArticleRead(data) {
     }
   });  
 }
+
+// 搜索，模糊匹配
+exports.search = (req, res,next) => {
+  var str = req.query.title,
+      page = req.query.page || 1,
+      q = {};    
+  if (str) {  
+    var pattern = new RegExp("^.*"+ str +".*$");
+    q.title = pattern;
+  }
+  var rankObj = {};
+  rankObj.visit_number = 1;    //以阅读量为排序
+  api.search(q, rankObj, page,(err, data, length) => {
+    if (err) {
+      common.failRes(res,'search fail');
+    }
+    common.succRes(res,{"list":data,"total":length});
+  });
+};
+
+
