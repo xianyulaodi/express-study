@@ -9,6 +9,7 @@ var MongoStore = require('connect-mongo')(session);  //需要在session的下面
 var ejs = require('ejs');
 var router=require('./routes');
 var config = require('./config');
+var log4js = require('log4js');  // 添加日志统计
 
 // 静态文件目录
 var staticDir = path.join(__dirname,'/public');
@@ -46,6 +47,19 @@ app.use(session({
 	  saveUninitialized:true
 }));
 
+// 添加日志统计 START
+var log4js_config = require("./config/log4js.json");  
+log4js.configure(log4js_config);  
+var logger = log4js.getLogger('log_file');  // 这里跟配置文件的 category 对应
+// logger.trace('Entering cheese testing');
+// logger.debug('Got cheese.');
+// logger.info('Cheese is Gouda.');
+// logger.warn('Cheese is quite smelly.');
+// logger.error('Cheese is too ripe!');
+// logger.fatal('Cheese was breeding ground for listeria.');
+// 添加日志统计 END
+
+
 // 接口支持跨域访问
 app.all('*',function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -64,14 +78,13 @@ app.all('*',function (req, res, next) {
     next();
   }
 });
-
 // routes
 app.use('/',router);
-
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
+  logger.error(err);
   next(err);
 });
 
@@ -80,9 +93,9 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
   // render the error page
   res.status(err.status || 500);
+  logger.error(err);
   res.render('error');
 });
 

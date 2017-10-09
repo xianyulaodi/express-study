@@ -4,6 +4,7 @@ const ip = require('ip');
 const api = require('../api/topic');
 const common = require('../common/common');
 var config=require('../config');
+var log = require('log4js').getLogger("log_file"); // 日志统计
 
 // 新增主题
 exports.addNewTopic = (req,res,next) => {
@@ -29,8 +30,10 @@ exports.addNewTopic = (req,res,next) => {
   .then(result => {
     if(result) {
       common.succRes(res,{data: result});
+      log.info('add new topic success');
     } else {
       common.failRes(res,'save topic fail');
+      log.error('add new topic fail');
     }
   })
 }
@@ -51,9 +54,11 @@ exports.getArticleDetail=(req,res,next) => {
    .then(result => {
      if(result) {
       common.succRes(res,{data:result});
+      log.info('get article detail success');
       countArticleRead(result); //更新文章阅读量
      } else {
       common.failRes(res,'get artile detail fail');
+      log.error('get article detail fail');
      }
    })
 }
@@ -76,6 +81,7 @@ exports.getTopicList = (req,res,next) => {
 
    ep.all('topics','topic_count',(topics,topic_count) => {
       common.succRes(res,{"list":topics,"total":topic_count});
+      log.info('get topiclist success');
    })
 }
 // 删除文章
@@ -84,10 +90,12 @@ exports.delArticleById = (req,res,nex) => {
   var authorId = req.body.authorId;
   if(req.session.user._id != authorId ) {
     common.failRes(res,'not your article');
+    log.error('del article fail');
     return false;
   }
   api.delArticleById({ _id: articleId },(err,data) => {
     common.succRes(res);
+    log.info('del article success');
   })
 }
 
@@ -102,8 +110,10 @@ exports.updateArticle = (req,res,nex) => {
   }).then(result => {
      if(result){
         common.succRes(res);
+        log.info('update article success');
      } else {
         common.failRes(res,'update article fail');
+        log.info('update article fail');
      }
    })
 }
@@ -122,8 +132,10 @@ function countArticleRead(data) {
   }).then(result => {
     if(result){
       common.succRes(res);
+      log.info('count article read success');
     } else {
       common.failRes(res,'count read num fail');
+      log.error('count article read fail');
     }
   });  
 }
@@ -142,8 +154,11 @@ exports.search = (req, res,next) => {
   api.search(q, rankObj, page,(err, data, length) => {
     if (err) {
       common.failRes(res,'search fail');
+      log.error('search '+str+'fail');
+      return false;
     }
     common.succRes(res,{"list":data,"total":length});
+    log.error('search '+str+'success');
   });
 };
 
