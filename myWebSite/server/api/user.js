@@ -20,9 +20,9 @@ module.exports = {
     /**
     * 登录
     */
-    login(email,password) {
+    login(email) {
       return new Promise((resolve,reject) => {
-        User.findOne({'email':email,'password' : password },(err,doc) => {
+        User.findOne({'email':email},(err,doc) => {
           if(err) {;
             reject(err);
           } else {

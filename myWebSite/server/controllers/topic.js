@@ -5,6 +5,7 @@ const api = require('../api/topic');
 const common = require('../common/common');
 var config=require('../config');
 var log = require('log4js').getLogger("log_file"); // 日志统计
+var ep = new eventproxy();
 
 // 新增主题
 exports.addNewTopic = (req,res,next) => {
@@ -65,25 +66,10 @@ exports.getArticleDetail=(req,res,next) => {
 
 // 获取所有的文章列表
 exports.getTopicList = (req,res,next) => {
-   var ep = new eventproxy();
-   var query = {};
-   var limit =Number(req.query.pageSize) || 10;
-   var page = Number(req.query.page) || 1;
- 	 var options = { skip:(page - 1)* limit,limit:limit };  //这里是用来做分页的地方，参数可以从url那里传过来，后面再对其进行优化
-   // 获取主题数据
-   getTopicsByQuery(query,options,(err,topics) => {
-       ep.emit('topics',topics);
-   });
-   // 获取话题总数，用于分页
-   getCountByQuery({},(err,tcount) => {
-      ep.emit('topic_count',tcount);
-   });
-
-   ep.all('topics','topic_count',(topics,topic_count) => {
-      common.succRes(res,{"list":topics,"total":topic_count});
-      log.info('get topiclist success');
-   })
+  var query = {};
+  findArticle(req,res,query);
 }
+
 // 删除文章
 exports.delArticleById = (req,res,nex) => {
   var articleId = req.body.articleId;
@@ -154,12 +140,38 @@ exports.search = (req, res,next) => {
   api.search(q, rankObj, page,(err, data, length) => {
     if (err) {
       common.failRes(res,'search fail');
-      log.error('search '+str+'fail');
+      log.error('search '+str+' fail');
       return false;
     }
     common.succRes(res,{"list":data,"total":length});
-    log.error('search '+str+'success');
+    log.error('search '+str+' success');
   });
 };
+
+// 根据文章分类查找文章
+exports.findArticleByType = (req,res,next) => {
+  var type = req.query.type || '';
+  var query = {type: type};
+  findArticle(req,res,query);
+}
+
+// 根据某些条件查找文章
+function findArticle(req,res,query) {
+  var limit = Number(req.query.pageSize) || 10;
+  var page = Number(req.query.page) || 1;
+  var options = { skip:(page - 1) * limit, limit:limit }; 
+  // 获取主题数据
+  getTopicsByQuery(query,options,(err,topics) => {
+    ep.emit('topics',topics);
+  });
+  // 获取话题总数，用于分页
+  getCountByQuery(query,(err,tcount) => {
+    ep.emit('topic_count',tcount);
+  });
+  ep.all('topics','topic_count',(topics,topic_count) => {
+    common.succRes(res,{"list":topics,"total":topic_count});
+  });
+};
+
 
 

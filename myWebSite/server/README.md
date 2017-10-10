@@ -123,18 +123,18 @@ todoList
 [x]  关注作者、取消关注作者
 [x]   搜索
 [x]   为服务的运行记录日志或者错误日志  关注这篇文章:https://github.com/nomiddlename/log4js-node   
-      使用的是log4js。这里记得注意log4js的版本，这里用的是0.6.15的版本。2.x的版本配置文件不一样
+      (使用的是log4js。注意log4js的版本，这里用的是0.6.15的版本。2.x的版本配置文件不一样)
+
+[x]   根据某个分类查找某篇文章
+[x]   密码加密,Base64 + 随机密码
 
 []   引入nginx   
 []   进程管理  process,自动重启，某个进程如果有问题，kill掉。负载均衡
 []   文章排序:  根据：1. 评论 2.阅读量 3.最新   http://blog.csdn.net/wangliqiang1014/article/details/16861337
-[]   根据某个分类查找某篇文章
-[]   密码加密
 []   web socket 来进行用户反馈的聊天
 
-9月31号任务:
-(1).引入nginx
-(2).用socket进行聊天反馈信息
+10月11号任务:
+  web socket 来进行用户反馈的聊天
 
 后台管理
 []  banner广告图，新增广告的后端管理系统
@@ -166,4 +166,5 @@ https://segmentfault.com/a/1190000007735211  process_child这篇文章写的比�
    a. nginx以及它的一些配置
    b. websocket的使用
    c. node 中添加日志统计
+   d. node中密码加密
    ...

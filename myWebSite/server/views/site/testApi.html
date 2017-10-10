@@ -71,10 +71,10 @@ $(document).ready(function() {
     // data.title = "收藏文章的标题";
     // data.type = "css";
     // data.articleId = "59c0e2e2e452f221ac998da1";
-    data.authorId = "59c0e21cc33cb9048058ecee";
-    // data.userName = "123";
-    // data.email = "1009140297@qq.com";
-    // data.password = "123";
+    // data.authorId = "59c0e21cc33cb9048058ecee";
+    // data.userName = "梦小糕";
+    data.email = "1009140296@qq.com";
+    data.password = "7712375bad";
     // replyId = 59c22a7fb565b717a0cf924a
     // replyerId = 59c0e21cc33cb9048058ecee
     // 59bfdd305b2b682ab820448a  articleId
@@ -85,7 +85,8 @@ $(document).ready(function() {
     // data.oldPass = "123";
     // data.newPass = "123456abc";
     $.ajax({
-      url: "/getTopicList",
+      // url: "/getTopicList",
+      // url: "/findArticleByType?type=css",
       // url: "/search?title=文章标题",
       // url: "/getAuthorCenter?authorId=59c0e21cc33cb9048058ecee",
       // url: "/getCollectList?authorId=59c0e21cc33cb9048058ecee",
@@ -102,9 +103,11 @@ $(document).ready(function() {
       // url: "/changePass",
       // url: "/focusAuthor",
       // url: "/unfocusAuthor",
-      // data: data,
-      // type: 'post',
-      type: 'get',
+      // url: "/register",
+      url: "/login",
+      data: data,
+      type: 'post',
+      // type: 'get',
       dataType:'json',
       success: function(res) {
         console.log(res);

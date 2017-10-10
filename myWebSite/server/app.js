@@ -50,7 +50,8 @@ app.use(session({
 // 添加日志统计 START
 var log4js_config = require("./config/log4js.json");  
 log4js.configure(log4js_config);  
-var logger = log4js.getLogger('log_file');  // 这里跟配置文件的 category 对应
+app.use(log4js.connectLogger(log4js.getLogger('log_file'), { level: log4js.levels.INFO }));  // 这样所有的请求都会走这里的日志统计
+var logger = log4js.getLogger('log_file');  // log_file 跟配置文件的 category 对应
 // logger.trace('Entering cheese testing');
 // logger.debug('Got cheese.');
 // logger.info('Cheese is Gouda.');
@@ -60,7 +61,7 @@ var logger = log4js.getLogger('log_file');  // 这里跟配置文件的 category
 // 添加日志统计 END
 
 
-// 接口支持跨域访问
+// 接口支持跨域访问 START
 app.all('*',function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
   // res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With');
@@ -78,6 +79,9 @@ app.all('*',function (req, res, next) {
     next();
   }
 });
+// 跨域请求 END
+
+
 // routes
 app.use('/',router);
 // catch 404 and forward to error handler
