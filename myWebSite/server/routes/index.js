@@ -48,5 +48,15 @@ router.post('/hadFocus',author.hadFocus);    //是否已关注作者
 router.get('/testApi',(req,res,next) => {
 	 res.render('site/testApi',{});
 });
+// room page
+router.get('/room/:roomID', function (req, res) {
+  var roomID = req.params.roomID;
+
+  // 渲染页面数据(见views/room.hbs)
+  res.render('site/socket', {
+    roomID: roomID
+    // users: roomInfo[roomID]
+  });
+});
 
 module.exports = router;

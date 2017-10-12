@@ -101,7 +101,7 @@ node进程经常挂掉，因为node是单线程的，可以用： 多进程+doma
 统计本站访问量(不蒜子)： http://ibruce.info/2015/04/04/busuanzi  
 eg: http://www.cnblogs.com/chengxs/p/7440382.html
 
-todoList
+todoList 
 
 [x] 登陆
 [x] 注册
@@ -126,15 +126,20 @@ todoList
       (使用的是log4js。注意log4js的版本，这里用的是0.6.15的版本。2.x的版本配置文件不一样)
 
 [x]   根据某个分类查找某篇文章
-[x]   密码加密,Base64 + 随机密码
+[x]   密码加密,Base64 + 随机密码  (参考这篇文章：https://github.com/kuangshp/node-password)
 
 []   引入nginx   
 []   进程管理  process,自动重启，某个进程如果有问题，kill掉。负载均衡
 []   文章排序:  根据：1. 评论 2.阅读量 3.最新   http://blog.csdn.net/wangliqiang1014/article/details/16861337
 []   web socket 来进行用户反馈的聊天
 
+
 10月11号任务:
   web socket 来进行用户反馈的聊天
+  参看这个demo: https://github.com/wuyanxin/chatapp-demo
+  客户端引入404问题： http://blog.csdn.net/changhuzhao/article/details/50884231
+  api地址: https://socket.io/get-started/chat/
+
 
 后台管理
 []  banner广告图，新增广告的后端管理系统
@@ -143,7 +148,7 @@ todoList
 bugs: 
 [] 更新个人资料后，对应的文章列表的个人信息没有更新
 
-
+es6的文章可以看看： 
 
 状态码:
 
@@ -163,8 +168,13 @@ https://segmentfault.com/a/1190000007735211  process_child这篇文章写的比�
 2. 整理一份接口文档
 
 3. 输出几份博客： 
-   a. nginx以及它的一些配置
-   b. websocket的使用
-   c. node 中添加日志统计
-   d. node中密码加密
+   a. nginx以及它的一些配置  参考： http://www.jianshu.com/p/fd25a9c008a0?utm_campaign=maleskine&utm_content=note&utm_medium=pc_all_hots&utm_source=recommendation
+   b. socket.io的使用  socket中实现私聊: https://cnodejs.org/topic/557a999216839d2d539361a3
+   http://blog.csdn.net/blueblueskyhua/article/details/70807847   vue+websocket+express+mongodb实战项目（实时聊天）（一）
+   c. node 中添加日志统计  参考：https://github.com/nomiddlename/log4js-node 
+   d. node中密码加密  参考：https://github.com/kuangshp/node-password
    ...
+
+4. 看看ES6的文章: https://juejin.im/post/59d7790e6fb9a00a496e926a
+
+5. https://ioliu.cn/2017/add-valine-comments-to-your-blog/  hexo新增评论
