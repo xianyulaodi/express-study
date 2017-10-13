@@ -67,14 +67,14 @@ $(document).ready(function() {
 
   $('#upload').on('click', function(e) {
     var data = {};
-    // data.content = "新添加另外一篇文章";
+    // data.content = "最新的一篇文章。创建于1984年";
     // data.title = "收藏文章的标题";
-    // data.type = "css";
+    // data.type = "test";
     // data.articleId = "59c0e2e2e452f221ac998da1";
     // data.authorId = "59c0e21cc33cb9048058ecee";
-    // data.userName = "梦小糕";
-    data.email = "1009140296@qq.com";
-    data.password = "7712375bad";
+    data.userName = "梦666糕88";
+    data.email = "100914029d6@qq.com";
+    data.password = "7712375babd";
     // replyId = 59c22a7fb565b717a0cf924a
     // replyerId = 59c0e21cc33cb9048058ecee
     // 59bfdd305b2b682ab820448a  articleId
@@ -85,7 +85,7 @@ $(document).ready(function() {
     // data.oldPass = "123";
     // data.newPass = "123456abc";
     $.ajax({
-      // url: "/getTopicList",
+      url: "/getTopicList",
       // url: "/findArticleByType?type=css",
       // url: "/search?title=文章标题",
       // url: "/getAuthorCenter?authorId=59c0e21cc33cb9048058ecee",
@@ -104,10 +104,10 @@ $(document).ready(function() {
       // url: "/focusAuthor",
       // url: "/unfocusAuthor",
       // url: "/register",
-      url: "/login",
-      data: data,
-      type: 'post',
-      // type: 'get',
+      // url: "/login",
+      // data: data,
+      // type: 'post',
+      type: 'get',
       dataType:'json',
       success: function(res) {
         console.log(res);

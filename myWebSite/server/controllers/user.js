@@ -7,18 +7,18 @@ const config = require('../config');
 
 // 获取用户个人信息
 exports.getUserInfo = (req,res,next) => {
-   const id = req.session.user._id;
-   User.getUserById(id)
-   .then(user => {
-      if(user) {
-        common.succRes(res,{"userInfo": user});
-      } else {
-        common.failRes(res,'get info fail');
-      }
-   });
+  const id = req.session.user._id;
+  User.getUserById(id,(err,user) => {
+    if(user) {
+      common.succRes(res,{"userInfo": user});
+    } else {
+      common.failRes(res,'get info fail');
+    }      
+  });
 };
 
-// 个人资料设置,这里暂时还有问题
+// 个人资料设置,这里暂时还有问题。
+// bug: 文章里面的个人信息没有更新
 exports.setUserInfo = (req,res,next) => {
   const
     data = {

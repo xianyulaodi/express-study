@@ -1,11 +1,12 @@
 const eventproxy=require('eventproxy'); // eventproxy 模块控制并发, 使用方法可以参考：http://www.cnblogs.com/zichi/p/4913133.html#top
 const validator = require('validator');  //用于表单验证
 const ip = require('ip');
-const api = require('../api/topic');
+const Topic = require('../api/topic');
+const User = require('../api/user');
 const common = require('../common/common');
-var config=require('../config');
-var log = require('log4js').getLogger("log_file"); // 日志统计
-var ep = new eventproxy();
+const config=require('../config');
+const log = require('log4js').getLogger("log_file"); // 日志统计
+const ep = new eventproxy();
 
 // 新增主题
 exports.addNewTopic = (req,res,next) => {
@@ -21,13 +22,8 @@ exports.addNewTopic = (req,res,next) => {
     content: req.body.content,
     type: req.body.type || '', //文章类型
     author_id: req.session.user._id,
-    authorInfo: {
-      name: req.session.user.userName,
-      authorId: req.session.user._id,
-      authorPic: req.session.user.profile_image_url || ""
-    }
   }
-  api.newAndSave(data)
+  Topic.newAndSave(data)
   .then(result => {
     if(result) {
       common.succRes(res,{data: result});
@@ -41,17 +37,17 @@ exports.addNewTopic = (req,res,next) => {
 
 // 根据查询条件获取主题,一次性返回20条数据
 const getTopicsByQuery=(query,options,callback) => {
-  api.findByQuery(query,options,callback);
+  Topic.findByQuery(query,options,callback);
 };
 // 获取首页总数,用于分页
 const getCountByQuery = (query, callback) => {
-	api.getCountByQuery(query,callback);
+	Topic.getCountByQuery(query,callback);
 }
 
 // 获取文章情页
 exports.getArticleDetail=(req,res,next) => { 
    var articleId = req.query.articleId;
-   api.getTopicById({ _id: articleId })
+   Topic.getTopicById({ _id: articleId })
    .then(result => {
      if(result) {
       common.succRes(res,{data:result});
@@ -79,7 +75,7 @@ exports.delArticleById = (req,res,nex) => {
     log.error('del article fail');
     return false;
   }
-  api.delArticleById({ _id: articleId },(err,data) => {
+  Topic.delArticleById({ _id: articleId },(err,data) => {
     common.succRes(res);
     log.info('del article success');
   })
@@ -90,7 +86,7 @@ exports.updateArticle = (req,res,nex) => {
   var articleId = req.body.articleId;
   var content = req.body.content;
   var title = req.body.title;
-  api.updateArticle({_id: articleId},{ 
+  Topic.updateArticle({_id: articleId},{ 
     content: content,
     title: title 
   }).then(result => {
@@ -112,7 +108,7 @@ function countArticleRead(data) {
   if(isRead) {
     return false;
   }
-  api.updateArticle({_id: data._id},{ 
+  Topic.updateArticle({_id: data._id},{ 
     $inc:{ visit_number: 1 },
     $push:{ reader_ips: readerIp }
   }).then(result => {
@@ -137,7 +133,7 @@ exports.search = (req, res,next) => {
   }
   var rankObj = {};
   rankObj.visit_number = 1;    //以阅读量为排序
-  api.search(q, rankObj, page,(err, data, length) => {
+  Topic.search(q, rankObj, page,(err, data, length) => {
     if (err) {
       common.failRes(res,'search fail');
       log.error('search '+str+' fail');
@@ -169,9 +165,37 @@ function findArticle(req,res,query) {
     ep.emit('topic_count',tcount);
   });
   ep.all('topics','topic_count',(topics,topic_count) => {
-    common.succRes(res,{"list":topics,"total":topic_count});
+    var list = combineAuthorInfoWithArticle(topics);
+    common.succRes(res,{"list":list,"total":topic_count});
   });
 };
+
+// 将文章信息和作者部分信息结合，
+function combineAuthorInfoWithArticle(topics) {
+  var data = topics;
+  var arr = [];
+  for(var i = 0,len = data.length; i < len; i++) {
+    var article = data[i];
+    var authorId  = article.author_id;
+    var j = i;
+    // 查询是异步操作
+    User.getUserById(authorId,(err,user) => {
+      if(user) {
+        var author = {
+          name: user.userName,
+          avatar_url: user.profile_image_url
+        }        
+        article.author = author;
+      }
+      ep.emit('article'+j,article);
+    });
+  }
+  ep.all('article0','article1',(a,b) => {
+      arr.push(a);
+      arr.push(b);
+    });    
+  return arr;
+}
 
 
 

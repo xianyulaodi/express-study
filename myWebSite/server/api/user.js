@@ -35,17 +35,9 @@ module.exports = {
     /**
     * 获取用户信息
     **/
-    getUserById(id) {
-      return new Promise((resolve,reject) => {
-        User.findOne({_id:id},(err,doc) => {
-          if(err){
-            reject(err);
-          }else{
-            resolve(doc);
-          }
-        })
-      })
-    },
+    getUserById(id,callback) {
+      User.findOne({_id: id},callback);
+    },    
 
     /**更新数据，三个参数: 查询的条件，更新的数据，options忘了*/
     updateData(condition,updateData,options){

@@ -34,7 +34,7 @@ router.get('/unCollect',collect.unCollect);   // 取消收藏
 router.get('/getAuthorCenter',author.getAuthorCenter);  //获取作者中心
 router.get('/getCollectList',author.getCollectList);   // 获取作者收藏的列表
 // 个人信息
-router.post('/getUserInfo',user.getUserInfo);     //获取个人信息
+router.get('/getUserInfo',user.getUserInfo);     //获取个人信息
 router.post('/setUserInfo',user.setUserInfo);    // 设置个人信息
 router.post('/uploadPic',user.uploadHeadPic);   //图片上传
 router.post('/changePass',user.changePass);    //修改密码

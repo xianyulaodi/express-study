@@ -127,14 +127,14 @@ todoList
 
 [x]   根据某个分类查找某篇文章
 [x]   密码加密,Base64 + 随机密码  (参考这篇文章：https://github.com/kuangshp/node-password)
+[x]   web socket 来进行用户反馈的聊天。 群聊
 
 []   引入nginx   
 []   进程管理  process,自动重启，某个进程如果有问题，kill掉。负载均衡
 []   文章排序:  根据：1. 评论 2.阅读量 3.最新   http://blog.csdn.net/wangliqiang1014/article/details/16861337
-[]   web socket 来进行用户反馈的聊天
 
 
-10月11号任务:
+10月11号任务: done
   web socket 来进行用户反馈的聊天
   参看这个demo: https://github.com/wuyanxin/chatapp-demo
   客户端引入404问题： http://blog.csdn.net/changhuzhao/article/details/50884231

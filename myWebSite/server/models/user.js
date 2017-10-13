@@ -11,7 +11,7 @@ const db = require('../lib/mongo');
     url : {type:String},
     active :{type:Boolean,default:false},
     location:{type:String,default:'暂无'},
-    profile_image_url : {type:String},
+    profile_image_url : {type:String, default:'//upload.jianshu.io/users/upload_avatars/2061572/c3b59df1-d46b-40c3-8804-f46317f148f4.png?imageMogr2/auto-orient/strip|imageView2/1/w/120/h/120'},
     sigature:{type:String,default:'用户暂无个性签名'}, //用户签名
     rank:{type:Number,default:3},  //级别：0-管理员，1-高级用户，2-普通用户，3-新手
     concerned_topics :[{topicId:ObjectId,topicTitle:String,topicNode:String}],  //关注的文章id集合

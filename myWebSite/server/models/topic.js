@@ -6,12 +6,6 @@ const db = require('../lib/mongo');
     title: req.body.title,
     content: req.body.content,
     type: type, //文章类型
-    authorInfo: {
-      name: req.session.user.userName,
-      authorId: req.session.user._id,
-      authorPic: req.session.user.profile_image_url
-    }
-
 **/
  // 话题列表
 const TopicSchema = new mongoose.Schema({
@@ -21,11 +15,6 @@ const TopicSchema = new mongoose.Schema({
  	content: {type:String},
  	type: {type:String}, //文章类型
  	author_id: {type: ObjectId },
-	authorInfo: {
-		authorPic:String,
-		name:String,
-    authorId:String
-	},
 	top: {type: Boolean, default: false},            //是否为置顶帖
 	good: {type: Boolean, default: false},           //是否为精华帖
 	reply_ornot: {type: Boolean, default: false},  // **   是否有人回复
@@ -39,7 +28,7 @@ const TopicSchema = new mongoose.Schema({
 	last_reply_at: {type: Date},
 	reader_ips:[],  //阅读者的ip
 	watched_fellow: [{type: ObjectId}],               //关注的人们的id
-	favored_fellow: [{type: ObjectId}]                //该文章的喜欢人数[这里为什么弄成数组不分表造成索引灾难]
+	favored_fellow: [{type: ObjectId}]                //该文章的喜欢人数。这里到时候需要分个表
 
 });
 

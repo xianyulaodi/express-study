@@ -48,8 +48,7 @@ function getArticle(req) {
 
 //获取用户个人信息： 头像，个性签名，名字
 function getAuthorInfo(authorId) {
-  User.getUserById(authorId)
-  .then(result => {
+  User.getUserById(authorId,(err,result) => {
     if(result) {
       var data = {
         userName: result.userName,
@@ -62,7 +61,7 @@ function getAuthorInfo(authorId) {
       proxy.emit('authorInfo',data);
     } else {
       proxy.emit('authorInfo',{});
-    }
+    }    
   });
 }
 
@@ -154,14 +153,13 @@ exports.unfocusAuthor = (req,res,next) => {
 exports.hadFocus = (req,res,next) => {
   const uesrId = req.session.user._id;
   const authorId = req.body.authorId;
-  User.getUserById(uesrId)
-  .then(result => {  
+  User.getUserById(uesrId,(err,result) => {
     var focusList = result.focus_ids;
     // 已关注
     if(focusList.indexOf(authorId) > -1) {
       common.succRes(res,{"isFocus": 1});
       return;
     } 
-    common.succRes(res,{"isFocus": 0});
-  });  
+    common.succRes(res,{"isFocus": 0});    
+  });
 }
