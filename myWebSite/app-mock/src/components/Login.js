@@ -15,10 +15,10 @@ class Login extends Component {
   }
   handleSubmit(e) {
     e.preventDefault();
-    const email = this.refs.email.value,
+    const userName = this.refs.userName.value,
           password = this.refs.password.value;
-    if(email == '') {
-      alert('邮箱不能为空');
+    if(userName == '') {
+      alert('用户名不能为空');
       return false;
     }
     if(password == '') {
@@ -26,7 +26,7 @@ class Login extends Component {
       return false;
     }
     var data = {
-      email: email,
+      userName: userName,
       password: password
     }
      this.props.actions.SubmitData('login',data);
@@ -34,13 +34,13 @@ class Login extends Component {
   }
   render() {
     if(this.props.header.isLogin) {
-      // window.location.href = '/'; //这里需要改为路由跳转的方式，待定
+      window.location.href = '/'; //这里需要改为路由跳转的方式，待定
     }
     return (
       <div className="container-login">
         <form action="">
           <p className="ipt">
-            <input type="text" placeholder="请输入邮箱" ref="email" />
+            <input type="text" placeholder="请输入邮箱" ref="userName" />
           </p>
           <p className="ipt">
             <input type="password" placeholder="请输入密码" ref="password" />

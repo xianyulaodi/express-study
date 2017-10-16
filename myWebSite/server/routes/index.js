@@ -59,4 +59,8 @@ router.get('/room/:roomID', function (req, res) {
   });
 });
 
+router.get('/testApi2',(req,res,next) => {
+	 res.render('site/testApi2',{});
+});
+
 module.exports = router;

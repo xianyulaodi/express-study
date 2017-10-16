@@ -26,6 +26,10 @@ exports.register = (req,res,next) => {
     password: lastPassword,
     email: email
   };
+  checkUserExist(data,req,res);
+}
+
+function saveRegister(data,req,res) {
   api.newAndSave(data)
   .then(result => {
     if (result) {
@@ -34,7 +38,23 @@ exports.register = (req,res,next) => {
     } else {
       common.failRes(res,'register fail');
     }
-  })
+  });  
+}
+
+function checkUserExist(data,req,res) {
+  var query = {
+    $or: [{ userName:data.userName },{ email: data.email }]
+  }
+  api.findByQuery(query,(err,result) => {
+    if(result) {
+      res.json({
+        "status": 201,
+        "message": "userName or email exist"      
+      });      
+    } else {
+      saveRegister(data,req,res);
+    }
+  });
 }
 
 // 登录
@@ -54,7 +74,8 @@ exports.login = (req,res,next) => {
         lastPassword = base64Random + base64Md5;
       if (result.password === lastPassword) {
         req.session.user = result; // 更新session
-        var data = {
+        console.log(req.session.user);
+        const data = {
           "userName": result.userName,
           "id": result._id,
           "userPic": result.profile_image_url || " "

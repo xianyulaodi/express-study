@@ -21,12 +21,10 @@ class addTopic extends React.Component {
   handleSubmit(e){
     e.preventDefault();
     let title = this.refs.title.value;
-    let type = this.refs.type.value;
     let content = document.getElementById('articleContent').innerHTML;
     const data = {
       title: title,
-      content: content,
-      type: type
+      content: content
     }
     if(title == '') {
       alert('文章标题不能为空');
@@ -60,12 +58,6 @@ class addTopic extends React.Component {
             placeholder = "请输入文章标题"  className="title-input"
             ref = "title"
           />
-          <select name="" ref = "type">
-            <option value="node">node.js</option>
-            <option value="css">css</option>
-            <option value="javascript">javascript</option>
-            <option value="python">python</option>
-          </select>             
           <textarea className = "content-input" 
             placeholder = "请输入文章内容,markdown 语法" 
             ref = "editor"

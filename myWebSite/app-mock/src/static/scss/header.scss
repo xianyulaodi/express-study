@@ -1,0 +1,48 @@
+$headerFontColor : white;
+
+.post_header{
+	font-size: 14px;
+    font-family: "微软雅黑";
+    color:$headerFontColor;
+    line-height: 60px;
+    background: #fff;
+    position: fixed;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+    height: 60px;
+    border-bottom: 1px solid #f0f0f0;
+    color:#333;
+    div.hadlogin {
+       color:#333;
+    }
+
+    .title{
+    	//display:inline;
+    	float:left;
+		margin-left:20%;
+
+		.logo{
+			display:inline;
+            color:#108ee9;
+            font-size:20px;
+		}
+    }
+
+    .user_login{
+    	//display:inline;
+    	float:right;
+    	color:$headerFontColor;
+        .label_register{
+            padding-right:20px;
+        }
+        .label_login{
+            padding-right:20px;
+        }
+        .login{
+            .logout{
+                margin-left:5px;
+            }
+        }
+    }
+}

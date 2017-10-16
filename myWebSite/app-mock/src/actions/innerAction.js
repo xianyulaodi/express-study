@@ -1,12 +1,9 @@
-import { SERVERADDRESS } from '../constants'
+import { SERVERADDRESS }from '../constants'
 import { push } from 'react-router-redux'
 
 import { message } from 'antd';
 import axios from 'axios';
-import qs from 'qs'; //用于anxios中将数据post时，数据的格式化
 import data from '../mock/mock';
-axios.defaults.timeout = 5000;
-axios.defaults.withCredentials = true;
 
 /**
 返回的格式统一为：
@@ -158,18 +155,17 @@ export function addComment(data,dispatch,callback){
  * @param email  {String} 邮箱
  * @param password  {String} 密码
  * */
-export function sendRegisterInfo(data,dispatch,callback) {
-  axios.post(SERVERADDRESS + '/register',qs.stringify(data))
-  .then(function(res) {
-    console.log(res);
-    if( res.data.status == '200' ) {
-      dispatch(callback[0](res.data));
-    } else if(res.data.status == "201") {
-      console.log('该用户名已存在');
-    } else {
-      console.log('注册失败');
-    }
-  })   
+export function sendRegisterInfo(data,dispatch,callback){
+    axios.post('/register',data)
+    .then(function(res){
+       if( res.data.status == '200' ) {
+           dispatch(callback[0](res.data));
+        } else if(res.data.status == "201") {
+           console.log('该用户名已存在');
+        } else {
+           console.log('注册失败');
+        }
+    })
 }
 
 /** 添加新文章 
@@ -177,11 +173,10 @@ export function sendRegisterInfo(data,dispatch,callback) {
 * @param  content  {String}    文章内容
 * 需要登录
 * **/
-export function addNewTopic(data,dispatch,callback) {
-    axios.post(SERVERADDRESS + '/addNewTopic',qs.stringify(data))
+export function addNewTopic(data,dispatch,callback){
+    axios.post('/addNewTopic',data)
     .then(function(res){
         if( res.data.status == '200' ) {
-           console.log('新增文章成功');
            dispatch(callback[0](res.data));
         } else {
            console.log('新增文章失败');
@@ -207,16 +202,18 @@ export function checkIsLogin(dispatch,callback) {
  * @param email  {String} 用户名
  * @param password  {String} 密码
  */
-export function sendLoginInfo(data,dispatch,callback) {
-  axios.post(SERVERADDRESS + '/login',qs.stringify(data))
-  .then(function(res) {
-    if( res.data.status == '200' ) {
-      dispatch(callback[0]('login'));
-      dispatch(callback[1](res.data.data));
-    } else {
-      console.log('登录失败');
-    }
-  });
+export function sendLoginInfo(data,dispatch,callback){
+    axios.post('/login',data)
+    .then(function(res){
+        if( res.data.status == '200' ) {
+
+            dispatch(callback[0]('login'));
+            dispatch(callback[1](res.data.data));
+
+        } else {
+           console.log('登录失败');
+        }
+    });
 }
 
 /**
@@ -272,7 +269,7 @@ export function setPersonalInfo(data,dispatch,callback) {
  * 退出登录
  */
 export function logOut(dispatch,callback) {
-    axios.post(SERVERADDRESS + '/logout')
+    axios.post('/logout')
     .then(function(res){
         if( res.data.status == '200' ) {
            dispatch(callback[0]('logOut'));

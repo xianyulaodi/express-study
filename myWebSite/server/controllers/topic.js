@@ -11,20 +11,22 @@ const ep = new eventproxy();
 
 // 新增主题
 exports.addNewTopic = (req,res,next) => {
-  if(!req.session.user._id) {
+  console.log(req.session);
+  console.log(req.session.user);
+  if(!req.session.user) {
     res.json({
       status: 201, // 201
       message: "no login"
     });
     return false;
   }
-  const data = {
+  const data_obj = {
     title: req.body.title,
     content: req.body.content,
     type: req.body.type || '', //文章类型
     author_id: req.session.user._id,
   }
-  Topic.newAndSave(data)
+  Topic.newAndSave(data_obj)
   .then(result => {
     if(result) {
       common.succRes(res,{data: result});

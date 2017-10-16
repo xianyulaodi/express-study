@@ -37,7 +37,12 @@ module.exports = {
     **/
     getUserById(id,callback) {
       User.findOne({_id: id},callback);
-    },    
+    }, 
+    
+    // 根据某些条件查找内容
+    findByQuery(query,callback) {
+      User.findOne(query,callback);
+    },   
 
     /**更新数据，三个参数: 查询的条件，更新的数据，options忘了*/
     updateData(condition,updateData,options){

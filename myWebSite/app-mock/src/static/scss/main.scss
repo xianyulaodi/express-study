@@ -1,0 +1,117 @@
+@import "common";
+
+.container-main {
+  width: $containerW;
+  margin:0 auto;
+  font-family: "微软雅黑";
+  background: $bg-content;
+  overflow: hidden;
+  .banner-container {
+    width: $containerW;
+    height: 270px;
+    overflow: hidden;
+  }
+  .container {
+    width: 100%;
+    display: flex;
+  }
+  .container-left {
+    flex: 1;
+  }
+  .container-right {
+    width: 320px;
+  }
+  .list-item {
+    padding:$space-normal 0;
+    @include border-bottom; 
+    display: flex;
+    overflow: hidden;
+    text-align: left;
+    font-weight: normal;
+  }
+  .col-left {
+    flex: 1;
+  }
+  .col-right {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    margin-left: $space-normal;
+  }
+  .author-pic {
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    vertical-align: middle;
+    overflow: hidden;
+    margin-left: 5px;
+    img {
+      width: 32px;
+      height: 32px;
+    }
+  }
+  .author-name,
+  .create-time {
+    font-size: $fs-small;
+    color: $color-gray;
+    margin-left: 5px;
+    vertical-align: middle;
+  }
+  .author-name {
+    color: $color-primary;
+  }
+  .title {
+    font-size: $fs-large;
+    color: $color-gray;
+    padding:$space-small 0;
+    display: block;
+  }
+  .category {
+    font-size: $fs-normal;
+    color:$color-primary;
+  }
+  .iconfont {
+    font-family: iconfont!important;
+    font-size: inherit;
+    font-style: normal;
+    font-weight: 400!important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .list-bottom {
+    padding-top: $space-normal;
+  }
+ 
+}
+
+.container-leftBar {
+  margin: $space-normal 0 $space-normal $space-normal;
+  padding: $space-normal;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  min-height: 500px;
+
+  .left-bar {
+    display: block;
+    overflow: hidden;
+    li {
+      float: left;
+      color: #4f93ff;
+      margin-right: 15px;
+    }
+  }
+  .hot-list {
+    padding: $space-normal 0; 
+  }
+  .hot-list a{
+    max-width: 300px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    padding-bottom: 10px; 
+  }
+}
+
+
+

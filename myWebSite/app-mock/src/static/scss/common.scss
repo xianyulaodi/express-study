@@ -1,0 +1,233 @@
+/** const scss START */
+
+// 字体大小
+$fs-small: 12px;
+$fs-normal: 14px;
+$fs-large: 16px;
+$fs-super: 18px;
+
+
+// body 颜色
+$bg-body: #f5f5f5;
+$bg-content: #fff;
+$bg-pressed: #efefef;
+$bg-warn: #fff1c8;
+$bg-active: #fdf3f3;
+$bg-disabled: #bbbbbb;
+
+// main color
+$color-primary: #333;
+$color-red: #e76464;
+$color-gray: #999;
+$color-darkgray: #666;
+$color-white: #fff;
+$color-link: #30b930;
+$color-active: #ED6C67;
+$color-border: rgba(0, 0, 0, 0.1);
+$color-divider: rgba(0,0,0,0.1);
+$color-mask: rgba(0,0,0,0.5);
+
+// 间距
+$space-tiny: 2px;
+$space-small: 5px;
+$space-normal: 14px;
+$space-large: 20px;
+$space-super: 40px;
+
+$containerW: 960px;
+
+/** const scss END */
+
+
+// 栅格系统 
+.row {
+	display: flex;
+}
+.col-md-1 {
+	width: 100%;
+}
+.col-md-2 {
+	width: 50%;
+}
+.col-md-3 {
+	width: 33.3%;
+}
+.col-md-4 {
+	width: 25%;
+}
+
+// border 相关
+@mixin border-radius($size:5px) {
+  border-radius:$size;  //引用：@include border-radius(10px);
+}
+@mixin border($color: #f0f0f0) {
+  border: 1px solid $color;
+}
+@mixin border-top($color: #f0f0f0) {
+	border-top: 1px solid $color;
+}
+@mixin border-bottom($color: #f0f0f0) {
+	border-bottom: 1px solid $color;
+}
+@mixin border-left($color: #f0f0f0) {
+	border-left: 1px solid $color;
+}
+@mixin border-right($color: #f0f0f0) {
+	border-right: 1px solid $color;
+}
+
+// 不传参的情况,测试用
+@mixin test { 
+
+	color: #fff;
+}
+
+// 字体相关
+.fs-small {
+	font-size: $fs-small;
+}
+.fs-normal {
+	font-size: $fs-normal;
+}
+.fs-large {
+	font-size: $fs-large;
+}
+.fs-super {
+	font-size: $fs-super;
+}
+.fw-bold {
+	font-weight: bold;
+}
+
+// 文本相关
+.text-ellipsis {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+// 清楚浮动
+.clearfix {
+	&:after {
+		content: '';
+		overflow: hidden;
+		display: table;
+		height: 0;
+		clear: both;
+	}
+}
+.ovh {
+	overflow: hidden;
+}
+
+// 间距
+.margin-tiny {
+	margin: $space-tiny;
+}
+.margin-small {
+	margin: $space-small;
+}
+.margin-normal {
+	margin: $space-normal;
+}
+.margin-large {
+	margin: $space-large;
+}
+.margin-super {
+	margin: $space-super;
+}
+.padding-tiny {
+	padding: $space-tiny;
+}
+.padding-small {
+	padding: $space-small;
+}
+.padding-normal {
+	padding: $space-normal;
+}
+.padding-large {
+	padding: $space-large;
+}
+.padding-super {
+	padding: $space-super;
+}
+
+// 按钮
+.btn {
+	display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: $fs-normal;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation; //它允许你移除特定元素或整个文档的触发延迟，可以解决300毫秒的延迟
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    @include border-radius(4px);
+}
+.btn-primary {
+	color: #fff;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+}
+.btn-success {
+	color: #fff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+} 
+.btn-info {
+	color: #fff;
+    background-color: #5bc0de;
+    border-color: #46b8da;
+}
+
+//图片部分
+.img-round {
+	border-radius: 6px;
+}
+.img-circle {
+	border-radius: 50%;
+}
+.img-responsive {
+   width: 100%;
+}
+
+// 阴影部分
+.bottomShadow{
+    box-shadow: 0 2px 2px $color-border;
+}
+
+// 辅助类
+.positionFixed {
+    position: fixed;
+    left: 0;
+    right: 0;
+}
+.caret {  // 小三角，下
+	display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 2px;
+    vertical-align: middle;
+    border-top: 4px dashed;
+    border-top: 4px solid\9;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+}
+.show {
+  display: block !important;
+}
+.hidden {
+  display: none !important;
+}
+.invisible {
+  visibility: hidden;
+}
+

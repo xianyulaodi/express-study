@@ -67,14 +67,14 @@ $(document).ready(function() {
 
   $('#upload').on('click', function(e) {
     var data = {};
-    // data.content = "最新的一篇文章。创建于1984年";
-    // data.title = "收藏文章的标题";
-    // data.type = "test";
+    data.content = "最新的一篇文章。创建于1984年";
+    data.title = "收藏文章的标题";
+    data.type = "test";
     // data.articleId = "59c0e2e2e452f221ac998da1";
     // data.authorId = "59c0e21cc33cb9048058ecee";
-    data.userName = "梦666糕8899";
-    data.email = "100914029d6@qq.com";
-    data.password = "7712375babd";
+    // data.userName = "梦666糕8899";
+    // data.email = "100914029d6@qq.com";
+    // data.password = "7712375babd";
     // replyId = 59c22a7fb565b717a0cf924a
     // replyerId = 59c0e21cc33cb9048058ecee
     // 59bfdd305b2b682ab820448a  articleId
@@ -90,12 +90,12 @@ $(document).ready(function() {
       // url: "/search?title=文章标题",
       // url: "/getAuthorCenter?authorId=59c0e21cc33cb9048058ecee",
       // url: "/getCollectList?authorId=59c0e21cc33cb9048058ecee",
-      url: "/getUserInfo",
+      // url: "/getUserInfo",
       // url: "/setUserInfo",
       // url: "/delComment?replyId=59c22a7fb565b717a0cf924a&replyerId=59c0e21cc33cb9048058ecee",
       // url: "/updateArticle",
       // url: "/getArticleDetail?articleId=59c0e2e2e452f221ac998da1",
-      // url: "/addNewTopic",
+      url: "/addNewTopic",
       // url: "/hadCollect?articleId=59c0e2e2e452f221ac998da1",
       // url: "/unCollect?articleId=59c0e2e2e452f221ac998da1",
       // url: "/addCollect",
@@ -106,8 +106,8 @@ $(document).ready(function() {
       // url: "/register",
       // url: "/login",
       // data: data,
-      // type: 'post',
-      type: 'get',
+      type: 'post',
+      // type: 'get',
       dataType:'json',
       success: function(res) {
         console.log(res);

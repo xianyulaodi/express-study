@@ -1,0 +1,124 @@
+@import "common";
+
+.container-detail {
+	padding:50px 80px 20px 80px;
+	font-family: "微软雅黑";
+	font-size: $fs-normal;
+	.title {
+		font-size: 34px;
+		padding: $space-super 0;
+		color: $color-primary;
+	}
+	.author-info {
+		display: flex;
+	}
+	.author-pic {
+		img {
+			width: 48px;
+			height: 48px;
+		}
+		width: 48px;
+		height: 48px;
+		display: block;
+		overflow: hidden;
+		margin-right: $space-small;
+	}
+	.author-detail {
+		flex: 1;
+	}
+	.author-name {
+		position: relative;
+		padding-left: 40px;
+		display: block;
+		margin-top: 6px;
+		&:before {
+			content:'作者';
+			position: absolute;
+			padding: 0 3px;
+			border: 1px solid #ea6f5a;
+			border-radius: 5px;
+			text-align: center;
+			left: 0;
+			font-size: $fs-small;
+			color: #ea6f5a;
+			height: 20px; 
+    		line-height: 19px;
+    		top: -1px; 
+		};
+	}
+	.other-info {
+		color: $color-gray;
+		font-size: $fs-small;
+		text-align: left;
+		font-weight: normal;
+	}
+	.content {
+		font-size: $fs-normal;
+		color: $color-primary;
+		text-align: left;
+		padding: $space-large 0;
+	}
+
+}
+
+.container-comment {
+	overflow: hidden;
+	padding: $space-super 0;
+	.comment-wrap,
+	.replyer-info {
+		display: flex;
+	}
+	.user-head,
+	.replyer-pic {
+		width: 38px;
+		height: 38px;
+		overflow: hidden;
+		display: block;
+		margin-right: $space-normal;
+	}
+	.comment-ipt {
+		flex: 1;
+		textarea {
+			width: 100%;
+			height: 80px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			box-sizing: border-box;
+			padding: 5px;
+			resize: none;
+		}
+	}
+	.login-form-button {
+		float: right;
+		margin-top: $space-normal;
+	}
+	.replyer-detail {
+		flex: 1;
+	}
+	.replyer-name {
+		font-size: $fs-small;
+		display: block;
+		font-weight: bold;
+	}
+	.conment-text {
+		font-size: $fs-normal;
+		color: $color-primary;
+		padding-top: $space-normal;
+	}
+	.comment-item {
+		border-bottom: 1px solid $color-gray;
+		padding: $space-normal 0;
+		&:last-child {
+			border-bottom: none;
+		};
+	}
+	.comment-list {
+		padding-top: $space-large;
+	}
+	.mb20 {
+		margin-bottom: 20px;
+	}
+
+}
+
+
