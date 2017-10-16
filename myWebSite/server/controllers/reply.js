@@ -14,15 +14,11 @@ exports.add = (req,res,next) => {
     articleId = req.body.articleId,
     content = req.body.content,
     replyerId = req.session.user._id,
-    replyer_name = req.session.user.userName,
-    replyer_profile = req.session.user.profile_image_url || '',
     proxy = new Eventproxy(),
     data = {
       content: content,
       replyer_id: replyerId,
-      article_id: articleId,
-      replyer_profile: replyer_profile,
-      replyer_name: replyer_name
+      article_id: articleId
     };
 
     Reply.newAndSave(data)
@@ -43,7 +39,7 @@ exports.add = (req,res,next) => {
     });
 
     // 更新文章的评论
-    Reply.updateLastReply(articleId,replyerId,replyer_name,(err) => {
+    Reply.updateLastReply(articleId,replyerId,(err) => {
       if(err) return;
       proxy.emit('topic',articleId);
     });

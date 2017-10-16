@@ -31,13 +31,12 @@ module.exports = {
   },  
 
   // 更新文章的最近回复信息
-  updateLastReply(articleId,replerId,replyName,callback) {
+  updateLastReply(articleId,replerId,callback) {
     Topic.getTopicById({ _id: articleId })
     .then( (topic) => {
       if(topic){
         topic.last_reply_id = replerId; //回复人的id
         topic.last_reply_at = new Date();
-        topic.last_reply_name = replyName ;
         topic.reply_number += 1;
         topic.save(callback);
       }

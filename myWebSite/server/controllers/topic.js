@@ -6,6 +6,7 @@ const User = require('../api/user');
 const common = require('../common/common');
 const config=require('../config');
 const log = require('log4js').getLogger("log_file"); // 日志统计
+const co  = require('co');
 const ep = new eventproxy();
 
 // 新增主题
@@ -165,37 +166,33 @@ function findArticle(req,res,query) {
     ep.emit('topic_count',tcount);
   });
   ep.all('topics','topic_count',(topics,topic_count) => {
-    var list = combineAuthorInfoWithArticle(topics);
-    common.succRes(res,{"list":list,"total":topic_count});
+    combineAuthorInfoWithArticle(topics,topic_count,res);
+    // common.succRes(res,{"list":list,"total":topic_count});
   });
 };
 
 // 将文章信息和作者部分信息结合，
-function combineAuthorInfoWithArticle(topics) {
+function combineAuthorInfoWithArticle(topics,topic_count,res) {
   var data = topics;
-  var arr = [];
-  for(var i = 0,len = data.length; i < len; i++) {
-    var article = data[i];
-    var authorId  = article.author_id;
-    var j = i;
-    // 查询是异步操作
-    User.getUserById(authorId,(err,user) => {
-      if(user) {
-        var author = {
-          name: user.userName,
-          avatar_url: user.profile_image_url
-        }        
-        article.author = author;
-      }
-      ep.emit('article'+j,article);
-    });
-  }
-  ep.all('article0','article1',(a,b) => {
-      arr.push(a);
-      arr.push(b);
-    });    
-  return arr;
+  co(function* () {
+    var articleList = [];
+    for(var i = 0,len = data.length; i < len; i++) {
+      var article = data[i];
+      var authorId  = article.author_id;         
+      yield new Promise((resolve, reject) => {
+        User.getUserById(authorId,(err,user) => {
+          if(user) {
+            var author = {
+              name: user.userName,
+              avatar_url: user.profile_image_url
+            }        
+            article.author = author;
+          }
+        });          
+        articleList.push(article);
+        resolve(true);
+      });
+    }
+    common.succRes(res,{"list":articleList,"total":topic_count});
+  }); 
 }
-
-
-

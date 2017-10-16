@@ -17,8 +17,7 @@ exports.getUserInfo = (req,res,next) => {
   });
 };
 
-// 个人资料设置,这里暂时还有问题。
-// bug: 文章里面的个人信息没有更新
+// 个人资料设置
 exports.setUserInfo = (req,res,next) => {
   const
     data = {
@@ -28,7 +27,7 @@ exports.setUserInfo = (req,res,next) => {
       location: req.body.location || ''// 坐标
     },
     id = req.session.user._id;
-   User.updateData({_id: id},data,{upsert: true})
+   User.updateData({_id: id},data,{upsert: false})
    .then(result => {
      if(result.ok == 1) {
        req.session.user.userName = data.userName;
@@ -62,7 +61,7 @@ exports.uploadHeadPic = (req,res,next) => {
     var newPath = form.uploadDir + files.imgFile.name;  //imgFile为file的name字段
     fs.renameSync(files.imgFile.path, newPath); //重命名
     const resUrl = '//'+ config.hostname + ':' + config.port +  config.upload.url + files.imgFile.name;
-    User.updateData({_id: req.session.user._id},{profile_image_url: resUrl},{upsert: true})
+    User.updateData({_id: req.session.user._id},{profile_image_url: resUrl},{upsert: false})
     .then(result => {
       if(result.ok == 1) {
         common.succRes(res,{picUrl: resUrl});
@@ -83,7 +82,7 @@ exports.changePass = (req,res,next) => {
     common.failRes(res,'old password not correct');
     return false;
   }
-  User.updateData({_id: req.session.user._id },{ password: newPass },{upsert: true})
+  User.updateData({_id: req.session.user._id },{ password: newPass },{upsert: false})
     .then(result => {
       if(result.ok == 1) {
         common.succRes(res);
