@@ -24,7 +24,7 @@ class Main extends Component {
   componentDidMount() {
     var data = {
       pageSize: this.state.pageSize,
-      pageNo: this.state.currentPage
+      page: this.state.currentPage
     }
     this.props.actions.GetTopicList(data);
     this.props.actions.GetBannerList();

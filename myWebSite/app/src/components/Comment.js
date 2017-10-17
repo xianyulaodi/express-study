@@ -21,12 +21,12 @@ class CommentItem extends Component{
         <dl className="replyer-info">
           <dt>
             <a className="img-circle replyer-pic" href="#">
-              <img src={ this.props.item.replyerInfo.replyerPic } alt="" />
+              <img src={ this.props.item.replyer.avatar_url } alt="" />
             </a> 
           </dt>
           <dd className="replyer-detail">
-            <span className="replyer-name">{ this.props.item.replyerInfo.name }</span>
-            <span className="other-info">1楼  { this.props.item.createTime }</span>
+            <span className="replyer-name">{ this.props.item.replyer.name }</span>
+            <span className="other-info">1楼  { this.props.item.create_at }</span>
           </dd>
         </dl>
         <article className="conment-text">

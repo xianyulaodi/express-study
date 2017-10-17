@@ -31,7 +31,7 @@ module.exports = {
   },  
 
   // 更新文章的最近回复信息
-  updateLastReply(articleId,replerId,callback) {
+  updateReply(articleId,replerId,callback) {
     Topic.getTopicById({ _id: articleId })
     .then( (topic) => {
       if(topic){

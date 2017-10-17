@@ -27,9 +27,12 @@ const TopicSchema = new mongoose.Schema({
 	last_reply_name: {type: String},					 //最后回复人的name
 	last_reply_at: {type: Date},
 	reader_ips:[],  //阅读者的ip
+	author: {
+		name:{type: String},
+		avatar_url: {type: String}
+	},
 	watched_fellow: [{type: ObjectId}],               //关注的人们的id
 	favored_fellow: [{type: ObjectId}]                //该文章的喜欢人数。这里到时候需要分个表
-
 });
 
 TopicSchema.index({create_at: -1});                  //查看:"最新创建"
@@ -42,3 +45,4 @@ TopicSchema.index({node_cat:  1, create_at: -1});               //主题页面�
 const Topic = db.model('Topic',TopicSchema);
 
  module.exports = Topic;
+

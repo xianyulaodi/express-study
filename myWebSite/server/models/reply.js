@@ -8,7 +8,11 @@ const ReplySchema = new mongoose.Schema({
     article_id: { type:ObjectId },
     topic_title: {type:String},      //topic_id与topic_title作为最近回帖展示的主题信息
   								    //topic_title:回复的话题title,topic_id:回复的话题id 	
-    create_at:{type:Date,default:Date.now}
+    create_at:{type:Date, default:Date.now },
+    replyer: {
+    	name: { type: String},
+    	avatar_url: {type: String}
+    }
 });
 
 ReplySchema.index({replyer_id:1},{create_at:1});

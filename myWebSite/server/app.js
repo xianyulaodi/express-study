@@ -60,8 +60,8 @@ var logger = log4js.getLogger('log_file');  // log_file 跟配置文件的 categ
 // logger.fatal('Cheese was breeding ground for listeria.');
 // 添加日志统计 END
 
-
 // 接口支持跨域访问 START
+/**
 app.all('*',function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
   // res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With');
@@ -79,6 +79,7 @@ app.all('*',function (req, res, next) {
     next();
   }
 });
+**/
 // 跨域请求 END
 
 

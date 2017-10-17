@@ -5,8 +5,8 @@ import { message } from 'antd';
 import axios from 'axios';
 import qs from 'qs'; //用于anxios中将数据post时，数据的格式化
 import data from '../mock/mock';
-axios.defaults.timeout = 5000;
-axios.defaults.withCredentials = true;
+
+const api = '/api';
 
 /**
 返回的格式统一为：
@@ -58,44 +58,42 @@ axios.post('/user',{
 **/
 
 /**
- * 获取所有的商品列表
- * @param { string} pageNo 页码
+ * 获取所有的文章
+ * @param { string} page 页码
  * @param { string} pageSize 每页多少数据
  */
-export function getTopicList(data,dispatch,callback) {
-
-    axios.get('/getTopicList',data)
-        .then(function (res) {
-            const resData = res.data;
-            if( res.data.status == '200' ) {
-
-                if(data.pageNo > 5) { // 模拟没有数据时的场景
-                   dispatch(callback[1](true));
-                } 
-                dispatch(callback[0](resData.list));
-            };
-        })
-        .catch(function (error) {
-           console.log(error);
-        });
+export function getTopicList(params,dispatch,callback) {
+  axios.get(api + '/getTopicList?pageSize='+ params.pageSize +'&page='+ params.page)
+  .then(function (res) {
+    const resData = res.data;
+    console.log(resData);
+    if( resData.status == '200' ) {
+      if(params.page > 5) { // 模拟没有数据时的场景
+        dispatch(callback[1](true));
+      } 
+      dispatch(callback[0](resData.list));
+    };
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
 }
 
 /**
  * 获取banner列表
  */
 export function getBannerList(dispatch,callback) {
-
-    axios.get('/getBannerList')
-        .then(function (res) {
-            const data = res.data;
-            const list = res.data.list || [];
-            if( res.data.status == '200' ) {
-                dispatch(callback[0](list));
-            };
-        })
-        .catch(function (error) {
-           console.log(error);
-        });
+  axios.get('/getBannerList')
+  .then(function (res) {
+    const data = res.data;
+    const list = res.data.list || [];
+    if( res.data.status == '200' ) {
+        dispatch(callback[0](list));
+    };
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
 }
  
  /**
@@ -103,15 +101,16 @@ export function getBannerList(dispatch,callback) {
   * @param {string} [articleId] 文章id
   */
 export function getArticleDetail(articleId,dispatch,callback) {
-    axios.get('/getArticleDetail')
-    .then(function(res){
-        if( res.data.status == '200' ) {
-            dispatch(callback[0](res.data.data));
-        };
-    })
-    .catch(function(err){
-      console.log(err);
-    });
+  axios.get( api + '/getArticleDetail?articleId='+ articleId )
+  .then(function(res) {
+    console.log(res);
+    if( res.data.status == '200' ) {
+        dispatch(callback[0](res.data.data));
+    };
+  })
+  .catch(function(err){
+    console.log(err);
+  });
 }
 
 /**
@@ -119,16 +118,16 @@ export function getArticleDetail(articleId,dispatch,callback) {
  * @param {string} [articleId] 文章id
  */
 /****/
-export function getComments(articleId,dispatch,callback){
-    axios.get('/getComments')
-    .then(function(res){
-        if( res.data.status == '200' ) {
-            dispatch(callback[0](res.data.list));
-        };
-    })
-    .catch(function(err){
-      console.log(err);
-    });
+export function getComments(articleId,dispatch,callback) {
+  axios.get(api + '/getComments?articleId='+articleId )
+  .then(function(res) {
+    if( res.data.status == '200' ) {
+      dispatch(callback[0](res.data.list));
+    };
+  })
+  .catch(function(err){
+    console.log(err);
+  });
 }
 
 /**往后的页面都还没做**/
@@ -139,16 +138,18 @@ export function getComments(articleId,dispatch,callback){
  * @param articleId {string} 文章id
  * @param content  {string}  评论内容
  */
-export function addComment(data,dispatch,callback){
-    axios.post('/addCommentByArticleId',data)
-    .then(function(res){
-        if( res.data.status == '200' ) {
-            dispatch(callback[0](res.data));
-        };
-    })
-    .catch(function(err){
-      console.log(err);
-    });
+export function addComment(data,dispatch,callback) {
+  axios.post(
+    api + '/addCommentByArticleId',
+    qs.stringify(data)
+  ).then(function(res){
+    if( res.data.status == '200' ) {
+      dispatch(callback[0](res.data));
+    };
+  })
+  .catch(function(err){
+    console.log(err);
+  });
 }
 
 
@@ -159,8 +160,10 @@ export function addComment(data,dispatch,callback){
  * @param password  {String} 密码
  * */
 export function sendRegisterInfo(data,dispatch,callback) {
-  axios.post(SERVERADDRESS + '/register',qs.stringify(data))
-  .then(function(res) {
+  axios.post(
+    api + '/register',
+    qs.stringify(data)
+  ).then(function(res) {
     console.log(res);
     if( res.data.status == '200' ) {
       dispatch(callback[0](res.data));
@@ -178,8 +181,11 @@ export function sendRegisterInfo(data,dispatch,callback) {
 * 需要登录
 * **/
 export function addNewTopic(data,dispatch,callback) {
-    axios.post(SERVERADDRESS + '/addNewTopic',qs.stringify(data))
-    .then(function(res){
+    axios.post(
+      api + '/addNewTopic',
+      qs.stringify(data)
+      // { withCredentials : true }
+    ).then(function(res){
         if( res.data.status == '200' ) {
            console.log('新增文章成功');
            dispatch(callback[0](res.data));
@@ -208,7 +214,7 @@ export function checkIsLogin(dispatch,callback) {
  * @param password  {String} 密码
  */
 export function sendLoginInfo(data,dispatch,callback) {
-  axios.post(SERVERADDRESS + '/login',qs.stringify(data))
+  axios.post(api + '/login',qs.stringify(data))
   .then(function(res) {
     if( res.data.status == '200' ) {
       dispatch(callback[0]('login'));
@@ -272,7 +278,7 @@ export function setPersonalInfo(data,dispatch,callback) {
  * 退出登录
  */
 export function logOut(dispatch,callback) {
-    axios.post(SERVERADDRESS + '/logout')
+    axios.post(api + '/logout')
     .then(function(res){
         if( res.data.status == '200' ) {
            dispatch(callback[0]('logOut'));

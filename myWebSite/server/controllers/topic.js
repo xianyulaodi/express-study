@@ -11,8 +11,6 @@ const ep = new eventproxy();
 
 // 新增主题
 exports.addNewTopic = (req,res,next) => {
-  console.log(req.session);
-  console.log(req.session.user);
   if(!req.session.user) {
     res.json({
       status: 201, // 201
@@ -30,10 +28,8 @@ exports.addNewTopic = (req,res,next) => {
   .then(result => {
     if(result) {
       common.succRes(res,{data: result});
-      log.info('add new topic success');
     } else {
       common.failRes(res,'save topic fail');
-      log.error('add new topic fail');
     }
   })
 }
@@ -53,12 +49,10 @@ exports.getArticleDetail=(req,res,next) => {
    Topic.getTopicById({ _id: articleId })
    .then(result => {
      if(result) {
-      common.succRes(res,{data:result});
-      log.info('get article detail success');
+      combineAuthorInfoWithDetail(res,result);
       countArticleRead(result); //更新文章阅读量
      } else {
       common.failRes(res,'get artile detail fail');
-      log.error('get article detail fail');
      }
    })
 }
@@ -95,10 +89,8 @@ exports.updateArticle = (req,res,nex) => {
   }).then(result => {
      if(result){
         common.succRes(res);
-        log.info('update article success');
      } else {
         common.failRes(res,'update article fail');
-        log.info('update article fail');
      }
    })
 }
@@ -117,10 +109,8 @@ function countArticleRead(data) {
   }).then(result => {
     if(result){
       common.succRes(res);
-      log.info('count article read success');
     } else {
       common.failRes(res,'count read num fail');
-      log.error('count article read fail');
     }
   });  
 }
@@ -169,7 +159,6 @@ function findArticle(req,res,query) {
   });
   ep.all('topics','topic_count',(topics,topic_count) => {
     combineAuthorInfoWithArticle(topics,topic_count,res);
-    // common.succRes(res,{"list":list,"total":topic_count});
   });
 };
 
@@ -184,17 +173,25 @@ function combineAuthorInfoWithArticle(topics,topic_count,res) {
       yield new Promise((resolve, reject) => {
         User.getUserById(authorId,(err,user) => {
           if(user) {
-            var author = {
-              name: user.userName,
-              avatar_url: user.profile_image_url
-            }        
-            article.author = author;
+            article.author.name = user.userName;
+            article.author.avatar_url = user.profile_image_url;
           }
-        });          
-        articleList.push(article);
-        resolve(true);
+          articleList.push(article);
+          resolve(true);          
+        });
       });
     }
     common.succRes(res,{"list":articleList,"total":topic_count});
   }); 
+}
+// 结合文章详情和个人信息
+function combineAuthorInfoWithDetail(res,result) {
+  var result = result;
+  User.getUserById(result.author_id,(err,user) => {
+    if(user) {
+      result.author.name = user.userName;
+      result.author.avatar_url = user.profile_image_url;
+      common.succRes(res,{data:result});
+    }         
+  });  
 }

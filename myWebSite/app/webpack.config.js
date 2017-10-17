@@ -90,6 +90,15 @@ module.exports = {
             new webpack.HotModuleReplacementPlugin()
         ],
         inline:true,
+        proxy: {  // 跨域请求代理
+            // 请求到 '/device' 下 的请求都会被代理到 target： http://debug.xxx.com 中
+            '/api/*': { 
+                target: 'http://127.0.0.1:3000',
+                secure: false, // 接受 运行在 https 上的服务
+                changeOrigin: true
+            }
+        }
+
     }
 }
 if (prod) {

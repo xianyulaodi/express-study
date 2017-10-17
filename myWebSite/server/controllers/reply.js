@@ -2,6 +2,8 @@ const validator = require('validator');
 const _ = require('lodash');
 const Eventproxy = require('eventproxy');
 const common = require('../common/common');
+const User = require('../api/user');
+const co  = require('co');
 const Reply = require('../api/reply');
 
 // 添加评论
@@ -20,7 +22,6 @@ exports.add = (req,res,next) => {
       replyer_id: replyerId,
       article_id: articleId
     };
-
     Reply.newAndSave(data)
     .then(result => {
       var obj = '';
@@ -39,7 +40,7 @@ exports.add = (req,res,next) => {
     });
 
     // 更新文章的评论
-    Reply.updateLastReply(articleId,replyerId,(err) => {
+    Reply.updateReply(articleId,replyerId,(err) => {
       if(err) return;
       proxy.emit('topic',articleId);
     });
@@ -57,8 +58,32 @@ exports.getComments = (req,res,next) => {
       common.failRes(res,'get repiles fail');
       return false;
     }
-    common.succRes(res,{"list": data});
+    combineAuthorInfoWithReply(data,res);
+    // common.succRes(res,{"list": data});
   });
+}
+
+function combineAuthorInfoWithReply(replies,res) {
+  var data = replies;
+  co(function* () {
+    var replyList = [];
+    for(var i = 0,len = data.length; i < len; i++) {
+      var replyInfo = data[i];
+      var replyer_id  = replyInfo.replyer_id;         
+      yield new Promise((resolve, reject) => {
+        User.getUserById(replyer_id,(err,user) => {
+          if(user) {
+            replyInfo.replyer.name = user.userName;
+            replyInfo.replyer.avatar_url = user.profile_image_url;
+          }
+          replyList.push(replyInfo);
+          resolve(true);          
+        });
+      });
+    }
+    console.log(replyInfo);
+    common.succRes(res,{"list": replyList});
+  }); 
 }
 
 exports.delComment = (req,res,next) => {

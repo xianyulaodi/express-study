@@ -18,8 +18,8 @@ class Detail extends Component {
         _id:'',
         title:'',
         content:'',
-        authorInfo:{
-          "authorPic": '',
+        author:{
+          "avatar_url": '',
           "name": '',
         },
         createTime:'',
@@ -43,11 +43,11 @@ class Detail extends Component {
         _id: data._id,
         title: data.title,
         content: data.content,
-        authorInfo: data.authorInfo,
-        createTime: data.createTime,
-        read: data.read,
-        like: data.like,
-        commentNum: data.commentNum,
+        author: data.author,
+        createTime: data.create_at,
+        read: data.visit_number,
+        like: data.collect_number,
+        commentNum: data.reply_number,
         contentPic: data.contentPic,
       });
     }
@@ -55,15 +55,13 @@ class Detail extends Component {
   componentDidMount(){
     
   }
-  render(){
-    //console.log(this.props.detailInfo);
+  render() {
     let comments = this.props.detailInfo.commentList || [];
     let addCommentStatus = this.props.detailInfo.addCommentStatus;
     if(addCommentStatus == 200) {
       alert('添加评论成功');
       window.location.reload();
     }
-    // console.log(addCommentStatus);
     return (
       <div className='container-detail'>
         <h1 className='title'>
@@ -72,16 +70,16 @@ class Detail extends Component {
         <dl className="author-info">
           <dt>
             <a className="img-circle author-pic" href="" >
-              <img src={ this.state.authorInfo.authorPic } alt="" />
+              <img src={ this.state.author.avatar_url } alt="" />
             </a> 
           </dt>
           <dd className="author-detail">
-            <span className="author-name">{ this.state.authorInfo.name }</span>
+            <span className="author-name">{ this.state.author.name }</span>
             <span className="other-info">{ this.state.createTime }  字数：789  阅读：{ this.state.read }  喜欢：{ this.state.like }   评论：{ this.state.commentNum }  赞赏：5</span>
           </dd>
         </dl>
         <div className="content">
-           { this.state.content }
+          <p dangerouslySetInnerHTML={{__html: this.state.content }}></p>
         </div>
         <div className='gap'>
           <hr/>

@@ -132,6 +132,7 @@ todoList
 []   引入nginx   
 []   进程管理  process,自动重启，某个进程如果有问题，kill掉。负载均衡
 []   文章排序:  根据：1. 评论 2.阅读量 3.最新   http://blog.csdn.net/wangliqiang1014/article/details/16861337
+[]  加tocken防止 csrf
 
 
 10月11号任务: done
@@ -178,3 +179,43 @@ https://segmentfault.com/a/1190000007735211  process_child这篇文章写的比�
 4. 看看ES6的文章: https://juejin.im/post/59d7790e6fb9a00a496e926a
 
 5. https://ioliu.cn/2017/add-valine-comments-to-your-blog/  hexo新增评论
+
+6. mongodb返回的对象中不能新增或者删除新属性的坑： http://www.cnblogs.com/fhen/p/5322493.html
+
+7. 前端数据加密，反爬虫有哪些策略
+
+
+知识点：
+------------------------------------------------------------------------------------
+1. co模块，可以异步执行一些操作
+co(function* () {
+  var arr = [];
+  for(var i = 0,len = 20; i < len; i++) {
+    yield new Promise((resolve, reject) => {
+      setTimeout(function() {
+        arr.push(123);
+        resolve(true);
+      },10);
+    });
+  }
+  console.log(arr);
+  console.log('next');
+}); 
+
+2. 跨域处理
+webpack 中配置
+ devServer: {
+  proxy: {  // 跨域请求代理
+      // 请求到 '/api' 下 的请求都会被代理到 target： http://127.0.0.1:3000 中
+      '/api/*': { 
+          target: 'http://127.0.0.1:3000',
+          secure: false, // 接受 运行在 https 上的服务
+          changeOrigin: true
+      }
+  }
+}
+前端页面中调用
+axios('/api/login') ....
+
+3. 让浏览器变得可以编辑，控制台上写
+document.body.contentEditable=true

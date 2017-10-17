@@ -6,33 +6,35 @@ import * as actions from '../actions/index'
 
 import { Link } from 'react-router-dom'
 
-class Poster extends Component{
+class Poster extends Component {
   constructor(props){
     super(props);
     this.state={
       _id:this.props.posterInfo._id,
       title:this.props.posterInfo.title,
+      author_id:this.props.posterInfo.author_id,
       category:this.props.posterInfo.category,
       content:this.props.posterInfo.content,
-      authorInfo:this.props.posterInfo.authorInfo,
+      author:this.props.posterInfo.author,
       createTime:this.props.posterInfo.createTime,
-      read:this.props.posterInfo.read,
-      like:this.props.posterInfo.like,
-      commentNum:this.props.posterInfo.commentNum,
+      read:this.props.posterInfo.visit_number,
+      like:this.props.posterInfo.collect_number,
+      commentNum:this.props.posterInfo.reply_number,
       contentPic:this.props.posterInfo.contentPic,
     }
   }
-  componentWillReceiveProps(nextProps){
+  componentWillReceiveProps(nextProps) {
     this.setState({
       _id:nextProps.posterInfo._id,
       title:nextProps.posterInfo.title,
+      author_id:nextProps.posterInfo.author_id,
       category:nextProps.posterInfo.category,
       content:nextProps.posterInfo.content,
-      authorInfo:nextProps.posterInfo.authorInfo,
+      author:nextProps.posterInfo.author,
       createTime:nextProps.posterInfo.createTime,
-      read:nextProps.posterInfo.read,
-      like:nextProps.posterInfo.like,
-      commentNum:nextProps.posterInfo.commentNum,
+      read:nextProps.posterInfo.visit_number,
+      like:nextProps.posterInfo.collect_number,
+      commentNum:nextProps.posterInfo.reply_number,
       contentPic:nextProps.posterInfo.contentPic,
     });
   }
@@ -49,13 +51,15 @@ class Poster extends Component{
           <dt className="col-left">
             <div className="author-info">
               <a className="author-pic img-circle" href="#">
-                <img src={ this.state.authorInfo.authorPic } alt="" />
+                <img src={ this.state.author.avatar_url } alt="" />
               </a> 
-              <Link className="author-name" to={ '/author_center/'+encodeURI(this.state.authorInfo.authorId) }>{ this.state.authorInfo.name }</Link>
+              <Link className="author-name" to={ '/author_center/'+encodeURI(this.state.author_id) }>{ this.state.author.name }</Link>
               <span className="create-time">{ this.state.createTime }</span>
             </div>
             <Link className="title" to={'/detail/'+encodeURI(this.state._id) }>{ this.state.title }</Link>
-            <p className="category">{ this.state.content }</p>
+            <div className="category">
+              <p dangerouslySetInnerHTML={{__html: this.state.content }}></p>
+            </div>
             <div className="list-bottom">
               <a target="_blank" href="/p/8f83d08c9659">
                 已读：<i className="iconfont ic-list-read"></i> 
