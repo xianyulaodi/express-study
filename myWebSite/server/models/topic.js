@@ -21,11 +21,11 @@ const TopicSchema = new mongoose.Schema({
 	reply_number: {type: Number, default: 0},
 	collect_number: {type: Number, default: 0}, // 收藏人数
 	visit_number: {type: Number, default: 0},
-	create_at: {type: Date, default: Date.now},
-	update_at: {type: Date},
-	last_reply_id: {type: ObjectId},					 //最后回复人的id
-	last_reply_name: {type: String},					 //最后回复人的name
-	last_reply_at: {type: Date},
+	create_at: {type: String },
+	update_at: {type: String },
+	last_reply_id: {type: ObjectId },					 //最后回复人的id
+	last_reply_name: {type: String },					 //最后回复人的name
+	last_reply_at: {type: String },
 	reader_ips:[],  //阅读者的ip
 	author: {
 		name:{type: String},

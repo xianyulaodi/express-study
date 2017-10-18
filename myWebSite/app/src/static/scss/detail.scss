@@ -75,6 +75,10 @@
 		overflow: hidden;
 		display: block;
 		margin-right: $space-normal;
+		img {
+			width: 100%;
+			height: auto;
+		}
 	}
 	.comment-ipt {
 		flex: 1;

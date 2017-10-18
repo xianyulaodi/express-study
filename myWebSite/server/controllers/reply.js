@@ -20,7 +20,8 @@ exports.add = (req,res,next) => {
     data = {
       content: content,
       replyer_id: replyerId,
-      article_id: articleId
+      article_id: articleId,
+      create_at: common.getTimeNow()
     };
     Reply.newAndSave(data)
     .then(result => {
@@ -59,7 +60,6 @@ exports.getComments = (req,res,next) => {
       return false;
     }
     combineAuthorInfoWithReply(data,res);
-    // common.succRes(res,{"list": data});
   });
 }
 
@@ -81,7 +81,6 @@ function combineAuthorInfoWithReply(replies,res) {
         });
       });
     }
-    console.log(replyInfo);
     common.succRes(res,{"list": replyList});
   }); 
 }

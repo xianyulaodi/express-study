@@ -43,5 +43,14 @@ module.exports = {
       "message": "no login" 
   	});  	
   },
+  getTimeNow() {
+    var timeStamp = new Date(),
+        y = timeStamp.getFullYear(),
+        m = timeStamp.getMonth() + 1,
+        d = timeStamp.getDate(),
+        h = timeStamp.getHours(),
+        min = timeStamp.getMinutes();
+    return y + '-' + m + '-' + d + ' ' + h + ':' + min;
+  }
 
 }

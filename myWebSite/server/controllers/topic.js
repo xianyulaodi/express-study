@@ -23,6 +23,7 @@ exports.addNewTopic = (req,res,next) => {
     content: req.body.content,
     type: req.body.type || '', //文章类型
     author_id: req.session.user._id,
+    create_at: common.getTimeNow()
   }
   Topic.newAndSave(data_obj)
   .then(result => {
