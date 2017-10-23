@@ -170,6 +170,21 @@ export function focus(authorId) {
   }
 }
 
+// 取消关注
+export function unFocus(authorId) {
+  return (dispatch,getState) => {
+    return basicAction.focus(authorId,dispatch,[call_focus])
+  }
+}
+
+// 判断是否已经关注作者
+export function isFocus(authorId) {
+  return (dispatch,getState) => {
+    return basicAction.isFocus(authorId,dispatch,[call_focus])
+  }
+}
+
+
 function call_focus(boolean) {
   return {
        type:constants.FOCUS,
@@ -187,7 +202,7 @@ export function getPersonalInfo() {
 
 function call_getPersonalInfo(data) {
   return {
-       type:constants.UPDATEUSERINFO,
+       type:constants.GETTINGINFO,
        data:data
   }
 }
@@ -198,10 +213,23 @@ export function setPersonalInfo(data) {
     return basicAction.setPersonalInfo(data,dispatch,[call_setPersonalInfo]);
   }
 }
-
-function call_setPersonalInfo(data) {
+function call_setPersonalInfo(boolean) {
   return {
        type:constants.UPDATEUSERINFO,
-       data:data
+       data:boolean
+  }
+}
+
+// 头像图片上传
+export function uploadPic(data) {
+  return (dispatch, getState) => {
+    return basicAction.uploadPic(data,dispatch,[call_uploadPic]);
+  }
+}
+
+function call_uploadPic(data) {
+  return {
+    type:constants.UPLOADPIC,
+    data:data.picUrl
   }
 }

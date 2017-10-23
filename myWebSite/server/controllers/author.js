@@ -2,6 +2,7 @@ const Eventproxy = require('eventproxy');
 const Collect = require('../api/collect');
 const Topic = require('../api/topic');
 const User = require('../api/User');
+const co  = require('co');
 const common = require('../common/common');
 const proxy = new Eventproxy();
 
@@ -11,7 +12,8 @@ exports.getAuthorCenter = (req,res,next) => {
   getArticle(req);
   getAuthorInfo(authorId);
   proxy.all('topics','authorInfo',(topics,authorInfo) => {
-     common.succRes(res,{"list":topics,"authorInfo":authorInfo});
+    combineAuthorInfoWithArticle(topics,authorInfo,res);
+     // common.succRes(res,{"list":topics,"authorInfo":authorInfo});
   });
 }
 // 获取作者的收藏列表
@@ -46,6 +48,31 @@ function getArticle(req) {
   });
 }
 
+// 将文章信息和作者部分信息结合，
+function combineAuthorInfoWithArticle(topics,authorInfo,res) {
+  var data = topics;
+  co(function* () {
+    var articleList = [];
+    for(var i = 0,len = data.length; i < len; i++) {
+      var article = data[i];
+      var authorId  = article.author_id;         
+      yield new Promise((resolve, reject) => {
+        User.getUserById(authorId,(err,user) => {
+          if(user) {
+            article.author.name = user.userName;
+            article.author.avatar_url = user.profile_image_url;
+          }
+          articleList.push(article);
+          resolve(true);          
+        });
+      });
+    }
+    common.succRes(res,{"list":articleList,"authorInfo":authorInfo});
+  }); 
+}
+
+
+
 //获取用户个人信息： 头像，个性签名，名字
 function getAuthorInfo(authorId) {
   User.getUserById(authorId,(err,result) => {
@@ -56,7 +83,7 @@ function getAuthorInfo(authorId) {
         profile_image_url: result.profile_image_url,
         fansNum : result.fans_num,
         foucsNum: result.focus_num,
-        fans_ids: result.fans_ids
+        fans_ids: result.fans_ids,
       }
       proxy.emit('authorInfo',data);
     } else {

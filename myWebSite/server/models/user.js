@@ -7,6 +7,7 @@ const db = require('../lib/mongo');
     userName:{type:String},
     password : {type:String},
     repeatPassword : {type:String},
+    introdece : {type:String},
     email : {type:String},
     url : {type:String},
     active :{type:Boolean,default:false},

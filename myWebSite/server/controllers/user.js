@@ -10,7 +10,15 @@ exports.getUserInfo = (req,res,next) => {
   const id = req.session.user._id;
   User.getUserById(id,(err,user) => {
     if(user) {
-      common.succRes(res,{"userInfo": user});
+      const data = {
+        userName: user.userName,
+        sigature: user.sigature,
+        email: user.email,
+        profile_image_url: user.profile_image_url,
+        location: user.location,
+        introdece: user.introdece
+      }
+      common.succRes(res,{"userInfo": data});
     } else {
       common.failRes(res,'get info fail');
     }      
@@ -24,7 +32,8 @@ exports.setUserInfo = (req,res,next) => {
       userName: req.body.userName || '',
       sigature: req.body.sigature || '', // 个性签名
       email: req.body.email || '',  //邮箱
-      location: req.body.location || ''// 坐标
+      location: req.body.location || '',// 坐标,
+      introdece: req.body.introdece || ''// 坐标,
     },
     id = req.session.user._id;
    User.updateData({_id: id},data,{upsert: false})
@@ -34,6 +43,7 @@ exports.setUserInfo = (req,res,next) => {
        req.session.user.sigature = data.sigature;
        req.session.user.email = data.email;
        req.session.user.location = data.location;
+       req.session.user.introdece = data.introdece;
        common.succRes(res);
      } else {
        common.failRes(res,'update info fail');
