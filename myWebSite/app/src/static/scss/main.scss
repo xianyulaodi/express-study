@@ -33,8 +33,8 @@
     flex: 1;
   }
   .col-right {
-    width: 150px;
-    height: 150px;
+    width: 120px;
+    height: 120px;
     overflow: hidden;
     margin-left: $space-normal;
   }
@@ -71,45 +71,85 @@
     color:$color-primary;
   }
   .iconfont {
-    font-family: iconfont!important;
-    font-size: inherit;
-    font-style: normal;
-    font-weight: 400!important;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    width: 20px;
+    height: 12px;
+    display: inline-block;
   }
+  .icon-comments {
+    background: url('../images/comment.4d5744f.svg') no-repeat left center;
+  }
+  .icon-like {
+    background: url('../images/like.4bf00fb.svg') no-repeat left center;
+  } 
+  .icon-read {
+    background: url('../images/read.png') no-repeat -3px center;
+    background-size: 20px 10px;
+  }  
   .list-bottom {
     padding-top: $space-normal;
+    a {
+      color: #b2bacd;
+      margin-right: 10px;
+      text-decoration: none;
+    }
   }
+  .load-more {
+    overflow: hidden;
+    text-align: center;
+  }
+  .more-btn {
+    padding: 5px 10px;
+    color: #1d1d1d;
+    border-radius: 5px;
+    margin-top: 10px;
+    text-decoration: none;
+    display: inline-block;
+    background: #ccc;
+  }  
  
 }
 
 .container-leftBar {
   margin: $space-normal 0 $space-normal $space-normal;
   padding: $space-normal;
-  border: 1px solid #ccc;
-  border-radius: 5px;
   min-height: 500px;
-
-  .left-bar {
-    display: block;
+  .ad-list {
     overflow: hidden;
-    li {
-      float: left;
-      color: #4f93ff;
-      margin-right: 15px;
+  }
+  .img-wrap {
+    width: 240px;
+    height: 200px;
+    margin-bottom: 10px;
+    img{
+      width: 100%;
+      height: auto;
     }
   }
-  .hot-list {
-    padding: $space-normal 0; 
+  .hot-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
   }
-  .hot-list a{
+  .hot-list {
+    padding: 10px 0;
+    margin-top: 10px;
+    border-radius: 5px;
+  }
+  .hot-list a {
     max-width: 300px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     display: block;
     padding-bottom: 10px; 
+    color: #333;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
 

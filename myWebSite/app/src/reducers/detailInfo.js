@@ -1,6 +1,6 @@
-import { UPDATEDETAILINFO,UPDATECOMMENTLIST,ADDCOMMENT } from '../constants'
+import { UPDATEDETAILINFO,UPDATECOMMENTLIST,ADDCOMMENT,DELCOMMENT } from '../constants'
 
-function updateDetailInfo(state = {detailInfo:'', commentList:[], addCommentStatus: null}, action){
+function updateDetailInfo(state = {detailInfo:'', commentList:[], addCommentStatus: null,delCommentStatus: false}, action){
 	switch(action.type) {
 		case UPDATEDETAILINFO:
 			  return Object.assign({},state,{ detailInfo: action.data });
@@ -10,7 +10,10 @@ function updateDetailInfo(state = {detailInfo:'', commentList:[], addCommentStat
 		    break; 
         case ADDCOMMENT:
 			  return Object.assign({},state,{ addCommentStatus : action.data });
-		    break;		
+		    break;	
+        case DELCOMMENT:
+		   return Object.assign({},state,{ delCommentStatus : action.data });
+	    break;				
 		default:
 		  return state;
 	}

@@ -63,7 +63,6 @@ export function getTopicList(params,dispatch,callback) {
   axios.get(api + '/getTopicList?pageSize='+ params.pageSize +'&page='+ params.page)
   .then(function (res) {
     const resData = res.data;
-    console.log(resData);
     if( resData.status == '200' ) {
       if(params.page > 5) { // 模拟没有数据时的场景
         dispatch(callback[1](true));
@@ -100,7 +99,6 @@ export function getBannerList(dispatch,callback) {
 export function getArticleDetail(articleId,dispatch,callback) {
   axios.get( api + '/getArticleDetail?articleId='+ articleId )
   .then(function(res) {
-    console.log(res);
     if( res.data.status == '200' ) {
         dispatch(callback[0](res.data.data));
     };
@@ -146,6 +144,24 @@ export function addComment(data,dispatch,callback) {
   });
 }
 
+/**
+ * 删除评论
+ * @param replyId {string} 评论id
+ */
+export function delComment(data,dispatch,callback) {
+  axios.post(
+    api + '/delComment',
+    qs.stringify(data)
+  ).then(function(res){
+    if( res.data.status == '200' ) {
+      dispatch(callback[0](true));
+    };
+  })
+  .catch(function(err){
+    console.log(err);
+  });
+}
+
 
 
 /* 注册
@@ -158,11 +174,10 @@ export function sendRegisterInfo(data,dispatch,callback) {
     api + '/register',
     qs.stringify(data)
   ).then(function(res) {
-    console.log(res);
     if( res.data.status == '200' ) {
       dispatch(callback[0](res.data));
     } else if(res.data.status == "201") {
-      console.log('该用户名已存在');
+      alert('该用户名已存在');
     } else {
       console.log('注册失败');
     }
@@ -193,13 +208,14 @@ export function addNewTopic(data,dispatch,callback) {
  * 判断是否登录了
  */
 export function checkIsLogin(dispatch,callback) {
-    axios.get('/checkIsLogin')
-    .then(function(res){
-        if( res.data.status == '200' ) {
-            dispatch(callback[0]('login'));
-            dispatch(callback[1](res.data.data));
-        }
-    })
+  axios.get(api + '/checkIsLogin')
+  .then(function(res) {
+    if( res.data.status == '200' ) {
+      dispatch(callback[0]('login',res.data.uid));
+    } else {
+      dispatch(callback[0]('noLogin'));
+    }
+  })
 }
 
 /**
@@ -213,10 +229,10 @@ export function sendLoginInfo(data,dispatch,callback) {
     qs.stringify(data)
   ).then(function(res) {
     if( res.data.status == '200' ) {
-      dispatch(callback[0]('login'));
+      dispatch(callback[0]('login',res.data.data.id));
       dispatch(callback[1](res.data.data));
     } else {
-      console.log('登录失败');
+      alert('账号或密码不正确');
     }
   });
 }
@@ -249,6 +265,18 @@ export function getPersonalInfo(dispatch,callback) {
        console.log('获取用户信息失败');
     }
   });
+}
+
+// 获取用户uid
+export function getUserId(dispatch,callback) {
+  axios.get(api +'/getUserId')
+  .then((res) => {
+    if( res.data.status == '200' ) {
+      dispatch(callback[0](res.data.uid));
+    } else {
+      console.log('获取uid失败');
+    }
+  })
 }
 
 /**
@@ -314,7 +342,6 @@ export function focus(authorId,dispatch,callback) {
     api+ '/focusAuthor',
     qs.stringify({authorId,authorId})
   ).then(function(res) {
-    console.log('关注',res);
     if(res.data.status == '200') {
         dispatch(callback[0](true));
     } else {
@@ -330,7 +357,6 @@ export function unFocus(authorId,dispatch,callback) {
     api+ '/unfocusAuthor',
     qs.stringify({authorId,authorId})
   ).then(function(res) {
-    console.log('关注',res);
     if(res.data.status == '200') {
         dispatch(callback[0](false));
     } else {

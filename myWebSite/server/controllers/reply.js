@@ -14,6 +14,7 @@ exports.add = (req,res,next) => {
   } 
   const 
     articleId = req.body.articleId,
+    authorId = req.body.authorId,
     content = req.body.content,
     replyerId = req.session.user._id,
     proxy = new Eventproxy(),
@@ -21,6 +22,7 @@ exports.add = (req,res,next) => {
       content: content,
       replyer_id: replyerId,
       article_id: articleId,
+      author_id: authorId,
       create_at: common.getTimeNow()
     };
     Reply.newAndSave(data)
@@ -87,11 +89,6 @@ function combineAuthorInfoWithReply(replies,res) {
 
 exports.delComment = (req,res,next) => {
   var replyId = req.body.replyId; // 评论id
-  var replyerId = req.body.replyerId; // 评论者id
-  if(req.session.user._id != replyerId ) {
-    common.failRes(res,'not your article');
-    return false;    
-  }
   Reply.delReplyByReplyId({ _id:replyId },(error,data) => {
     if(error) {
       common.failRes(res,'del reply fail');

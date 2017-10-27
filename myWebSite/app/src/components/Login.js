@@ -2,7 +2,7 @@ import React,{Component} from "react"
 import {render} from 'react-dom'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
-
+import { Redirect } from 'react-router-dom'
 import * as actions from '../actions/index'
 
 class Login extends Component {
@@ -34,7 +34,9 @@ class Login extends Component {
   }
   render() {
     if(this.props.header.isLogin) {
-      // window.location.href = '/'; //这里需要改为路由跳转的方式，待定
+      window.location.href = '/'
+      // window.location.reload();
+      // return <Redirect push to="/" />
     }
     return (
       <div className="container-login">
@@ -54,13 +56,11 @@ class Login extends Component {
 
 
 const mapStateToProps = (state) => {
-  //console.log('Login:mapStateToProps,state is ',state);
   return { 
     header:state.stores.header
   }
 }
 const mapDispatchToProps = (dispatch) => {
-  //console.log('mapDispatchToProps');
   return {
     actions: bindActionCreators(actions, dispatch),
   }

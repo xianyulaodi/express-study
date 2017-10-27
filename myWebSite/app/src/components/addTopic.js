@@ -1,8 +1,9 @@
 import React,{Component} from "react"
 import {render} from 'react-dom'
 import {connect} from 'react-redux'
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdown from 'react-markdown'
 import { bindActionCreators } from 'redux'
+import TopicHeader from './AddTopicHead'
 import * as actions from '../actions/index'
 import '../static/scss/addTopic.scss';
 
@@ -13,30 +14,8 @@ class addTopic extends React.Component {
       markdownText: ''
     };
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
   componentDidMount(){
-    
-  }
-  handleSubmit(e){
-    e.preventDefault();
-    let title = this.refs.title.value;
-    let type = this.refs.type.value;
-    let content = document.getElementById('articleContent').innerHTML;
-    const data = {
-      title: title,
-      content: content,
-      type: type
-    }
-    if(title == '') {
-      alert('文章标题不能为空');
-      return false;
-    }
-    if(content == '') {
-      alert('文章内容不能为空');
-      return false;
-    }
-    this.props.actions.SubmitData('addNewTopic',data);
     
   }
   handleChange() {
@@ -46,35 +25,18 @@ class addTopic extends React.Component {
     });
   }
   render() { 
-    console.log()
-    if(this.props.newTopic.newTopicStatus == 200) {
-      if(window.confirm('发布成功，是否跳转到首页')) {
-        window.location.href = '/'; //这里需要改为路由跳转的方式，待定
-      }
-      
-    }
+    var articleContent = document.getElementById('articleContent') ? document.getElementById('articleContent').innerHTML : '';
+    let content = articleContent;
     return (
       <div className="container-add">
-        <div className="col-l">
-          <input type = "input" 
-            placeholder = "请输入文章标题"  className="title-input"
-            ref = "title"
-          />
-          <select name="" ref = "type">
-            <option value="node">node.js</option>
-            <option value="css">css</option>
-            <option value="javascript">javascript</option>
-            <option value="python">python</option>
-          </select>             
-          <textarea className = "content-input" 
-            placeholder = "请输入文章内容,markdown 语法" 
-            ref = "editor"
-            onChange = { this.handleChange }
-          >
-          </textarea>  
-          <input type="button" value="提交" className="btn-submit" onClick = { this.handleSubmit } />
-        </div> 
-        <div className="col-r" id="articleContent">
+        <TopicHeader content = { content } />       
+        <textarea className = "content-input" 
+          placeholder = "请输入文章内容,markdown 语法" 
+          ref = "editor"
+          onChange = { this.handleChange }
+        >
+        </textarea>   
+        <div className="toggle-view" id="articleContent">
           <ReactMarkdown source={ this.state.markdownText } />
         </div>
       </div>

@@ -19,16 +19,20 @@ class LeftBar extends Component {
   render() {
     return (
       <div className="container-leftBar">
-        <ul className="left-bar">
-          <li>最新</li>
-          <li>最热</li>
-          <li>评论</li>
-        </ul>
+        <div className="ad-list">
+          <p className="img-wrap">
+            <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1509525793&di=5da9934b6c1ea1a73c430d366551fec8&imgtype=jpg&er=1&src=http%3A%2F%2Fpic3.16pic.com%2F00%2F19%2F57%2F16pic_1957628_b.jpg" alt="" />
+          </p>
+          <p className="img-wrap">
+            <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1509525793&di=5da9934b6c1ea1a73c430d366551fec8&imgtype=jpg&er=1&src=http%3A%2F%2Fpic3.16pic.com%2F00%2F19%2F57%2F16pic_1957628_b.jpg" alt="" />
+          </p>          
+        </div>
         <div className="hot-list">
-          <a href="javascript:void(0);" >这个热门文章哦</a>
-          <a href="javascript:void(0);" >这个热门文章哦</a>
-          <a href="javascript:void(0);" >这个热门文章哦</a>
-          <a href="javascript:void(0);" >这个热门文章哦</a>
+          <h2 className="hot-title">热门文章</h2>
+          <a href="javascript:void(0);" >JavaScript专题系列20篇正式完结！</a>
+          <a href="javascript:void(0);" >如何通过饿了么 Node.js 面试</a>
+          <a href="javascript:void(0);" >Rem布局的原理解析</a>
+          <a href="javascript:void(0);" >浅谈Web图像优化</a>
         </div>
       </div>
     );

@@ -1,0 +1,31 @@
+
+.user-header {
+	.head-img {
+		width: 48px;
+		height: 48px;
+		overflow: hidden;
+		border-radius: 100%;
+		margin-top: 5px;
+		cursor: pointer;
+		img {
+			width: 100%;
+			height: auto;
+		}
+	}
+	.other-info {
+		position: absolute;
+		top: 60px;
+        width: 150px; 
+		border: 1px solid #ccc;
+		border-radius: 5px;
+		background: #fff;
+		padding: 10px 15px 10px;
+		.nav {
+			font-size: 14px;
+			color: #333;
+			line-height: 30px;
+			display: block;
+			text-decoration: none;
+		}
+	}
+}

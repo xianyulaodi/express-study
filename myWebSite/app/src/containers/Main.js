@@ -32,12 +32,10 @@ class Main extends Component {
   componentWillReceiveProps(nextProps) {
     const nextList = nextProps.indexData.topicList;
     if(nextList.length > 0  && nextList != this.props.indexData.topicList) {
-
       var newRenderData = this.state.renderData.concat(nextList);
       this.setState({
         renderData: newRenderData
       });
-
     } else if (nextList.length == 0 && this.currentPage > 1) {
 
       this.setState({
@@ -63,7 +61,7 @@ class Main extends Component {
   render() {
     var loadText = this.props.indexData.noMoreData 
                   ? <span>没有更多数据啦</span>
-                  : <a href="javascript:void(0);" onClick={ this.changePageNo } >点击查看更多</a>;
+                  : <a className="more-btn" href="javascript:void(0);" onClick={ this.changePageNo } >查看更多</a>;
     // console.log('this.props.topicList is ',this.props.indexData.topicList);
     return (
       <div className="container-main">
@@ -71,7 +69,7 @@ class Main extends Component {
         <div className="container">
           <div className="container-left">
             <PostList posterInfo = { this.state.renderData }></PostList>
-            { loadText }
+            <p className="load-more">{ loadText }</p>
           </div>
           <div className="container-right">
               <LeftBar />

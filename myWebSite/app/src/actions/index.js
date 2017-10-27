@@ -105,6 +105,19 @@ function call_addComment(data) {
   }
 }
 
+// 删除评论
+export function delComment(data) {
+  return (dispatch, getState) => {
+    return basicAction.delComment(data,dispatch,[call_delComment]);
+  }  
+}
+function call_delComment(boolean) {
+  return {
+    type: constants.DELCOMMENT,
+    data: boolean
+  }  
+}
+
 // 添加文章
 function call_addNewTopic(data) {
   return {
@@ -115,22 +128,31 @@ function call_addNewTopic(data) {
 
 
 //更新登录状态
-function UpdateLoginState(key) {
+function UpdateLoginState(key,uid) {
+  var uid = uid || 0;
   if(key === 'login') {
     return {
-      type: constants.LOGIN
+      type: constants.LOGIN,
+      data: uid
     }
-  } else if (key === 'logOut'){
+  }
+  if (key === 'logOut'){
     return {
       type : constants.LOGOUT
+    }
+  }
+
+  if (key === 'noLogin'){
+    return {
+      type : constants.NOLOGIN
     }
   }
 }
 
 // 判断是否登录成功
-export function CheckIsLogin(){
+export function CheckIsLogin() {
   return (dispatch, getState) => {
-    return basicAction.checkIsLogin(dispatch,[UpdateLoginState,UpdateUserInfo]);
+    return basicAction.checkIsLogin(dispatch,[UpdateLoginState]);
   }
 }
 
@@ -205,6 +227,19 @@ function call_getPersonalInfo(data) {
        type:constants.GETTINGINFO,
        data:data
   }
+}
+
+// 获取用户id 
+export function getUserId() {
+  return (dispatch, getState) => {
+    return basicAction.getUserId(dispatch,[call_getUserId]);
+  }
+}
+function call_getUserId(uid) {
+  return {
+    type:constants.GETUSERID,
+    uid:uid
+  }  
 }
 
 //设置个人信息

@@ -40,6 +40,9 @@ router.get(API + '/getUserInfo',user.getUserInfo);     //获取个人信息
 router.post(API + '/setUserInfo',user.setUserInfo);    // 设置个人信息
 router.post(API + '/uploadPic',user.uploadHeadPic);   //图片上传
 router.post(API + '/changePass',user.changePass);    //修改密码
+router.get(API + '/getUserId',user.getUserId);    // 获取用户uid
+router.get(API + '/checkIsLogin',user.checkIsLogin);    // 检查用户是否登录了
+
 // 关注作者，取消关注作者
 router.post(API + '/focusAuthor',author.focusAuthor);         //关注作者
 router.post(API + '/unfocusAuthor',author.unfocusAuthor);    //取消关注作者

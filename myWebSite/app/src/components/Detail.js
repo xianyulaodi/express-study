@@ -3,9 +3,6 @@ import {render} from 'react-dom'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as actions from '../actions/index'
-
-import { Layout } from 'antd';
-
 import Comment from './Comment';
 
 import '../static/scss/detail.scss'
@@ -27,6 +24,8 @@ class Detail extends Component {
         like:'',
         commentNum:'',
         contentPic:'',
+        authorId: '',
+        delCommentStatus: false
       }
   }
   componentWillMount() {
@@ -49,10 +48,16 @@ class Detail extends Component {
         like: data.collect_number,
         commentNum: data.reply_number,
         contentPic: data.contentPic,
+        authorId: data.author_id
+      });
+    }
+    if(nextProps.detailInfo.delCommentStatus != this.props.detailInfo.delCommentStatus) {
+      this.setState({
+        delCommentStatus: nextProps.detailInfo.delCommentStatus
       });
     }
   }
-  componentDidMount(){
+  componentDidMount() {
     
   }
   render() {
@@ -60,6 +65,10 @@ class Detail extends Component {
     let addCommentStatus = this.props.detailInfo.addCommentStatus;
     if(addCommentStatus == 200) {
       alert('添加评论成功');
+      window.location.reload();
+    }
+    if(this.state.delCommentStatus) {
+      alert('删除评论成功');
       window.location.reload();
     }
     return (
@@ -84,7 +93,7 @@ class Detail extends Component {
         <div className='gap'>
           <hr/>
         </div>
-        <Comment comments = { comments } articleId = { this.state._id } history={this.props.history}></Comment>
+        <Comment comments = { comments } authorId = { this.state.authorId } delCommentStatus = { this.state.delCommentStatus } articleId = { this.state._id } history={this.props.history}></Comment>
       </div>
     );
   }

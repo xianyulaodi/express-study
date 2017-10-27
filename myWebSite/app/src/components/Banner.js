@@ -17,7 +17,7 @@ class Banner extends Component {
           {
             bannerList.map((item,index) => {
               return (
-                <img key={index} src={item.picUrl} />
+                <img key={index} src={ item.picUrl } />
               )
             })
           }

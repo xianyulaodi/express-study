@@ -1,2 +1,4 @@
 node_modules/
 myWebSite/public/upload/
+myWebSite/app/build/
+myWebSite/server/logs/

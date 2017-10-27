@@ -62,14 +62,14 @@ class Poster extends Component {
             </div>
             <div className="list-bottom">
               <a target="_blank" href="/p/8f83d08c9659">
-                已读：<i className="iconfont ic-list-read"></i> 
+                <i className="iconfont icon-read"></i> 
                 { this.state.read }&nbsp;&nbsp;
               </a>
               <a target="_blank" href="/p/8f83d08c9659#comments">
-                评论数：<i className="iconfont ic-list-comments"></i> {this.state.commentNum }&nbsp;&nbsp;
+                <i className="iconfont icon-comments"></i> {this.state.commentNum }&nbsp;&nbsp;
               </a>
               <a target="_blank" href="/p/8f83d08c9659#comments">
-                喜欢：<i className="iconfont ic-list-like"></i>
+                <i className="iconfont icon-like"></i>
                 {this.state.like }
               </a>
             </div>

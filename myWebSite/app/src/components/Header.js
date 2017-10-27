@@ -1,68 +1,66 @@
-import React,{Component} from "react"
-import {render} from 'react-dom'
-import {connect} from 'react-redux'
+import React,{ Component } from "react"
+import { render } from 'react-dom'
+import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import UserHead from './UserHead'
 import * as actions from '../actions/index'
 import { Link,Route,Redirect } from 'react-router-dom'
-
 import '../static/scss/header.scss'
 
 class PostHeader extends Component {
+
   constructor(props) {
     super(props);
-    this.logout = this.logout.bind(this);
-  }
-  componentDidMount(){
-    this.props.actions.CheckIsLogin();
-  }
-  logout(){
-    this.props.actions.LogOut();
   }
 
+  componentWillMount() { 
+    this.props.actions.CheckIsLogin();
+  }
+
+  componentDidMount() {
+    
+  }
+  
   render() {
-  	let isLogin;
-  	console.log('Header.js this.props is ',this.props)
-  	if(this.props.header.isLogin) {
-      if(this.props.userInfo.userInfo) {
-  		  isLogin = <div className='hadlogin login'>
-                    <span>欢迎您，{ this.props.userInfo.userInfo.userName }  </span>
-                    <Link className="label_login" to="/add_topic" >发文章</Link>
-                    <Link  to="/setting" >设置</Link>
-                    <a href='javascript:void(0);' className ='logout' onClick={ this.logout }>退出</a>
-                  </div>;
-      }
-    } else {
-  		isLogin = <div className="login">\
-                  <Link className="label_login" to="/sign_in" >登录</Link>\
-                  <Link className="label_register" to="/sign_up">注册</Link>\
-                  <Link className="label_login" to="/sign_in" >发文章</Link>\
-                </div>;
+    const isLogin = this.props.header.isLogin;
+    let loginTemp = <div className="login">
+                      <Link to="/sign_in" >登录</Link>
+                      <Link to="/sign_up">注册</Link>
+                      <Link to="/sign_in" >发文章</Link>
+                    </div>;    
+    if(isLogin) {
+      loginTemp = <UserHead />;
     }
     return (
         <header className='post_header' >
-        	<div className='title'>
-	        	<Link className="logo" to="/" >首页</Link>
-	        </div>
-        	<div className='user_login'>
-        		{ isLogin }
-        	</div>
+          <div className="header-inner">
+            <a className="logo" href="javascript:void(0);"></a>
+            <nav className='nav-bar'>
+              <Link className="nav" to="/" >首页</Link>
+              <Link className="nav" to="/" > css </Link>
+              <Link className="nav" to="/" > javascript </Link>
+              <Link className="nav" to="/" > node </Link>
+              <Link className="nav" to="/" > webpack </Link>
+            </nav>
+            <div className='user-login-wrap'>
+              { loginTemp } 
+            </div>            
+          </div>
         </header>
     );
   }
 }
 
 const mapStateToProps = (state) => {
-  //console.log('Header.js mapStateToProps,state is ',state);
-    return {
-      header:state.stores.header,
-      userInfo:state.stores.userInfo
-    }
+  return {
+    header: state.stores.header
+  }
 }
+
 const mapDispatchToProps = (dispatch) => {
-  //console.log('mapDispatchToProps');
-    return {
-        actions: bindActionCreators(actions, dispatch),
-    }
+  return {
+    actions: bindActionCreators(actions, dispatch),
+  }
 }
 
 export default connect(

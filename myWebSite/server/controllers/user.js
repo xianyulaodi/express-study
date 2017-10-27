@@ -16,7 +16,8 @@ exports.getUserInfo = (req,res,next) => {
         email: user.email,
         profile_image_url: user.profile_image_url,
         location: user.location,
-        introdece: user.introdece
+        introdece: user.introdece,
+        uid: id
       }
       common.succRes(res,{"userInfo": data});
     } else {
@@ -50,6 +51,26 @@ exports.setUserInfo = (req,res,next) => {
      }
    });
 };
+
+// 直返回用户uid
+exports.getUserId = (req,res,next) => {
+  var uid = 0;
+  if(req.session.user) {
+    uid = req.session.user._id;
+  }
+  common.succRes(res,{ uid: uid });
+}
+
+// 检查用户是否登录了
+exports.checkIsLogin = (req,res,next) => {
+  if(req.session.user) {
+    var uid = req.session.user._id;
+    common.succRes(res,{ uid: uid });  
+    return false;
+  } 
+  common.failRes(res,'update info fail');
+}
+
 
 // 上传头像
 exports.uploadHeadPic = (req,res,next) => {
