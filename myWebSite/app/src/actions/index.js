@@ -6,7 +6,7 @@ import * as basicAction from './innerAction'
 // pageSize
 export function GetTopicList(data) {
   return (dispatch, getState) => {
-    return basicAction.getTopicList(data,dispatch,[call_getTopicList,isNoMoreData]);
+    return basicAction.getTopicList(data,dispatch,[call_getTopicList]);
   }
 }
 
@@ -16,12 +16,7 @@ function call_getTopicList(data) {
     data:data
   }
 }
-function isNoMoreData(isNoData) {
-  return {
-    type:constants.NOMOREDATA,
-    data:isNoData    
-  }
-}
+
 
 
 // 获取banner列表

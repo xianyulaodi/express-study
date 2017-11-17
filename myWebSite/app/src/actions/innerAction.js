@@ -63,10 +63,7 @@ export function getTopicList(params,dispatch,callback) {
   axios.get(api + '/getTopicList?pageSize='+ params.pageSize +'&page='+ params.page)
   .then(function (res) {
     const resData = res.data;
-    if( resData.status == '200' ) {
-      if(params.page > 5) { // 模拟没有数据时的场景
-        dispatch(callback[1](true));
-      } 
+    if( resData.status == '200' ) { 
       dispatch(callback[0](resData.list));
     };
   })
@@ -79,17 +76,26 @@ export function getTopicList(params,dispatch,callback) {
  * 获取banner列表
  */
 export function getBannerList(dispatch,callback) {
+  /**
   axios.get('/getBannerList')
   .then(function (res) {
     const data = res.data;
     const list = res.data.list || [];
     if( res.data.status == '200' ) {
-        dispatch(callback[0](list));
+      dispatch(callback[0](list));
     };
   })
   .catch(function (error) {
     console.log(error);
   });
+  **/
+  var list = [
+    {
+      picUrl: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1508926087706&di=1e280b2044415a8a2f9a41fbc2f1773c&imgtype=0&src=http%3A%2F%2Fwww.pp3.cn%2Fuploads%2Fallimg%2F111120%2F100R612W-4.jpg',
+      url: 'www.baidu.com'
+    }
+  ];
+  dispatch(callback[0](list));
 }
  
  /**

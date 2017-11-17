@@ -136,7 +136,7 @@
 // );
 
 
-// //获取banner列表
+//获取banner列表
 // Mock.mock(
 // 	'/getBannerList',{
 // 		"status" : 200,

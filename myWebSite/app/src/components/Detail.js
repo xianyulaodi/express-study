@@ -28,6 +28,7 @@ class Detail extends Component {
         delCommentStatus: false
       }
   }
+  
   componentWillMount() {
     var id = this.props.match.params.id;
     this.props.actions.GetArticleDetail(id);

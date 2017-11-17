@@ -152,6 +152,7 @@ function findArticle(req,res,query) {
   var options = { skip:(page - 1) * limit, limit:limit }; 
   // 获取主题数据
   getTopicsByQuery(query,options,(err,topics) => {
+    console.log(page);
     ep.emit('topics',topics);
   });
   // 获取话题总数，用于分页

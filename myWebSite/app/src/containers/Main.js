@@ -14,17 +14,17 @@ class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentPage: 1,
+      curPage: 1,
       pageSize: 15,
       renderData: [],
-      isNoData: false
+      noMoreData: false
     }
     this.changePageNo = this.changePageNo.bind(this);
   }
   componentDidMount() {
     var data = {
       pageSize: this.state.pageSize,
-      page: this.state.currentPage
+      page: this.state.curPage
     }
     this.props.actions.GetTopicList(data);
     this.props.actions.GetBannerList();
@@ -36,33 +36,32 @@ class Main extends Component {
       this.setState({
         renderData: newRenderData
       });
-    } else if (nextList.length == 0 && this.currentPage > 1) {
+    } else if (nextList.length == 0 && this.state.curPage > 1) {
 
       this.setState({
-        isNoData: true
+        noMoreData: true
       });   
 
     }
   }  
 
   changePageNo(pageNo) {
-    let that = this,
-        currentPage  = this.state.currentPage;
-    currentPage +=1;
+    let that = this;
+    let curPage  = this.state.curPage +1;
     const data = {
       pageSize: this.state.pageSize,
-      pageNo: this.state.currentPage      
+      page: curPage      
     }
     that.props.actions.GetTopicList(data);
     this.setState({
-      currentPage: currentPage
+      curPage: curPage
     });
   }
   render() {
-    var loadText = this.props.indexData.noMoreData 
-                  ? <span>没有更多数据啦</span>
+    var loadText = this.state.noMoreData 
+                  ? <span className="no-data">没有更多数据啦~</span>
                   : <a className="more-btn" href="javascript:void(0);" onClick={ this.changePageNo } >查看更多</a>;
-    // console.log('this.props.topicList is ',this.props.indexData.topicList);
+    console.log('this.props.topicList is ',this.props.indexData);
     return (
       <div className="container-main">
         <Banner bannerList = { this.props.indexData.bannerList } />

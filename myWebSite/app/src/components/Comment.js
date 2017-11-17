@@ -47,6 +47,13 @@ class CommentItem extends Component{
         <article className="conment-text">
             { this.props.item.content }
         </article>
+        {/** 评论回复框,这里待定 **/}
+        <div className="reply-comment-wrap">
+            <ul>
+              <li>张三回复: 不错，挺好的</li>
+            </ul>
+            <input type="text" placeholder="请输入回复内容" /><span className="replyer-btn">提交</span>
+        </div>
       </div>
     )
   }
