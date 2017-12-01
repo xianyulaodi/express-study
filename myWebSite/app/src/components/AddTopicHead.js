@@ -63,11 +63,7 @@ class TopicHead extends Component {
     const title = this.refs.title.value;
     const type = this.state.type;
     const content = this.props.content;
-    const data = {
-      title: title,
-      content: content,
-      type: type
-    }
+    const realAuthor = this.refs.realAuthor.value || '';
     if(title == '') {
       alert('文章标题不能为空');
       return false;
@@ -75,7 +71,14 @@ class TopicHead extends Component {
     if(content == '') {
       alert('文章内容不能为空');
       return false;
+    }    
+    const data = {
+      title: title,
+      content: content,
+      type: type,
+      realAuthor: realAuthor  //用于有些文字是转载的情况
     }
+    
     this.props.actions.SubmitData('addNewTopic',data);
   }
 
@@ -108,6 +111,7 @@ class TopicHead extends Component {
                   })
                 }
               </ul>
+              <input type="text" className="real-author" ref="realAuthor" placeholder="请输入作者名字; 可选" />
               <a href="javascript:void(0);" className="submit-btn" onClick={ this.handleSubmit } >确认发布</a>              
             </div>
           </div>            

@@ -72,6 +72,20 @@ export function getTopicList(params,dispatch,callback) {
   });
 }
 
+// 获取热门文章
+export function getHotList(dispatch,callback) {
+  axios.get(api + '/getHotArticle')
+  .then(function (res) {
+    const resData = res.data;
+    if( resData.status == '200' ) { 
+      dispatch(callback[0](resData.list));
+    };
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+}
+
 /**
  * 获取banner列表
  */

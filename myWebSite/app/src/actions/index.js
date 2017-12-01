@@ -17,6 +17,20 @@ function call_getTopicList(data) {
   }
 }
 
+// 获取热门文章
+export function getHotList() {
+  return (dispatch,getState) => {
+    return basicAction.getHotList(dispatch,[call_getHotList]);
+  }
+}
+
+function call_getHotList(data) {
+  return {
+     type: constants.GETHOTLIST,
+     data: data
+  }
+}
+
 
 
 // 获取banner列表

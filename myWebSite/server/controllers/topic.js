@@ -11,33 +11,34 @@ const ep = new eventproxy();
 
 // 新增主题
 exports.addNewTopic = (req,res,next) => {
-  if(!req.session.user) {
-    res.json({
-      status: 201, // 201
-      message: "no login"
-    });
-    return false;
-  }
-  const data_obj = {
-    title: req.body.title,
-    content: req.body.content,
-    type: req.body.type || '', //文章类型
-    author_id: req.session.user._id,
-    create_at: common.getTimeNow()
-  }
-  Topic.newAndSave(data_obj)
-  .then(result => {
-    if(result) {
-      common.succRes(res,{data: result});
-    } else {
-      common.failRes(res,'save topic fail');
+    if(!req.session.user) {
+        res.json({
+          status: 201, // 201
+          message: "no login"
+        });
+        return false;
     }
-  })
+    const data_obj = {
+        title: req.body.title,
+        content: req.body.content,
+        type: req.body.type || '', //文章类型
+        real_author: req.body.realAuthor,
+        author_id: req.session.user._id,
+        create_at: common.getTimeNow()
+    }
+    Topic.newAndSave(data_obj)
+        .then(result => {
+        if(result) {
+          common.succRes(res,{data: result});
+        } else {
+          common.failRes(res,'save topic fail');
+        }
+    })
 }
 
 // 根据查询条件获取主题,一次性返回20条数据
 const getTopicsByQuery=(query,options,callback) => {
-  Topic.findByQuery(query,options,callback);
+    Topic.findByQuery(query,options,callback);
 };
 // 获取首页总数,用于分页
 const getCountByQuery = (query, callback) => {
@@ -46,74 +47,82 @@ const getCountByQuery = (query, callback) => {
 
 // 获取文章情页
 exports.getArticleDetail=(req,res,next) => { 
-   var articleId = req.query.articleId;
-   Topic.getTopicById({ _id: articleId })
-   .then(result => {
-     if(result) {
-      combineAuthorInfoWithDetail(res,result);
-      countArticleRead(result); //更新文章阅读量
-     } else {
-      common.failRes(res,'get artile detail fail');
-     }
-   })
+    var articleId = req.query.articleId;
+    Topic.getTopicById({ _id: articleId })
+    .then(result => {
+        if(result) {
+            combineAuthorInfoWithDetail(res,result);
+            countArticleRead(result); //更新文章阅读量
+        } else {
+            common.failRes(res,'get artile detail fail');
+        }
+    })
+}
+
+// 获取热门文章。阅读量最高的前五篇文章
+exports.getHotArticle = (req,res,next) => {
+    let options = { skip:0, limit:5,sort: {'reply_number': 1} };     
+    Topic.findByQuery({},options,function(err,topics) {
+       common.succRes(res,{list: topics});
+    });  
 }
 
 // 获取所有的文章列表
 exports.getTopicList = (req,res,next) => {
-  var query = {};
-  findArticle(req,res,query);
+    var query = {};
+    findArticle(req,res,query);
 }
 
 // 删除文章
 exports.delArticleById = (req,res,nex) => {
-  var articleId = req.body.articleId;
-  var authorId = req.body.authorId;
-  if(req.session.user._id != authorId ) {
-    common.failRes(res,'not your article');
-    log.error('del article fail');
-    return false;
-  }
-  Topic.delArticleById({ _id: articleId },(err,data) => {
-    common.succRes(res);
-    log.info('del article success');
-  })
+    var articleId = req.body.articleId;
+    var authorId = req.body.authorId;
+    if(req.session.user._id != authorId ) {
+        common.failRes(res,'not your article');
+        log.error('del article fail');
+        return false;
+    }
+    Topic.delArticleById({ _id: articleId },(err,data) => {
+        common.succRes(res);
+        log.info('del article success');
+    })
 }
 
 // 更新文章
 exports.updateArticle = (req,res,nex) => {
-  var articleId = req.body.articleId;
-  var content = req.body.content;
-  var title = req.body.title;
-  Topic.updateArticle({_id: articleId},{ 
-    content: content,
-    title: title 
-  }).then(result => {
-     if(result){
-        common.succRes(res);
-     } else {
-        common.failRes(res,'update article fail');
-     }
-   })
+    var articleId = req.body.articleId;
+    var content = req.body.content;
+    var title = req.body.title;
+    Topic.updateArticle({_id: articleId},{ 
+        content: content,
+        title: title 
+    }).then(result => {
+        if(result){
+            common.succRes(res);
+        } else {
+            common.failRes(res,'update article fail');
+        }
+    })
 }
 
 // 统计文章阅读量
 function countArticleRead(data) {
-  var readerIp = ip.address(); // 获取读者的ip地址，统计文章阅读量，一个ip地址统计一次
-  var readerIps = data.reader_ips || [];
-  var isRead = readerIps.indexOf(readerIp) > -1; 
-  if(isRead) {
-    return false;
-  }
-  Topic.updateArticle({_id: data._id},{ 
-    $inc:{ visit_number: 1 },
-    $push:{ reader_ips: readerIp }
-  }).then(result => {
-    if(result){
-      common.succRes(res);
-    } else {
-      common.failRes(res,'count read num fail');
+    var readerIp = ip.address(); // 获取读者的ip地址，统计文章阅读量，一个ip地址统计一次
+    var readerIps = data.reader_ips || [];
+    var isRead = readerIps.indexOf(readerIp) > -1; 
+    if(isRead) {
+        return false;
     }
-  });  
+    Topic.updateArticle({_id: data._id},{ 
+        $inc:{ visit_number: 1 },
+        $push:{ reader_ips: readerIp }
+    }).then(result => {
+        if(result){
+          common.succRes(res);
+        } else {
+          common.failRes(res,'count read num fail');
+        }
+    });  
 }
 
 // 搜索，模糊匹配

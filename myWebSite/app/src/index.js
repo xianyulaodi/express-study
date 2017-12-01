@@ -18,6 +18,7 @@ import LoginRegister from 'containers/LoginRegister'
 import AuthorCenter from 'containers/AuthorCenter'
 import Detail from 'components/Detail'
 import UserSetting from 'components/UserSetting'
+import About from 'components/About'
 import NoMatch from 'components/Page404'
 
 //import DevTools from './containers/DevTools'
@@ -53,6 +54,8 @@ ReactDOM.render(
               <Route path="/add_topic" location={ history.location } key={ history.location.key } component={ AddTopic } />
               <Route path="/setting" location={ history.location } key={ history.location.key } component={ UserSetting } />
               <Route path="/author_center/:authorId" location={ history.location } key={ history.location.key } component={ AuthorCenter } />
+              <Route path="/about" location={ history.location } key={ history.location.key } component={ About } />
+
               <Route location={ history.location } key={ history.location.key } component={ NoMatch } />
             </Switch>
           </CSSTransitionGroup>

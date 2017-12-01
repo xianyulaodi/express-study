@@ -25,9 +25,19 @@
     width: 50%;
     padding: 10px;
     box-sizing: border-box;
+    overflow: auto;
   }
   .other-info {
     right: 20px;
+  }
+  .real-author {
+    height: 30px;
+    padding: 5px;
+    line-height: 30px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    color: #333;
   }
 }
 

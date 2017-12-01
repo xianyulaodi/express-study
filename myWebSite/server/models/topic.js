@@ -15,6 +15,7 @@ const TopicSchema = new mongoose.Schema({
  	content: {type:String},
  	type: {type:String}, //文章类型
  	author_id: {type: ObjectId },
+ 	real_author: {type: String },  // 真实的作者，用于文章时转载的情况
 	top: {type: Boolean, default: false},            //是否为置顶帖
 	good: {type: Boolean, default: false},           //是否为精华帖
 	reply_ornot: {type: Boolean, default: false},  // **   是否有人回复
@@ -35,7 +36,7 @@ const TopicSchema = new mongoose.Schema({
 	favored_fellow: [{type: ObjectId}]                //该文章的喜欢人数。这里到时候需要分个表
 });
 
-TopicSchema.index({create_at: -1});                  //查看:"最新创建"
+TopicSchema.index({create_at: 1});                  //查看:"最新创建"  1为升序  -1为降序
 TopicSchema.index({top: -1,last_reply_at: -1});      //查看:"默认"
 TopicSchema.index({good: -1,last_reply_at: -1});     //查看:"优质帖子"
 TopicSchema.index({reply_number: 1,create_at: -1});  //查看:"无人问津"

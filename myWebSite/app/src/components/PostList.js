@@ -21,6 +21,7 @@ class Poster extends Component {
       like:this.props.posterInfo.collect_number,
       commentNum:this.props.posterInfo.reply_number,
       contentPic:this.props.posterInfo.contentPic,
+      real_author:this.props.posterInfo.real_author
     }
   }
   componentWillReceiveProps(nextProps) {
@@ -36,6 +37,7 @@ class Poster extends Component {
       like:nextProps.posterInfo.collect_number,
       commentNum:nextProps.posterInfo.reply_number,
       contentPic:nextProps.posterInfo.contentPic,
+      real_author:nextProps.posterInfo.real_author
     });
   }
   render(){
@@ -53,13 +55,14 @@ class Poster extends Component {
               <a className="author-pic img-circle" href="#">
                 <img src={ this.state.author.avatar_url } alt="" />
               </a> 
-              <Link className="author-name" to={ '/author_center/'+encodeURI(this.state.author_id) }>{ this.state.author.name }</Link>
+              <Link className="author-name" to={ '/author_center/'+encodeURI(this.state.author_id) }>{ this.state.real_author ? this.state.real_author : this.state.author.name }</Link>
               <span className="create-time">{ this.state.createTime }</span>
             </div>
             <Link className="title" to={'/detail/'+encodeURI(this.state._id) }>{ this.state.title }</Link>
-            <div className="category">
+            {/** <div className="category">
               <p dangerouslySetInnerHTML={{__html: this.state.content }}></p>
             </div>
+            **/}
             <div className="list-bottom">
               <a target="_blank" href="/p/8f83d08c9659">
                 <i className="iconfont icon-read"></i> 

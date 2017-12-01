@@ -41,6 +41,7 @@ class PostHeader extends Component {
               <Link className="nav" to="/" > javascript </Link>
               <Link className="nav" to="/" > node </Link>
               <Link className="nav" to="/" > webpack </Link>
+              <Link className="nav" to="/about" > 关于 </Link>
             </nav>
             <div className='user-login-wrap'>
               { loginTemp } 
