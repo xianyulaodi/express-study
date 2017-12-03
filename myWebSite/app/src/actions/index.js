@@ -265,9 +265,23 @@ function call_setPersonalInfo(boolean) {
 }
 
 // 头像图片上传
+export function uploadHeadPic(data) {
+  return (dispatch, getState) => {
+    return basicAction.uploadPic(data,dispatch,false,[call_uploadHeadPic]);
+  }
+}
+
+function call_uploadHeadPic(data) {
+  return {
+    type:constants.UPLOADHEADPIC,
+    data:data.picUrl
+  }
+}
+
+// 图片上传,文章的编辑
 export function uploadPic(data) {
   return (dispatch, getState) => {
-    return basicAction.uploadPic(data,dispatch,[call_uploadPic]);
+    return basicAction.uploadPic(data,dispatch,true,[call_uploadPic]);
   }
 }
 
@@ -277,3 +291,5 @@ function call_uploadPic(data) {
     data:data.picUrl
   }
 }
+
+

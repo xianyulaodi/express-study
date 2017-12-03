@@ -5,6 +5,7 @@ const Topic = require('../api/topic');
 const User = require('../api/user');
 const common = require('../common/common');
 const config=require('../config');
+const uploadPic = require('../common/uploadPic');
 const log = require('log4js').getLogger("log_file"); // 日志统计
 const co  = require('co');
 const ep = new eventproxy();
@@ -123,6 +124,13 @@ function countArticleRead(data) {
           common.failRes(res,'count read num fail');
         }
     });  
+}
+
+// 上传文章图片
+exports.uploadArticlePic = (req,res,next) => {
+    uploadPic.uploadPic(req,res,next,(resUrl) => {
+        common.succRes(res,{picUrl: resUrl});
+    }); 
 }
 
 // 搜索，模糊匹配

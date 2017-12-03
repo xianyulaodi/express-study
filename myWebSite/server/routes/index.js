@@ -38,16 +38,17 @@ router.get(API + '/getCollectList',author.getCollectList);   // 获取作者收�
 // 个人信息
 router.get(API + '/getUserInfo',user.getUserInfo);     //获取个人信息
 router.post(API + '/setUserInfo',user.setUserInfo);    // 设置个人信息
-router.post(API + '/uploadPic',user.uploadHeadPic);   //图片上传
+router.post(API + '/uploadHeadPic',user.uploadHeadPic);   //图片上传
 router.post(API + '/changePass',user.changePass);    //修改密码
 router.get(API + '/getUserId',user.getUserId);    // 获取用户uid
 router.get(API + '/checkIsLogin',user.checkIsLogin);    // 检查用户是否登录了
+// 公共类
+router.post(API + '/uploadPic',topic.uploadArticlePic);   //图片上传，公共上传
 
 // 关注作者，取消关注作者
 router.post(API + '/focusAuthor',author.focusAuthor);         //关注作者
 router.post(API + '/unfocusAuthor',author.unfocusAuthor);    //取消关注作者
 router.post(API + '/hadFocus',author.hadFocus);    //是否已关注作者
-
 
 // 测试接口地址，改为前后端分离的模式，后端只生产数据，前端这样以后前端可以用任何的框架来做，分离解耦
 router.get('/testApi',(req,res,next) => {

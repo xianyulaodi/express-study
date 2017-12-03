@@ -1,5 +1,6 @@
 const User = require('../api/user');
 const common = require('../common/common');
+const uploadPic = require('../common/uploadPic');
 const formidable = require('formidable');
 const fs  = require('fs');
 const path = require("path");
@@ -63,7 +64,7 @@ exports.getUserId = (req,res,next) => {
 
 // 检查用户是否登录了
 exports.checkIsLogin = (req,res,next) => {
-  if(req.session.user) {
+  if(req.session && req.session.user) {
     var uid = req.session.user._id;
     common.succRes(res,{ uid: uid });  
     return false;
@@ -74,34 +75,20 @@ exports.checkIsLogin = (req,res,next) => {
 
 // 上传头像
 exports.uploadHeadPic = (req,res,next) => {
-  var form = formidable.IncomingForm();
-  form.encoding = 'utf-8';
-  form.uploadDir = config.upload.path;
-  form.keepExtensions = true; //保留后缀
-  form.maxFieldsSize = 2 * 1024 * 1024; // 单位为byte
-  form.type = true;
-  form.on('error', function(err) {
-    console.error('upload failed', err.message);
-    next(err);
-  });
-  form.parse(req,(err, fields, files) => {
-    if (err) {
-      res.send(err);
-      return;
-    };
-    var newPath = form.uploadDir + files.imgFile.name;  //imgFile为file的name字段
-    fs.renameSync(files.imgFile.path, newPath); //重命名
-    const resUrl = '//'+ config.hostname + ':' + config.port +  config.upload.url + files.imgFile.name;
-    User.updateData({_id: req.session.user._id},{profile_image_url: resUrl},{upsert: false})
-    .then(result => {
-      if(result.ok == 1) {
-        common.succRes(res,{picUrl: resUrl});
-        req.session.user.profile_image_url = resUrl;
-      } else {
-        common.failRes(res,'upload pic fail');
-      }
-    });
-  });
+    uploadPic.uploadPic(req,res,next,(resUrl) => {
+        User.updateData(
+            {_id: req.session.user._id},
+            {profile_image_url: resUrl},
+            {upsert: false}
+        ).then(result => {
+            if(result.ok == 1) {
+                common.succRes(res,{picUrl: resUrl});
+                req.session.user.profile_image_url = resUrl;
+            } else {
+                common.failRes(res,'upload pic fail');
+            }
+        });
+    }); 
 }
 
 // 修改密码

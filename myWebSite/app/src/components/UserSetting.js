@@ -18,7 +18,7 @@ class UserSetting extends Component {
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInput = this.handleInput.bind(this);
-    this.uploadPic = this.uploadPic.bind(this);
+    this.uploadHeadPic = this.uploadHeadPic.bind(this);
   }
   componentWillMount() {
     this.props.actions.getPersonalInfo();
@@ -44,9 +44,9 @@ class UserSetting extends Component {
       });
     }    
   }
-  uploadPic(e) {
+  uploadHeadPic(e) {
     let file = e.target.files[0]
-    this.props.actions.uploadPic(file);
+    this.props.actions.uploadHeadPic(file);
   }
   handleInput(e) {
     const name = e.target.name;

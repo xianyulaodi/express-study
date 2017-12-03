@@ -1,8 +1,10 @@
-import { ADDTOPIC } from '../constants'
+import { ADDTOPIC,UPLOADPIC } from '../constants'
 
-function newTopic(state = { newTopicStatus : null }, action) {
+function newTopic(state = { newTopicStatus: null,picUrl: null }, action) {
     if (action.type === ADDTOPIC) {
-       return { newTopicStatus: action.data }
+        return Object.assign({},state,{ newTopicStatus: action.data });
+    } else if(action.type === UPLOADPIC) {
+        return Object.assign({},state,{ picUrl: action.data });
     }
     return state;
 }

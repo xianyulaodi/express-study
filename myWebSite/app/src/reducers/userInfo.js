@@ -1,4 +1,4 @@
-import { UPDATEUSERINFO,GETTINGINFO,UPLOADPIC } from '../constants'
+import { UPDATEUSERINFO,GETTINGINFO,UPLOADHEADPIC } from '../constants'
 
 function updateUserInfo(state = { userInfo: null, updateSuccess: false, newHeadPic:'' }, action) {
 	//console.log('in reducers,state is ',state,'action is ',action);
@@ -9,7 +9,7 @@ function updateUserInfo(state = { userInfo: null, updateSuccess: false, newHeadP
     case UPDATEUSERINFO:
   	   return Object.assign({},state,{ updateSuccess: action.data });
   	   break;  	
-    case UPLOADPIC:
+    case UPLOADHEADPIC:
   	   return Object.assign({},state,{ newHeadPic: action.data });
   	   break; 
   	default:

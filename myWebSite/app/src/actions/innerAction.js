@@ -105,7 +105,7 @@ export function getBannerList(dispatch,callback) {
   **/
   var list = [
     {
-      picUrl: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1508926087706&di=1e280b2044415a8a2f9a41fbc2f1773c&imgtype=0&src=http%3A%2F%2Fwww.pp3.cn%2Fuploads%2Fallimg%2F111120%2F100R612W-4.jpg',
+      picUrl: '/img/banner.220dd2740e9216d9a82e87450e1fba5f.jpg',
       url: 'www.baidu.com'
     }
   ];
@@ -321,23 +321,24 @@ export function setPersonalInfo(data,dispatch,callback) {
 }
 
 // 头像上传
-export function uploadPic(file,dispatch,callback) {
-  let param = new FormData()  // 创建form对象
-  param.append('imgFile', file, file.name)  // 通过append向form对象添加数据
-  param.append('chunk', '0') // 添加form表单中其他数据
-  let config = {
-    headers: {'Content-Type': 'multipart/form-data'}
-  }
-  axios.post(
-    api+ '/uploadPic',
-    param,
-    config
-  ).then(res => {
-    if(res.data.status == '200') {
-      dispatch(callback[0](res.data));
+export function uploadPic(file,dispatch,fromArticle,callback) {
+    let url = fromArticle ? api + '/uploadPic' : api + '/uploadHeadPic';
+    let param = new FormData()  // 创建form对象
+    param.append('imgFile', file, file.name)  // 通过append向form对象添加数据
+    param.append('chunk', '0') // 添加form表单中其他数据
+    let config = {
+        headers: {'Content-Type': 'multipart/form-data'}
     }
-    console.log('图片上传结果',res);
-  })  
+    axios.post(
+        url,
+        param,
+        config
+    ).then(res => {
+        if(res.data.status == '200') {
+          dispatch(callback[0](res.data));
+        }
+        console.log('图片上传结果',res);
+    })  
 }
 
 /**
@@ -358,16 +359,16 @@ export function logOut(dispatch,callback) {
 // 关注
 // authorId 作者id
 export function focus(authorId,dispatch,callback) {
-  axios.post(
-    api+ '/focusAuthor',
-    qs.stringify({authorId,authorId})
-  ).then(function(res) {
-    if(res.data.status == '200') {
-        dispatch(callback[0](true));
-    } else {
-        console.log('关注失败');
-    }
-  })
+    axios.post(
+        api+ '/focusAuthor',
+        qs.stringify({authorId,authorId})
+    ).then(function(res) {
+        if(res.data.status == '200') {
+            dispatch(callback[0](true));
+        } else {
+            console.log('关注失败');
+        }
+    })
 }
 
 // 取消关注

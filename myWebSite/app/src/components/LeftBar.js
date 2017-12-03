@@ -21,7 +21,7 @@ class LeftBar extends Component {
       <div className="container-leftBar">
         <div className="ad-list">
           <p className="img-wrap">
-            <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1509525793&di=5da9934b6c1ea1a73c430d366551fec8&imgtype=jpg&er=1&src=http%3A%2F%2Fpic3.16pic.com%2F00%2F19%2F57%2F16pic_1957628_b.jpg" alt="" />
+            <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1512238289356&di=3fae91b7e978032fa0085ca6951494ce&imgtype=0&src=http%3A%2F%2Fwww.eccn.com%2Fevents%2F2017%2Fosram%2Fimages%2Fweixin.gif" alt="" />
           </p>
           <p className="img-wrap">
             <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1509525793&di=5da9934b6c1ea1a73c430d366551fec8&imgtype=jpg&er=1&src=http%3A%2F%2Fpic3.16pic.com%2F00%2F19%2F57%2F16pic_1957628_b.jpg" alt="" />

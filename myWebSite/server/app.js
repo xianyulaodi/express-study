@@ -25,7 +25,6 @@ app.set('view engine', 'html');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-//app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser(config.session_secret));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -33,19 +32,28 @@ app.use('/public',express.static(staticDir));
 
 // session 设置
 app.use(session({
-    name:config.name,
-    secret:config.session_secret,
-    store:new MongoStore({
-      url:config.mongodb  // 用来保存数据库的一些session，比如记住登录密码等
-    }),
-    cookie:{
-      path: '/',
-      maxAge: 1000 * 60 * 60 * 24 * 30,
-      signed: true, httpOnly: true
-    }, //cookie 有效期30天,
-	  resave:true,
-	  saveUninitialized:true
+  name:config.name,
+  secret:config.session_secret,
+  store:new MongoStore({
+    url:config.mongodb  // 用来保存数据库的一些session，比如记住登录密码等
+  }),
+  cookie:{
+    path: '/',
+    maxAge: 1000 * 60 * 30,  // session过期时间为30分钟
+    signed: true, 
+    httpOnly: true
+  }, 
+  resave:true,
+  saveUninitialized:true
 }));
+
+
+// 每次用户有请求，重新设置session过期时间
+app.use(function(req, res, next){
+  req.session._garbage = Date();
+  req.session.touch();
+  next();
+});
 
 // 添加日志统计 START
 var log4js_config = require("./config/log4js.json");  
