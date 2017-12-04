@@ -6,21 +6,22 @@ import * as actions from '../actions/index'
 import PostList from '../components/PostList';;
 import Banner from '../components/Banner';
 import LeftBar from '../components/LeftBar';
-
 import '../static/scss/main.scss';
 
-
 class Main extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
       curPage: 1,
       pageSize: 15,
       renderData: [],
+      hotList: [],
       noMoreData: false
     }
     this.changePageNo = this.changePageNo.bind(this);
   }
+
   componentDidMount() {
     var data = {
       pageSize: this.state.pageSize,
@@ -28,7 +29,9 @@ class Main extends Component {
     }
     this.props.actions.GetTopicList(data);
     this.props.actions.GetBannerList();
+    this.props.actions.GetHotList();
   }
+
   componentWillReceiveProps(nextProps) {
     const nextList = nextProps.indexData.topicList;
     if(nextList.length > 0  && nextList != this.props.indexData.topicList) {
@@ -37,18 +40,21 @@ class Main extends Component {
         renderData: newRenderData
       });
     } else if (nextList.length == 0 && this.state.curPage > 1) {
-
       this.setState({
         noMoreData: true
       });   
-
+    }
+    if(nextProps.indexData.hotList !== this.props.indexData.hotList ) {
+      this.setState({
+        hotList: nextProps.indexData.hotList
+      });      
     }
   }  
 
   changePageNo(pageNo) {
     let that = this;
     let curPage  = this.state.curPage +1;
-    const data = {
+    let data = {
       pageSize: this.state.pageSize,
       page: curPage      
     }
@@ -58,6 +64,7 @@ class Main extends Component {
     });
   }
   render() {
+    console.log('indexData:',this.props.indexData);
     var loadText = this.state.noMoreData 
                   ? <span className="no-data">没有更多数据啦~</span>
                   : <a className="more-btn" href="javascript:void(0);" onClick={ this.changePageNo } >查看更多</a>;
@@ -71,7 +78,7 @@ class Main extends Component {
             <p className="load-more">{ loadText }</p>
           </div>
           <div className="container-right">
-              <LeftBar />
+              <LeftBar hotList = { this.state.hotList } />
           </div>
         </div>
       </div>

@@ -8,6 +8,10 @@ const config = require('../config');
 
 // 获取用户个人信息
 exports.getUserInfo = (req,res,next) => {
+  if(!req.session.user) {
+    common.failRes(res,'get info fail');
+    return false;
+  }
   const id = req.session.user._id;
   User.getUserById(id,(err,user) => {
     if(user) {

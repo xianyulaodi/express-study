@@ -62,7 +62,7 @@ exports.getArticleDetail=(req,res,next) => {
 
 // 获取热门文章。阅读量最高的前五篇文章
 exports.getHotArticle = (req,res,next) => {
-    let options = { skip:0, limit:5,sort: {'reply_number': 1} };     
+    var options = { skip:0, limit:5,sort: {'reply_number': 1} };     
     Topic.findByQuery({},options,function(err,topics) {
        common.succRes(res,{list: topics});
     });  

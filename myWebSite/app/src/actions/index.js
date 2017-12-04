@@ -18,7 +18,7 @@ function call_getTopicList(data) {
 }
 
 // 获取热门文章
-export function getHotList() {
+export function GetHotList() {
   return (dispatch,getState) => {
     return basicAction.getHotList(dispatch,[call_getHotList]);
   }

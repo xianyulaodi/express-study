@@ -24,6 +24,7 @@ router.post(API + '/delArticleById',topic.delArticleById);   //删除选中的�
 router.post(API + '/updateArticle',topic.updateArticle);    //更新文章
 router.get(API + '/search',topic.search);    //搜索文章
 router.get(API + '/findArticleByType',topic.findArticleByType);    //根据文章分类筛选文章
+router.get(API + '/getHotArticle',topic.getHotArticle);    // 获取热门文章
 // 评论类
 router.post(API + '/addCommentByArticleId',reply.add); // 新增文章评论
 router.get(API + '/getComments',reply.getComments);   // 获取某偏文章的所有评论
