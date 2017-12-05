@@ -96,10 +96,10 @@
         - 添加二级评论功能
         - 添加标签(tag)功能
 
-## 捐赠
+## mongolass 
+   地址: https://github.com/mongolass/mongolass
+   API: 和 node-mongodb-native一样  http://mongodb.github.io/node-mongodb-native/2.2/api/
 
-您的捐赠，是我持续开源的动力。
+## 使用UI: semantic-ui
 
-支付宝 | 微信
-------|------
-![](./public/alipay.png) | ![](./public/wechat.jpeg)
+  http://www.semantic-ui.cn/
