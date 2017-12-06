@@ -1,7 +1,30 @@
 <%- include('header') %>
 
-<% posts.forEach(function (post) { %>
-  <%- include('components/post-content', { post: post }) %>
-<% }) %>
+<%- include('components/banner') %>
+<div class="container row">
+  <div class="col-md-9">
+    <% posts.forEach(function (post) { %>
+      <%- include('components/post-content', { post: post }) %>
+    <% }) %>
+  </div>
+  <div class="col-md-3">
+    <div class="container-left">
+      <div class="ad-list">
+        <p class="img-wrap">
+          <img src="" alt="" />
+        </p>
+        <p class="img-wrap">
+          <img src="" alt="" />
+        </p>
+      </div>
+      <div class="hot-list">
+        <h2 class="hot-title">热门文章</h2>
+        <a href="#">热门文章1</a>
+        <a href="#">热门文章1</a>
+        <a href="#">热门文章1</a>
+      </div>
+    </div>
+  </div>
+</div>
 
 <%- include('footer') %>

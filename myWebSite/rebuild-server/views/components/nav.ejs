@@ -1,10 +1,34 @@
-<div class="nav">
-  <div class="ui grid">
-    <div class="four wide column"></div>
-
-    <div class="eight wide column">
-      <a href="/posts"><h1><%= blog.title %></h1></a>
-      <p><%= blog.description %></p>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/posts">
+       <%= blog.title %>
+       <span><%= blog.description %></span>
+      </a>
+    </div>
+    <div id="navbar" class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/posts">首页</a></li>
+        <li><a href="#about">CSS</a></li>
+        <li><a href="#contact">HTML</a></li>
+      </ul>
+      <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          菜单
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+          <% if (user) { %>
+            <li><a href="/posts?author=<%= user._id %>">个人主页</a></li>
+            <li><a href="/posts/create">发表文章</a></li>
+            <li><a href="/signout">登出</a></li>
+          <% } else { %>
+            <li><a href="/signin">登录</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a  href="/signup">注册</a></li>
+          <% } %>
+        </ul>
+      </div>
     </div>
   </div>
-</div>
+</nav>

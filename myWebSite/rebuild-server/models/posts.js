@@ -57,8 +57,8 @@ module.exports = {
   },
 
   // 按创建时间降序获取所有用户文章或者某个特定用户的所有文章
-  getPosts: function getPosts (author) {
-    const query = {}
+  getPosts: function getPosts (author,page,pageSize) {
+    const query = {};
     if (author) {
       query.author = author
     }
@@ -66,6 +66,8 @@ module.exports = {
       .find(query)
       .populate({ path: 'author', model: 'User' })
       .sort({ _id: -1 })
+      .skip(page-1)  //分页
+      .limit(pageSize)
       .addCreatedAt()
       .addCommentsCount()
       .contentToHtml()

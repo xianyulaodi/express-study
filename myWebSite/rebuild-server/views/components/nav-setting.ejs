@@ -1,18 +1,17 @@
-<div class="nav-setting">
-  <div class="ui buttons">
-    <div class="ui floating dropdown button">
-      <i class="icon bars"></i>
-      <div class="menu">
-        <% if (user) { %>
-          <a class="item" href="/posts?author=<%= user._id %>">个人主页</a>
-          <div class="divider"></div>
-          <a class="item" href="/posts/create">发表文章</a>
-          <a class="item" href="/signout">登出</a>
-        <% } else { %>
-          <a class="item" href="/signin">登录</a>
-          <a class="item" href="/signup">注册</a>
-        <% } %>
-      </div>
-    </div>
-  </div>
+<div class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    菜单
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+    <% if (user) { %>
+      <li><a href="/posts?author=<%= user._id %>">个人主页</a></li>
+      <li><a href="/posts/create">发表文章</a></li>
+      <li><a href="/signout">登出</a></li>
+    <% } else { %>
+      <li><a href="/signin">登录</a></li>
+      <li role="separator" class="divider"></li>
+      <li><a  href="/signup">注册</a></li>
+    <% } %>
+  </ul>
 </div>

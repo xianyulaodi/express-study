@@ -1,3 +1,4 @@
+const path = require('path')
 const express = require('express')
 const router = express.Router()
 
@@ -8,9 +9,11 @@ const CommentModel = require('../models/comments')
 // GET /posts 所有用户或者特定用户的文章页
 //   eg: GET /posts?author=xxx
 router.get('/', function (req, res, next) {
-  const author = req.query.author
+  const author = req.query.author;
+  let page = req.query.page || 1;
+  let pageSize = req.query.pageSize || 10;
 
-  PostModel.getPosts(author)
+  PostModel.getPosts(author,page,pageSize)
     .then(function (posts) {
       res.render('posts', {
         posts: posts
@@ -19,11 +22,28 @@ router.get('/', function (req, res, next) {
     .catch(next)
 })
 
+// /posts/upload 文章图片上传 借助于 express-formidable 中间件
+router.post('/upload',function(req,res,next) {
+  const picName = req.files.file.path.split(path.sep).pop();
+  if(picName) {
+    res.json({
+      status: 200,
+      picUrl: '/img/'+picName
+    })
+  } else {
+    res.json({ status: 100 });
+  }
+
+  next();
+})
+
+
 // POST /posts/create 发表一篇文章
 router.post('/create', checkLogin, function (req, res, next) {
   const author = req.session.user._id
   const title = req.fields.title
   const content = req.fields.content
+  const type = req.fields.type
 
   // 校验参数
   try {
@@ -33,15 +53,18 @@ router.post('/create', checkLogin, function (req, res, next) {
     if (!content.length) {
       throw new Error('请填写内容')
     }
+    if (!type.length) {
+      throw new Error('请填写文章类型')
+    }
   } catch (e) {
     req.flash('error', e.message)
     return res.redirect('back')
   }
-
   let post = {
     author: author,
     title: title,
     content: content,
+    type: type,
     pv: 0
   }
 

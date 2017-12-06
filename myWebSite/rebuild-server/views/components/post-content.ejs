@@ -1,4 +1,4 @@
-<div class="post-content">
+<!-- <div class="post-content">
   <div class="ui grid">
     <div class="four wide column">
       <a class="avatar avatar-link"
@@ -8,6 +8,7 @@
         <img class="avatar" src="/img/<%= post.author.avatar %>">
       </a>
     </div>
+
 
     <div class="eight wide column">
       <div class="ui segment">
@@ -33,6 +34,21 @@
           </span>
         </div>
       </div>
+    </div>
+  </div>
+</div> -->
+<div class="post-item">
+  <div class="media">
+    <div class="media-left media-middle">
+      <a href="/posts?author=<%= post.author._id %>" >
+        <img class="img-circle" src="/img/<%= post.author.avatar %>" alt="...">
+      </a>
+    </div>
+    <div class="media-body">
+      <h4 class="media-heading"><a href="/posts/<%= post._id %>"><%= post.title %></a></h4>
+      <p class="content"><%- post.content %></p>
+      <span>阅读(<%= post.pv || 0 %>)</span>
+      <span>评论(<%= post.commentsCount || 0 %>)</span>
     </div>
   </div>
 </div>
