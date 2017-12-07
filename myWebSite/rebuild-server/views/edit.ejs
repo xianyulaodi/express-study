@@ -1,28 +1,57 @@
-<%- include('header') %>
-
-<div class="ui grid">
-  <div class="four wide column">
-    <a class="avatar"
-       href="/posts?author=<%= user._id %>"
-       data-title="<%= user.name %> | <%= ({m: '男', f: '女', x: '保密'})[user.gender] %>"
-       data-content="<%= user.bio %>">
-      <img class="avatar" src="/img/<%= user.avatar %>">
-    </a>
-  </div>
-
-  <div class="eight wide column">
-    <form class="ui form segment" method="post" action="/posts/<%= post._id %>/edit">
-      <div class="field required">
-        <label>标题</label>
-        <input type="text" name="title" value="<%= post.title %>">
-      </div>
-      <div class="field required">
-        <label>内容</label>
-        <textarea name="content" rows="15"><%= post.content %></textarea>
-      </div>
-      <input type="submit" class="ui button" value="发布">
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title><%= blog.title %></title>
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/create.css">
+  </head>
+  <body>
+    <div class="container-create">
+      <form method="post" action="/posts/<%= post._id %>/edit" >
+        <header class="add-topic-head" >
+          <div class="head-l">
+            <input type="text" name="title" value="<%= post.title %>" required placeholder="输入文章标题" />
+          </div>
+          <div class="head-r">
+            <div class="topic-user-head">
+              <p class="head-img dropdown-toggle" id="dropSetting" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" >
+                <img class="avatar" src="/img/<%= user.avatar %>" alt="" />
+              </p>
+              <div class="other-info dropdown-menu" aria-labelledby="dropSetting" >
+                <a href="javascript:void(0);">发文章</a>
+                <a href="/">回首页 </a>
+                <a href="/signout"> 退出 </a>
+              </div>
+            </div>
+            <a href="javascript:void(0);" class="publish-btn dropdown-toggle" id="dropPublish" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" >发布</a>
+            <div class="draw-down dropdown-menu" aria-labelledby="dropPublish" >
+              <div class="draw-inner">
+                <h3>文章分类</h3>
+                <input type="hidden" name="type" value="" required id="type">
+                <ul class="type-list" id="typeList">
+                  <li class="type <% if(post.type == "html") { %> active <% } %>" >html</li>
+                  <li class="type <% if(post.type == "css") { %> active <% } %>" >css</li>
+                  <li class="type <% if(post.type == "javascript") { %> active <% } %>" >javascript</li>
+                  <li class="type <% if(post.type == "node") { %> active <% } %>" >node</li>
+                  <li class="type <% if(post.type == "other") { %> active <% } %>" >other</li>
+                </ul>
+                <input class="submit-btn" type="submit" value="确认发布" >
+              </div>
+            </div>
+          </div>
+        </header>
+        <div class="container-add">
+          <textarea class="content-input" name="content" required id="content" placeholder="请输入文章内容,markdown 语法"><%= post.content %></textarea>
+          <div class="toggle-view" id="articleContent"></div>
+        </div>
     </form>
+    <%- include('components/notification') %>
   </div>
-</div>
-
-<%- include('footer') %>
+  </body>
+  <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <script src="/js/marked.js"></script>
+  <script src="/js/create.js"></script>
+</html>

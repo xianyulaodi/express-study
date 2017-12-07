@@ -1,0 +1,49 @@
+@charset "utf-8";
+
+@import "markdown";
+
+.container-detail {
+  padding: 50px 0;
+  .user-info {
+    margin-bottom: 20px;
+    img {
+      width: 64px;
+      height: 64px;
+      border-radius: 100%;
+      overflow: hidden;
+    }
+    span {
+      display: block;
+      color: #333;
+    }
+    .name {
+      font-size: 16px;
+      margin-top: 11px;
+    }
+    .create-at {
+      font-size: 14px;
+      color: #1d1d1d;
+    }
+  }
+  .edit-btns {
+    float: right;
+    a {
+      margin-left: 15px;
+      width: 60px;
+      height: 30px;
+      line-height: 30px;
+      border-radius: 30px;
+      border: 1px solid #ccc;
+      display: inline-block;
+      color: #ccc;
+      text-align: center;
+    }
+  }
+  .other-info span {
+    margin-right: 10px;
+  }
+  .content {
+    margin-top: 50px;
+  }
+
+}

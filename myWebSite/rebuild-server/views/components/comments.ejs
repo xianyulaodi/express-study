@@ -1,42 +1,39 @@
-<div class="ui grid">
-  <div class="four wide column"></div>
-  <div class="eight wide column">
-    <div class="ui segment">
-      <div class="ui minimal comments">
-        <h3 class="ui dividing header">留言</h3>
-
-        <% comments.forEach(function (comment) { %>
-          <div class="comment">
-            <span class="avatar">
-              <img src="/img/<%= comment.author.avatar %>">
-            </span>
-            <div class="content">
-              <a class="author" href="/posts?author=<%= comment.author._id %>"><%= comment.author.name %></a>
-              <div class="metadata">
-                <span class="date"><%= comment.created_at %></span>
-              </div>
-              <div class="text"><%- comment.content %></div>
-
-              <% if (user && comment.author._id && user._id.toString() === comment.author._id.toString()) { %>
-                <div class="actions">
-                  <a class="reply" href="/comments/<%= comment._id %>/remove">删除</a>
-                </div>
-              <% } %>
-            </div>
-          </div>
-        <% }) %>
-
-        <% if (user) { %>
-          <form class="ui reply form" method="post" action="/comments">
-            <input name="postId" value="<%= post._id %>" hidden>
-            <div class="field">
-              <textarea name="content"></textarea>
-            </div>
-            <input type="submit" class="ui icon button" value="留言" />
-          </form>
-        <% } %>
-
+<div class="container-comment">
+  <h3 class="header">评论</h3>
+  <% if (user) { %>
+    <form class="form" method="post" action="/comments">
+      <input name="postId" value="<%= post._id %>" hidden>
+      <div class="comment-wrap" >
+        <a class="user-avatar" href="#">
+          <img src="/img/<%= user.avatar %>" alt="" />
+        </a>
+        <div class="textarea-wrap">
+          <textarea placeholder="评论内容" name="content" cols="30" rows="10"></textarea>
+        </div>
       </div>
-    </div>
+      <input type="submit" class="sub-btn" value="提交评论" />
+    </form>
+  <% } %>
+
+  <div class="comment-list">
+    <% comments.forEach(function (comment) { %>
+      <div class="comment-item">
+        <a href="/posts?author=<%= comment.author._id %>" class="replyer-avatar">
+          <img src="/img/<%= comment.author.avatar %>">
+        </a>
+        <div class="detail">
+          <div class="metadata">
+            <a class="replyer-name" href="/posts?author=<%= comment.author._id %>"><%= comment.author.name %></a>
+            <span class="date"><%= comment.created_at %></span>
+            <% if (user && comment.author._id && user._id.toString() === comment.author._id.toString()) { %>
+              <a class="del" href="/comments/<%= comment._id %>/remove">删除</a>
+            <% } %>
+          </div>
+          <div class="comment-text"><%- comment.content %></div>
+        </div>
+      </div>
+    <% }) %>
   </div>
+
+
 </div>

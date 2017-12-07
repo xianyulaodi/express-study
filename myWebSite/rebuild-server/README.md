@@ -1,6 +1,4 @@
-## N-blog
-
-使用 Express + MongoDB 搭建多人博客
+## myBlog 
 
 ## 开发环境
 
@@ -8,98 +6,127 @@
 - MongoDB: `3.4.10`
 - Express: `4.16.2`
 
-## 目录
-
-- 开发环境搭建
-    - [Node.js 的安装与使用](https://github.com/nswbmw/N-blog/blob/master/book/1.1%20Node.js%20%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8.md)
-        - [安装 Node.js](https://github.com/nswbmw/N-blog/blob/master/book/1.1%20Node.js%20%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8.md#111-安装-nodejs)
-        - [n 和 nvm](https://github.com/nswbmw/N-blog/blob/master/book/1.1%20Node.js%20%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8.md#112-n-和-nvm)
-        - [nrm](https://github.com/nswbmw/N-blog/blob/master/book/1.1%20Node.js%20%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8.md#113-nrm)
-    - [MongoDB 的安装与使用](https://github.com/nswbmw/N-blog/blob/master/book/1.2%20MongoDB%20%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8.md)
-        - [安装与启动 MongoDB](https://github.com/nswbmw/N-blog/blob/master/book/1.2%20MongoDB%20%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8.md#121-安装与启动-mongodb)
-        - [Robomongo 和 MongoChef](https://github.com/nswbmw/N-blog/blob/master/book/1.2%20MongoDB%20%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8.md#122-robomongo-和-mongochef)
-- Node.js 知识点讲解
-    - [require](https://github.com/nswbmw/N-blog/blob/master/book/2.1%20require.md)
-    - [exports 和 module.exports](https://github.com/nswbmw/N-blog/blob/master/book/2.2%20exports%20%E5%92%8C%20module.exports.md)
-    - [Promise](https://github.com/nswbmw/N-blog/blob/master/book/2.3%20Promise.md)
-    - [环境变量](https://github.com/nswbmw/N-blog/blob/master/book/2.4%20%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F.md)
-    - [packge.json](https://github.com/nswbmw/N-blog/blob/master/book/2.5%20package.json.md)
-        - [semver](https://github.com/nswbmw/N-blog/blob/master/book/2.5%20package.json.md#251-semver)
-    - [npm 使用注意事项](https://github.com/nswbmw/N-blog/blob/master/book/2.6%20npm%20%E4%BD%BF%E7%94%A8%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9.md)
-        - [npm init](https://github.com/nswbmw/N-blog/blob/master/book/2.6%20npm%20%E4%BD%BF%E7%94%A8%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9.md#261-npm-init)
-        - [npm install](https://github.com/nswbmw/N-blog/blob/master/book/2.6%20npm%20%E4%BD%BF%E7%94%A8%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9.md#262-npm-install)
-        - [npm scripts](https://github.com/nswbmw/N-blog/blob/master/book/2.6%20npm%20%E4%BD%BF%E7%94%A8%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9.md#263-npm-scripts)
-        - [npm shrinkwrap ](https://github.com/nswbmw/N-blog/blob/master/book/2.6%20npm%20%E4%BD%BF%E7%94%A8%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9.md#264-npm-shrinkwrap)
-- Hello, Express
-    - [初始化一个 Express 项目](https://github.com/nswbmw/N-blog/blob/master/book/3.1%20%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%80%E4%B8%AA%20Express%20%E9%A1%B9%E7%9B%AE.md)
-        - [supervisor](https://github.com/nswbmw/N-blog/blob/master/book/3.1%20%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%80%E4%B8%AA%20Express%20%E9%A1%B9%E7%9B%AE.md#311-supervisor)
-    - [路由](https://github.com/nswbmw/N-blog/blob/master/book/3.2%20%E8%B7%AF%E7%94%B1.md)
-        - [express.Router](https://github.com/nswbmw/N-blog/blob/master/book/3.2%20%E8%B7%AF%E7%94%B1.md#321-expressrouter)
-    - [模板引擎](https://github.com/nswbmw/N-blog/blob/master/book/3.3%20%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E.md)
-        - [ejs](https://github.com/nswbmw/N-blog/blob/master/book/3.3%20%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E.md#331-ejs)
-        - [includes](https://github.com/nswbmw/N-blog/blob/master/book/3.3%20%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E.md#332-includes)
-    - [Express 浅析](https://github.com/nswbmw/N-blog/blob/master/book/3.4%20Express%20%E6%B5%85%E6%9E%90.md)
-        - [中间件与 next](https://github.com/nswbmw/N-blog/blob/master/book/3.4%20Express%20%E6%B5%85%E6%9E%90.md#341-中间件与-next)
-        - [错误处理](https://github.com/nswbmw/N-blog/blob/master/book/3.4%20Express%20%E6%B5%85%E6%9E%90.md#342-错误处理)
-- 一个简单的博客
-    - [开发环境](https://github.com/nswbmw/N-blog/blob/master/book/4.1%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83.md)
-    - [准备工作](https://github.com/nswbmw/N-blog/blob/master/book/4.2%20%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C.md)
-        - [目录结构](https://github.com/nswbmw/N-blog/blob/master/book/4.2%20%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C.md#421-目录结构)
-        - [安装依赖模块](https://github.com/nswbmw/N-blog/blob/master/book/4.2%20%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C.md#422-安装依赖模块)
-        - [ESLint](https://github.com/nswbmw/N-blog/blob/master/book/4.2%20%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C.md#423-eslint)
-        - [EditorConfig](https://github.com/nswbmw/N-blog/blob/master/book/4.2%20%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C.md#424-editorconfig)
-    - [配置文件](https://github.com/nswbmw/N-blog/blob/master/book/4.3%20%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.md)
-        - [config-lite](https://github.com/nswbmw/N-blog/blob/master/book/4.3%20%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.md#431-config-lite)
-    - [功能设计](https://github.com/nswbmw/N-blog/blob/master/book/4.4%20%E5%8A%9F%E8%83%BD%E8%AE%BE%E8%AE%A1.md)
-        - [功能与路由设计](https://github.com/nswbmw/N-blog/blob/master/book/4.4%20%E5%8A%9F%E8%83%BD%E8%AE%BE%E8%AE%A1.md#441-功能与路由设计)
-        - [会话](https://github.com/nswbmw/N-blog/blob/master/book/4.4%20%E5%8A%9F%E8%83%BD%E8%AE%BE%E8%AE%A1.md#442-会话)
-        - [页面通知](https://github.com/nswbmw/N-blog/blob/master/book/4.4%20%E5%8A%9F%E8%83%BD%E8%AE%BE%E8%AE%A1.md#443-页面通知)
-        - [权限控制](https://github.com/nswbmw/N-blog/blob/master/book/4.4%20%E5%8A%9F%E8%83%BD%E8%AE%BE%E8%AE%A1.md#444-权限控制)
-    - [页面设计](https://github.com/nswbmw/N-blog/blob/master/book/4.5%20%E9%A1%B5%E9%9D%A2%E8%AE%BE%E8%AE%A1.md)
-        - [组件](https://github.com/nswbmw/N-blog/blob/master/book/4.5%20%E9%A1%B5%E9%9D%A2%E8%AE%BE%E8%AE%A1.md#451-组件)
-        - [app.locals 和 res.locals](https://github.com/nswbmw/N-blog/blob/master/book/4.5%20%E9%A1%B5%E9%9D%A2%E8%AE%BE%E8%AE%A1.md#452-applocals-和-reslocals)
-    - [连接数据库](https://github.com/nswbmw/N-blog/blob/master/book/4.6%20%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93.md)
-        - [为什么使用 Mongolass](https://github.com/nswbmw/N-blog/blob/master/book/4.6%20%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93.md#461-为什么使用-mongolass)
-    - [注册](https://github.com/nswbmw/N-blog/blob/master/book/4.7%20%E6%B3%A8%E5%86%8C.md)
-        - [用户模型设计](https://github.com/nswbmw/N-blog/blob/master/book/4.7%20%E6%B3%A8%E5%86%8C.md#471-用户模型设计)
-        - [注册页](https://github.com/nswbmw/N-blog/blob/master/book/4.7%20%E6%B3%A8%E5%86%8C.md#472-注册页)
-        - [注册与文件上传](https://github.com/nswbmw/N-blog/blob/master/book/4.7%20%E6%B3%A8%E5%86%8C.md#473-注册与文件上传)
-    - [登出与登录](https://github.com/nswbmw/N-blog/blob/master/book/4.8%20%E7%99%BB%E5%87%BA%E4%B8%8E%E7%99%BB%E5%BD%95.md)
-        - [登出](https://github.com/nswbmw/N-blog/blob/master/book/4.8%20%E7%99%BB%E5%87%BA%E4%B8%8E%E7%99%BB%E5%BD%95.md#481-登出)
-        - [登录页](https://github.com/nswbmw/N-blog/blob/master/book/4.8%20%E7%99%BB%E5%87%BA%E4%B8%8E%E7%99%BB%E5%BD%95.md#482-登录页)
-        - [登录](https://github.com/nswbmw/N-blog/blob/master/book/4.8%20%E7%99%BB%E5%87%BA%E4%B8%8E%E7%99%BB%E5%BD%95.md#483-登录)
-    - [文章](https://github.com/nswbmw/N-blog/blob/master/book/4.9%20%E6%96%87%E7%AB%A0.md)
-        - [文章模型设计](https://github.com/nswbmw/N-blog/blob/master/book/4.9%20%E6%96%87%E7%AB%A0.md#491-文章模型设计)
-        - [发表文章](https://github.com/nswbmw/N-blog/blob/master/book/4.9%20%E6%96%87%E7%AB%A0.md#492-发表文章)
-        - [主页与文章页](https://github.com/nswbmw/N-blog/blob/master/book/4.9%20%E6%96%87%E7%AB%A0.md#493-主页与文章页)
-        - [编辑与删除文章](https://github.com/nswbmw/N-blog/blob/master/book/4.9%20%E6%96%87%E7%AB%A0.md#494-编辑与删除文章)
-    - [留言](https://github.com/nswbmw/N-blog/blob/master/book/4.10%20%E7%95%99%E8%A8%80.md)
-        - [留言模型设计](https://github.com/nswbmw/N-blog/blob/master/book/4.10%20%E7%95%99%E8%A8%80.md#4101-留言模型设计)
-        - [显示留言](https://github.com/nswbmw/N-blog/blob/master/book/4.10%20%E7%95%99%E8%A8%80.md#4102-显示留言)
-        - [发表与删除留言](https://github.com/nswbmw/N-blog/blob/master/book/4.10%20%E7%95%99%E8%A8%80.md#4103-发表与删除留言)
-    - [404页面](https://github.com/nswbmw/N-blog/blob/master/book/4.11%20404%20%E9%A1%B5%E9%9D%A2.md)
-    - [错误页面](https://github.com/nswbmw/N-blog/blob/master/book/4.12%20%E9%94%99%E8%AF%AF%E9%A1%B5%E9%9D%A2.md)
-    - [日志](https://github.com/nswbmw/N-blog/blob/master/book/4.13%20%E6%97%A5%E5%BF%97.md)
-        - [winston 和 express-winston](https://github.com/nswbmw/N-blog/blob/master/book/4.13%20%E6%97%A5%E5%BF%97.md#4131-winston-和-express-winston)
-        - [.gitignore](https://github.com/nswbmw/N-blog/blob/master/book/4.13%20%E6%97%A5%E5%BF%97.md#4132-gitignore)
-    - [测试](https://github.com/nswbmw/N-blog/blob/master/book/4.14%20%E6%B5%8B%E8%AF%95.md)
-        - [mocha 和 supertest](https://github.com/nswbmw/N-blog/blob/master/book/4.14%20%E6%B5%8B%E8%AF%95.md#4141-mocha-和-supertest)
-        - [测试覆盖率](https://github.com/nswbmw/N-blog/blob/master/book/4.14%20%E6%B5%8B%E8%AF%95.md#4142-测试覆盖率)
-    - [部署](https://github.com/nswbmw/N-blog/blob/master/book/4.15%20%E9%83%A8%E7%BD%B2.md)
-        - [申请 MLab](https://github.com/nswbmw/N-blog/blob/master/book/4.15%20%E9%83%A8%E7%BD%B2.md#4151-申请-mlab)
-        - [pm2](https://github.com/nswbmw/N-blog/blob/master/book/4.15%20%E9%83%A8%E7%BD%B2.md#4152-pm2)
-        - [部署到 Heroku](https://github.com/nswbmw/N-blog/blob/master/book/4.15%20%E9%83%A8%E7%BD%B2.md#4152-部署到-heroku)
-        - [部署到 UCloud](https://github.com/nswbmw/N-blog/blob/master/book/4.15%20%E9%83%A8%E7%BD%B2.md#4153-部署到-ucloud)
-        - [部署到阿里云](https://github.com/nswbmw/N-blog/blob/master/book/4.15%20%E9%83%A8%E7%BD%B2.md#4154-部署到阿里云)
-    - 扩展训练
-        - 添加分页功能
-        - 添加二级评论功能
-        - 添加标签(tag)功能
-
 ## mongolass 
+
    地址: https://github.com/mongolass/mongolass
    API: 和 node-mongodb-native一样  http://mongodb.github.io/node-mongodb-native/2.2/api/
 
 ## 使用UI: semantic-ui
 
   http://www.semantic-ui.cn/
+
+
+todoList 
+
+[x] 登陆
+[x] 注册
+[x] 退出
+[x] 新增文章
+[x] 获取文章详情
+[x] 获取所有文章
+[x] 新增文章评论
+[x] 获取文章评论
+[x] 删除某条评论
+[x] 删除某篇文章
+[x] 修改某篇文章
+[x] 头像上传,图片上传
+[x] 阅读量的统计,除去重复统计
+[x]  为服务的运行记录日志或者错误日志  关注这篇文章:https://github.com/nomiddlename/log4js-node   
+      (使用的是log4js。注意log4js的版本，这里用的是0.6.15的版本。2.x的版本配置文件不一样)
+
+
+[x] 收藏，取消收藏，对应文章数的增加和减少
+[x] 个人中心，包括该用户写的文章，收藏的文章
+[x] 用户中心设置: 用户性，个性签名，坐标，邮箱
+[x] 修改密码
+[x] 关注作者、取消关注作者
+[x] 搜索
+[x] 根据某个分类查找某篇文章
+[x] 密码加密,Base64 + 随机密码  (参考这篇文章：https://github.com/kuangshp/node-password)
+[x] web socket 来进行用户反馈的聊天。 群聊
+
+[] 引入nginx   
+[] 进程管理  process,自动重启，某个进程如果有问题，kill掉。负载均衡
+[] 文章排序:  根据：1. 评论 2.阅读量 3.最新   http://blog.csdn.net/wangliqiang1014/article/details/16861337
+[] 加tocken防止 csrf
+[] 百度统计
+[] 评论的回复
+[] 缩进全部改为四个空格
+[] 热门文章  阅读量最高的五篇文章
+[] 设置请求超时  connect-timeout 打算用这个模块
+[] 权限访问控制
+[] 登陆超时
+
+10月11号任务: done
+  web socket 来进行用户反馈的聊天
+  参看这个demo: https://github.com/wuyanxin/chatapp-demo
+  客户端引入404问题： http://blog.csdn.net/changhuzhao/article/details/50884231
+  api地址: https://socket.io/get-started/chat/
+
+
+后台管理
+[]  banner广告图，新增广告的后端管理系统
+[]  首页文章的审核，审核通过才可以发布到首页
+
+
+
+在node中，child_process这个模块非常重要。掌握了它，等于在node的世界开启了一扇新的大门。
+https://segmentfault.com/a/1190000007735211  process_child这篇文章写的比较好
+
+-------------------------------------------------------------------------------------------------------
+
+10月份计划:
+
+1. 完成这个博客的所有后端部分，优化并美化代码。
+
+2. 整理一份接口文档
+
+3. 输出几份博客： 
+   a. nginx以及它的一些配置  参考： http://www.jianshu.com/p/fd25a9c008a0?utm_campaign=maleskine&utm_content=note&utm_medium=pc_all_hots&utm_source=recommendation
+   b. socket.io的使用  socket中实现私聊: https://cnodejs.org/topic/557a999216839d2d539361a3
+   http://blog.csdn.net/blueblueskyhua/article/details/70807847   vue+websocket+express+mongodb实战项目（实时聊天）（一）
+   c. node 中添加日志统计  参考：https://github.com/nomiddlename/log4js-node 
+   d. node中密码加密  参考：https://github.com/kuangshp/node-password
+   ...
+
+4. [x] 看看ES6的文章: https://juejin.im/post/59d7790e6fb9a00a496e926a
+
+5. [x] https://ioliu.cn/2017/add-valine-comments-to-your-blog/  hexo新增评论  
+
+6. [x] mongodb返回的对象中不能新增或者删除新属性的坑： http://www.cnblogs.com/fhen/p/5322493.html
+
+7. 前端数据加密，反爬虫有哪些策略
+
+
+
+2017-12月计划=====================================================================================
+
+1. 月底上线，上线的功能只有文章列表和文章详情，其他功能暂时都不开放
+
+2. 修改样式
+
+3. 代码高亮
+
+
+=====================================================================================
+
+
+知识点：
+------------------------------------------------------------------------------------
+1. co模块，可以异步执行一些操作
+co(function* () {
+  var arr = [];
+  for(var i = 0,len = 20; i < len; i++) {
+    yield new Promise((resolve, reject) => {
+      setTimeout(function() {
+        arr.push(123);
+        resolve(true);
+      },10);
+    });
+  }
+  console.log(arr);
+  console.log('next');
+}); 
+
+2. 让浏览器变得可以编辑，控制台上写
+document.body.contentEditable=true

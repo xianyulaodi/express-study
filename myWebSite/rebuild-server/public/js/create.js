@@ -40,6 +40,11 @@ var create = (function(win,$) {
     })
   }
 
+  function initToggle() {
+    var val = $('#content').val();
+    $('#articleContent').html(marked(val));
+  }
+
   function bindEvent() {
 
     $('#typeList').on('click','li',function() {
@@ -56,6 +61,7 @@ var create = (function(win,$) {
   function init() {
     bindEvent();
     drawUploadPic();
+    initToggle();
   }
 
   return init;
