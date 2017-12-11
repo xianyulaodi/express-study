@@ -58,4 +58,42 @@ router.get('/:commentId/remove', checkLogin, function (req, res, next) {
     })
 })
 
+// POST /comments/reply 创建一条评论回复
+router.post('/reply', checkLogin, function (req, res, next) {
+  const fromUid = req.session.user._id
+  const commentId = req.fields.commentId
+  const replyId = req.fields.replyId
+  const replyType = req.fields.replyType  // comment | reply
+  const content = req.fields.content
+  const toUid = req.fields.toUid
+
+  // 校验参数
+  try {
+    if (!content.length) {
+      throw new Error('请填写回复内容')
+    }
+  } catch (e) {
+    req.flash('error', e.message)
+    return res.redirect('back')
+  }
+
+  const comment = {
+    fromUid: fromUid,
+    commentId: commentId,
+    replyId: replyId,
+    replyType: replyType,
+    content: content,
+    toUid: toUid
+  }
+  console.log('收到数据:',comment);
+
+  CommentModel.create_reply(comment)
+    .then(function () {
+      req.flash('success', '回复成功')
+      // 留言成功后跳转到上一页
+      res.redirect('back')
+    })
+    .catch(next)
+})
+
 module.exports = router

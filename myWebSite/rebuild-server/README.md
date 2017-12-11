@@ -26,6 +26,7 @@ todoList
 [x] 获取所有文章
 [x] 新增文章评论
 [x] 获取文章评论
+[x] 评论的回复
 [x] 删除某条评论
 [x] 删除某篇文章
 [x] 修改某篇文章
@@ -35,13 +36,14 @@ todoList
       (使用的是log4js。注意log4js的版本，这里用的是0.6.15的版本。2.x的版本配置文件不一样)
 
 
+[] 热门文章  阅读量最高的五篇文章
+[x] 根据某个分类查找某篇文章
 [x] 收藏，取消收藏，对应文章数的增加和减少
 [x] 个人中心，包括该用户写的文章，收藏的文章
 [x] 用户中心设置: 用户性，个性签名，坐标，邮箱
 [x] 修改密码
 [x] 关注作者、取消关注作者
 [x] 搜索
-[x] 根据某个分类查找某篇文章
 [x] 密码加密,Base64 + 随机密码  (参考这篇文章：https://github.com/kuangshp/node-password)
 [x] web socket 来进行用户反馈的聊天。 群聊
 
@@ -50,9 +52,7 @@ todoList
 [] 文章排序:  根据：1. 评论 2.阅读量 3.最新   http://blog.csdn.net/wangliqiang1014/article/details/16861337
 [] 加tocken防止 csrf
 [] 百度统计
-[] 评论的回复
 [] 缩进全部改为四个空格
-[] 热门文章  阅读量最高的五篇文章
 [] 设置请求超时  connect-timeout 打算用这个模块
 [] 权限访问控制
 [] 登陆超时
@@ -130,3 +130,17 @@ co(function* () {
 
 2. 让浏览器变得可以编辑，控制台上写
 document.body.contentEditable=true
+
+
+3. mongodb 通过一个外键与另一张表建立关联时,可使用 populate
+
+例:
+```javascript
+// 通过文章 id 获取该文章下所有留言，按留言创建时间升序
+getComments: function getComments (postId) {
+  return Comment
+    .find({ postId: postId })
+    .populate({ path: 'author', model: 'User' })
+    .exec()
+}
+```

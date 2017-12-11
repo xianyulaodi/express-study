@@ -194,6 +194,50 @@ body {
       text-decoration: underline;
     }
   }
+  .reply-btn {
+    margin-bottom: 10px;
+    display: block;
+    text-decoration: none;
+  }
+  .reply-list {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  .reply-item {
+    border-bottom: 1px solid #ccc;
+    dt {
+      padding-bottom: 10px;
+    }
+    dd {
+      min-height: 40px;
+      text-indent: 2em;
+    }
+    &:hover {
+      .sub-reply-btn {
+        display: block;
+      }
+    }
+    .sub-reply-btn {
+      display: none;
+    }
+  }
+  .reply-form {
+    padding: 10px;
+    width: 50%;
+    .sub-btn {
+      margin: 12px 0 0 10px;
+    }
+    textarea {
+      height: 60px;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+      padding: 5px;
+      resize: none;
+    }
+  }
 }
 
 

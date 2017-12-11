@@ -30,6 +30,44 @@
             <% } %>
           </div>
           <div class="comment-text"><%- comment.content %></div>
+          <!-- 回复评论列表 -->
+          <div class="reply-wrap">
+            <a class="reply-btn" id="replyBtn" data-toggle="collapse" href="#collapseReply" data-replyId="<%= comment._id %>" data-replyType="comment" data-toUid="<%= comment.author._id %>" data-toName="<%= comment.author.name %>" ><%= comment.replyCount %>条评论</a>
+            <div class="reply-list collapse" id="collapseReply" >
+              <%
+                if( comment.replies && comment.replies.length > 0 ) {
+                  comment.replies.forEach(function (reply) {
+              %>
+                  <dl class="reply-item">
+                    <dt>
+                      <a href="/posts?author=<%= reply.fromUid._id %>"><%= reply.fromUid.name %></a>
+                      <% if(reply.toUid._id.toString() != comment.author._id.toString() ) { %>
+                        回复<a href="/posts?author=<%= reply.toUid._id %>"><%= reply.toUid.name %></a>:
+                      <% } %>
+                    </dt>
+                    <dd>
+                      <%= reply.content %>
+                      <a href="javascript:void(0);" class="sub-reply-btn" id="subReplyBtn" data-replyId="<%= reply._id %>" data-replyType="reply"  data-toUid="<%= reply.fromUid._id %>" data-toName="<%= reply.fromUid.name %>" >回复</a>
+                    </dd>
+                  </dl>
+              <%
+                 })
+                }
+              %>
+              <% if(user) { %>
+              <form method="post" class="form reply-form" action="/comments/reply">
+                 <input type="hidden" value="<%= comment._id %>" name="commentId" >
+                 <input type="hidden" value="<%= comment._id %>" name="replyId" id="replyId" >
+                 <input type="hidden" name="fromUid" value="<%= user._id %>" >
+                 <input type="hidden" name="toUid" value="<%= comment.author._id %>" id="toUid" >
+                 <input type="hidden" name="replyType" value="comment"  id="replyType">  <!-- [comment | reply] -->
+                 <textarea type="text" name="content" placeholder="回复" id="replyIpt" ></textarea>
+                 <input type="submit" class="sub-btn" value="提交" />
+              </form>
+              <% } %>
+            </div>
+          </div>
+          <!-- 回复评论列表end -->
         </div>
       </div>
     <% }) %>
@@ -37,3 +75,29 @@
 
 
 </div>
+<script>
+// 设置回复类型，是对评论回复，还是对评论的评论回复
+$(function() {
+
+  $('#replyBtn,#subReplyBtn').click(function() {
+    var toUid = $(this).attr('data-toUid'),
+        replyType = $(this).attr('data-replyType'),
+        toName = $(this).attr('data-toName'),
+        replyId = $(this).attr('data-replyId');
+    $('#toUid').val(toUid);
+    $('#replyId').val(replyId);
+    $('#replyType').val(replyType);
+    $('#replyIpt').attr('placeholder','回复:'+toName);
+  });
+
+})
+</script>
+
+<!-- 文章评论回复replies: [
+{ _id: 5a2e421de23053219c2710f0,
+fromUid: 5a268a6da200260bacbc0a7f,
+commentId: 5a28f41438308027a0f558b4,
+replyId: 5a28f41438308027a0f558b4,
+replyType: 'comment',
+content: '评论回复测试',
+toUid: 5a268a6da200260bacbc0a7f } ] -->
