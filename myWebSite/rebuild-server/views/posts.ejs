@@ -19,9 +19,9 @@
       </div>
       <div class="hot-list">
         <h2 class="hot-title">热门文章</h2>
-        <a href="#">热门文章1</a>
-        <a href="#">热门文章1</a>
-        <a href="#">热门文章1</a>
+        <% hotPosts.forEach(function (hotPost) { %>
+          <a href="/posts/<%= hotPost._id %>" ><%= hotPost.title %></a>
+        <% }) %>
       </div>
     </div>
   </div>

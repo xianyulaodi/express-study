@@ -1,0 +1,12 @@
+<%- include('header') %>
+
+<%- include('components/banner') %>
+<div class="container row">
+  <div class="col-md-12">
+    <% posts.forEach(function (post) { %>
+      <%- include('components/post-content', { post: post }) %>
+    <% }) %>
+  </div>
+</div>
+
+<%- include('footer') %>

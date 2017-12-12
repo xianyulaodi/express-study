@@ -18,12 +18,12 @@
   <div class="comment-list">
     <% comments.forEach(function (comment) { %>
       <div class="comment-item">
-        <a href="/posts?author=<%= comment.author._id %>" class="replyer-avatar">
+        <a href="/users?author=<%= comment.author._id %>" class="replyer-avatar">
           <img src="/img/<%= comment.author.avatar %>">
         </a>
         <div class="detail">
           <div class="metadata">
-            <a class="replyer-name" href="/posts?author=<%= comment.author._id %>"><%= comment.author.name %></a>
+            <a class="replyer-name" href="/users?author=<%= comment.author._id %>"><%= comment.author.name %></a>
             <span class="date"><%= comment.created_at %></span>
             <% if (user && comment.author._id && user._id.toString() === comment.author._id.toString()) { %>
               <a class="del" href="/comments/<%= comment._id %>/remove">删除</a>
@@ -40,9 +40,9 @@
               %>
                   <dl class="reply-item">
                     <dt>
-                      <a href="/posts?author=<%= reply.fromUid._id %>"><%= reply.fromUid.name %></a>
+                      <a href="/users?author=<%= reply.fromUid._id %>"><%= reply.fromUid.name %></a>
                       <% if(reply.toUid._id.toString() != comment.author._id.toString() ) { %>
-                        回复<a href="/posts?author=<%= reply.toUid._id %>"><%= reply.toUid.name %></a>:
+                        回复<a href="/users?author=<%= reply.toUid._id %>"><%= reply.toUid.name %></a>:
                       <% } %>
                     </dt>
                     <dd>
@@ -55,15 +55,15 @@
                 }
               %>
               <% if(user) { %>
-              <form method="post" class="form reply-form" action="/comments/reply">
-                 <input type="hidden" value="<%= comment._id %>" name="commentId" >
-                 <input type="hidden" value="<%= comment._id %>" name="replyId" id="replyId" >
-                 <input type="hidden" name="fromUid" value="<%= user._id %>" >
-                 <input type="hidden" name="toUid" value="<%= comment.author._id %>" id="toUid" >
-                 <input type="hidden" name="replyType" value="comment"  id="replyType">  <!-- [comment | reply] -->
-                 <textarea type="text" name="content" placeholder="回复" id="replyIpt" ></textarea>
-                 <input type="submit" class="sub-btn" value="提交" />
-              </form>
+                <form method="post" class="form reply-form" action="/comments/reply">
+                  <input type="hidden" value="<%= comment._id %>" name="commentId" >
+                  <input type="hidden" value="<%= comment._id %>" name="replyId" id="replyId" >
+                  <input type="hidden" name="fromUid" value="<%= user._id %>" >
+                  <input type="hidden" name="toUid" value="<%= comment.author._id %>" id="toUid" >
+                  <input type="hidden" name="replyType" value="comment"  id="replyType">  <!-- [comment | reply] -->
+                  <textarea type="text" name="content" placeholder="回复" id="replyIpt" ></textarea>
+                  <input type="submit" class="sub-btn" value="提交" />
+                </form>
               <% } %>
             </div>
           </div>

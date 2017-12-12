@@ -4,7 +4,7 @@
 <div class="container-detail">
   <div class="media user-info">
     <div class="media-left media-middle">
-      <a href="/posts?author=<%= post.author._id %>" >
+      <a href="/users?author=<%= post.author._id %>" >
         <img class="img-circle" src="/img/<%= post.author.avatar %>" alt="...">
       </a>
     </div>
@@ -21,10 +21,45 @@
   </div>
 
   <div class="content-wrap">
-    <h2 class="title"><%= post.title %></h2>
+    <h2 class="title">
+      <%= post.title %>
+
+      <%
+        if(post.collectStatus == 1) {
+      %>
+        <form action="/collect/remove" method="post">
+          <input type="hidden" name="postId" value="<%= post._id %>" >
+          <input type="submit" value="已收藏">
+        </form>
+      <% } else { %>
+        <form action="/collect" method="post">
+          <input type="hidden" name="postId" value="<%= post._id %>" >
+          <input type="submit" value="收藏">
+        </form>
+      <% } %>
+
+      <%
+        if(post.focusStatus == 1) {
+      %>
+        <form action="/focus/unfocus" method="post">
+          <input type="hidden" name="author" value="<%= post.author._id %>" >
+          <input type="hidden" name="postId" value="<%= post._id %>" >
+          <input type="submit" value="已关注">
+        </form>
+      <% } else { %>
+        <form action="/focus" method="post">
+          <input type="hidden" name="author" value="<%= post.author._id %>" >
+          <input type="hidden" name="postId" value="<%= post._id %>" >
+          <input type="submit" value="关注">
+        </form>
+      <% } %>
+
+    </h2>
+
     <p class="other-info">
       <span>阅读(<%= post.pv || 0 %>)</span>
       <span>评论(<%= post.commentsCount || 0 %>)</span>
+      <span>收藏(<%= post.collectCount || 0 %>)</span>
     </p>
     <div class="content">
       <%- post.content %>

@@ -1,0 +1,24 @@
+<%- include('header') %>
+
+<div class="container row">
+  <div class="user-info">
+    <div class="avatar">
+      <img src="/img/<%= userInfo.avatar %>" alt="">
+    </div>
+    <p class="user-name"><%= userInfo.name %></p>
+    <p class="fans">
+      <span>粉丝: 7000</span>
+      <span>关注: 1</span>
+    </p>
+  </div>
+  <div class="article-list">
+    <h4>文章列表</h4>
+    <div class="col-md-12">
+      <% posts.forEach(function (post) { %>
+        <%- include('components/post-content', { post: post }) %>
+      <% }) %>
+    </div>
+  </div>
+</div>
+
+<%- include('footer') %>

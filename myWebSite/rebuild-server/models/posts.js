@@ -1,6 +1,8 @@
 const marked = require('marked')
 const Post = require('../lib/mongo').Post
 const CommentModel = require('./comments')
+const CollectModel = require('./collect')
+const FocusModel = require('./focus')
 
 // 给 post 添加留言数 commentsCount
 Post.plugin('addCommentsCount', {
@@ -16,6 +18,61 @@ Post.plugin('addCommentsCount', {
     if (post) {
       return CommentModel.getCommentsCount(post._id).then(function (count) {
         post.commentsCount = count
+        return post
+      })
+    }
+    return post
+  }
+})
+
+// 给post 添加收藏数 collectCount
+Post.plugin('addCollectCount', {
+  afterFind: function (posts) {
+    return Promise.all(posts.map(function (post) {
+      return CollectModel.getCollectsCount(post._id).then(function (count) {
+        post.collectCount = count
+        return post
+      })
+    }))
+  },
+  afterFindOne: function (post) {
+    if (post) {
+      return CollectModel.getCollectsCount(post._id).then(function (count) {
+        post.collectCount = count
+        return post
+      })
+    }
+    return post
+  }
+})
+
+// 给post 添加 该文章收藏状态: 0:未收藏  1: 已收藏
+Post.plugin('addCollectStatus', {
+  afterFindOne: function (post,uid) {
+    post.collectStatus = 0;
+    if(!uid) {
+      return post
+    }
+    if (post) {
+      return CollectModel.getCollectStatus(post._id,uid).then(function (status) {
+        post.collectStatus = status ? 1 : 0;
+        return post
+      })
+    }
+    return post
+  }
+})
+
+// 添加关注状态
+Post.plugin('addFocusStatus', {
+  afterFindOne: function (post,uid) {
+    post.focusStatus = 0;
+    if(!uid) {
+      return post
+    }
+    if (post) {
+      return FocusModel.getFocusStatus(post.author._id,uid).then(function (status) {
+        post.focusStatus = status ? 1 : 0;
         return post
       })
     }
@@ -46,22 +103,22 @@ module.exports = {
   },
 
   // 通过文章 id 获取一篇文章
-  getPostById: function getPostById (postId) {
+  getPostById: function getPostById (postId,uid) {
     return Post
       .findOne({ _id: postId })
       .populate({ path: 'author', model: 'User' })
       .addCreatedAt()
       .addCommentsCount()
+      .addCollectCount()
+      .addCollectStatus(uid)
+      .addFocusStatus(uid)
       .contentToHtml()
       .exec()
   },
 
   // 按创建时间降序获取所有用户文章或者某个特定用户的所有文章
-  getPosts: function getPosts (author,page,pageSize) {
-    const query = {};
-    if (author) {
-      query.author = author
-    }
+  getPosts: function getPosts (queryObj,page,pageSize) {
+    const query = queryObj || {};
     return Post
       .find(query)
       .populate({ path: 'author', model: 'User' })
@@ -70,7 +127,19 @@ module.exports = {
       .limit(pageSize)
       .addCreatedAt()
       .addCommentsCount()
+      .addCollectCount()
       .contentToHtml()
+      .exec()
+  },
+
+  // 获取热门文章,阅读量最高的五篇文章
+  getHotPosts: function getHotPosts () {
+    const query = {};
+    return Post
+      .find(query)
+      .sort({ pv: -1 }) // -1 降序 | 1 升序
+      .skip(0)  //分页
+      .limit(5)  //只需五条
       .exec()
   },
 

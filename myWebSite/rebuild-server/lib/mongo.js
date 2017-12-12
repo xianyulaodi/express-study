@@ -62,3 +62,19 @@ exports.CommentReply = mongolass.model('CommentReply',{
   toUid: { type: Mongolass.Types.ObjectId }    //目标用户id
 })
 exports.CommentReply.index({ commentId: 1, fromUid: 1 }).exec()  // 通过评论 id 获取该评论下的所有评论回复
+
+
+// 文章收藏
+exports.Collect = mongolass.model('Collect',{
+  postId: { type: Mongolass.Types.ObjectId }, // 文章id
+  uid : { type: Mongolass.Types.ObjectId }   // 用户uid
+})
+exports.Collect.index({ postId: 1 }).exec()
+
+
+// 关注作者
+exports.Focus = mongolass.model('Focus', {
+  toUid: { type: Mongolass.Types.ObjectId },    // 被关注者id
+  fromUid : { type: Mongolass.Types.ObjectId }  // 关注者id
+})
+exports.Focus.index({ toUid: 1 }).exec()

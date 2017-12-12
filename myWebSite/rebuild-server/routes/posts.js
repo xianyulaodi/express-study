@@ -1,26 +1,66 @@
 const path = require('path')
 const express = require('express')
 const router = express.Router()
-
+const eventproxy = require('eventproxy')
 const checkLogin = require('../middlewares/check').checkLogin
 const PostModel = require('../models/posts')
 const CommentModel = require('../models/comments')
 
-// GET /posts 所有用户或者特定用户的文章页
+// GET /posts 所有用户或者特定用户的文章页，以及热门文章
 //   eg: GET /posts?author=xxx
 router.get('/', function (req, res, next) {
-  const author = req.query.author;
-  let page = req.query.page || 1;
-  let pageSize = req.query.pageSize || 10;
+  let page = Number(req.query.page) || 1;
+  let pageSize = Number(req.query.pageSize) || 10;
+  let type = req.query.type;
+  let ep=new eventproxy();
+  let query = {};
 
-  PostModel.getPosts(author,page,pageSize)
+  if(type) {
+    query.type = type;
+  }
+
+  PostModel.getPosts(query,page,pageSize)
     .then(function (posts) {
-      res.render('posts', {
+      ep.emit('posts',posts);
+
+    })
+    .catch(next)
+
+  PostModel.getHotPosts()
+    .then(function (hotPosts) {
+      ep.emit('hotPosts',hotPosts);
+    })
+    .catch(next)
+
+  ep.all('posts','hotPosts',(posts,hotPosts) => {
+    res.render('posts', {
+      posts: posts,
+      hotPosts: hotPosts
+    })
+  })
+
+})
+
+//  GET 搜索，模糊匹配
+//  EG: GET /posts/search?title=xxx
+router.get('/search',function(req,res,next) {
+  let str = req.query.title,
+      page = req.query.page || 1,
+      pageSize = req.query.pageSize || 10,
+      query = {};
+  if(str) {
+    let pattern = new RegExp("^.*"+ str +".*$");
+    query.title = pattern;
+  }
+  PostModel.getPosts(query,page,pageSize)
+    .then(function (posts) {
+      res.render('search', {
         posts: posts
       })
     })
     .catch(next)
-})
+});
+
 
 // /posts/upload 文章图片上传 借助于 express-formidable 中间件
 router.post('/upload',function(req,res,next) {
@@ -84,12 +124,12 @@ router.get('/create', checkLogin, function (req, res, next) {
   res.render('create')
 })
 
-// GET /posts/:postId 单独一篇的文章页
+// GET /posts/:postId 文章详情页
 router.get('/:postId', function (req, res, next) {
   const postId = req.params.postId
-
+  const uid = req.session.user ? req.session.user._id : '';
   Promise.all([
-    PostModel.getPostById(postId), // 获取文章信息
+    PostModel.getPostById(postId,uid), // 获取文章信息
     CommentModel.getComments(postId), // 获取该文章所有留言
     PostModel.incPv(postId)// pv 加 1
   ])
