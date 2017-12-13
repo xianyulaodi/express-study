@@ -1,6 +1,6 @@
-const sha1 = require('sha1')
 const express = require('express')
 const router = express.Router()
+const crypto = require('../middlewares/encrypt')  // 用于密码加密
 
 const UserModel = require('../models/users')
 const checkNotLogin = require('../middlewares/check').checkNotLogin
@@ -34,8 +34,9 @@ router.post('/', checkNotLogin, function (req, res, next) {
         req.flash('error', '用户不存在')
         return res.redirect('back')
       }
+
       // 检查密码是否匹配
-      if (sha1(password) !== user.password) {
+      if (!crypto.decrypt(password,user.password)) {
         req.flash('error', '用户名或密码错误')
         return res.redirect('back')
       }

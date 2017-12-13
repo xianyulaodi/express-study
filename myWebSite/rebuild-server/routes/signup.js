@@ -1,8 +1,8 @@
 const fs = require('fs')
 const path = require('path')
-const sha1 = require('sha1')
 const express = require('express')
 const router = express.Router()
+const crypto = require('../middlewares/encrypt');  // 用于密码加密
 
 const UserModel = require('../models/users')
 const checkNotLogin = require('../middlewares/check').checkNotLogin
@@ -48,8 +48,8 @@ router.post('/', checkNotLogin, function (req, res, next) {
     return res.redirect('/signup')
   }
 
-  // 明文密码加密
-  password = sha1(password)
+  // 密码加密
+  password = crypto.encrypt(password)
 
   // 待写入数据库的用户信息
   let user = {

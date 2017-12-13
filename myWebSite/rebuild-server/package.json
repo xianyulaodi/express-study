@@ -27,6 +27,7 @@
     "winston": "2.4.0"
   },
   "devDependencies": {
+    "crypto": "^1.0.1",
     "eslint-config-standard": "10.2.1",
     "eslint-plugin-import": "2.8.0",
     "eslint-plugin-node": "5.2.1",

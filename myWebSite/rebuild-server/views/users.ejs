@@ -7,17 +7,30 @@
     </div>
     <p class="user-name"><%= userInfo.name %></p>
     <p class="fans">
-      <span>粉丝: 7000</span>
-      <span>关注: 1</span>
+      <span>粉丝: <%= fansCount %></span>
+      <span>关注: <%= focusCount %></span>
     </p>
   </div>
   <div class="article-list">
-    <h4>文章列表</h4>
-    <div class="col-md-12">
-      <% posts.forEach(function (post) { %>
-        <%- include('components/post-content', { post: post }) %>
-      <% }) %>
+    <div class="row">
+      <div class="col-md-6">
+        <h4>文章列表</h4>
+        <div class="">
+          <% posts.forEach(function (post) { %>
+            <%- include('components/post-content', { post: post }) %>
+          <% }) %>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <h4>收藏列表</h4>
+        <div class="">
+          <% collectPosts.forEach(function (collect) { %>
+            <%- include('components/post-content', { post: collect.post }) %>
+          <% }) %>
+        </div>
+      </div>
     </div>
+
   </div>
 </div>
 
