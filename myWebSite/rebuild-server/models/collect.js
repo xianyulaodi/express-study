@@ -45,3 +45,13 @@ module.exports = {
         .exec()
   }
 }
+/**
+ *  [
+ *   {
+ *    _id: 5a2fbe0635469e2828cbf689,
+      uid: 5a268a1ea200260bacbc0a7d,
+      postId: 5a2e7ea91175a11968895d7c,
+      created_at: '2017-12-12 19:31'
+    }
+  ]
+ */
