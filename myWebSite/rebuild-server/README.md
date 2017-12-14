@@ -172,3 +172,6 @@ getComments: function getComments (postId) {
 4. a/b模块之间不能相互引用，由于node.js避免相互引用的死循环，所以，会有一个模块引用另一为空的情况。
 解决方法： 最好不要相互引用，或者用第三个js，c来引用这两个模块，因为a/b模块在c中是加载完成的
 或者用c来分别引用 a/b，而不是将两者互相引用
+
+
+5. https://www.cnblogs.com/aaron-leb/p/5706176.html  数据库设计
