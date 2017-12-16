@@ -2,7 +2,7 @@
   <h3 class="header">评论</h3>
   <% if (user) { %>
     <form class="form" method="post" action="/comments">
-      <input name="postId" value="<%= post._id %>" hidden>
+      <input name="post_id" value="<%= post._id %>" hidden>
       <div class="comment-wrap" >
         <a class="user-avatar" href="#">
           <img src="/img/<%= user.avatar %>" alt="" />
@@ -40,14 +40,14 @@
               %>
                   <dl class="reply-item">
                     <dt>
-                      <a href="/users?author=<%= reply.fromUid._id %>"><%= reply.fromUid.name %></a>
-                      <% if(reply.toUid._id.toString() != comment.author._id.toString() ) { %>
-                        回复<a href="/users?author=<%= reply.toUid._id %>"><%= reply.toUid.name %></a>:
+                      <a href="/users?author=<%= reply.from_uid._id %>"><%= reply.from_uid.name %></a>
+                      <% if(reply.to_uid._id.toString() != comment.author._id.toString() ) { %>
+                        回复<a href="/users?author=<%= reply.to_uid._id %>"><%= reply.to_uid.name %></a>:
                       <% } %>
                     </dt>
                     <dd>
                       <%= reply.content %>
-                      <a href="javascript:void(0);" class="sub-reply-btn" id="subReplyBtn" data-replyId="<%= reply._id %>" data-replyType="reply"  data-toUid="<%= reply.fromUid._id %>" data-toName="<%= reply.fromUid.name %>" >回复</a>
+                      <a href="javascript:void(0);" class="sub-reply-btn" id="subReplyBtn" data-replyId="<%= reply._id %>" data-replyType="reply"  data-toUid="<%= reply.from_uid._id %>" data-toName="<%= reply.from_uid.name %>" >回复</a>
                     </dd>
                   </dl>
               <%
@@ -56,11 +56,11 @@
               %>
               <% if(user) { %>
                 <form method="post" class="form reply-form" action="/comments/reply">
-                  <input type="hidden" value="<%= comment._id %>" name="commentId" >
-                  <input type="hidden" value="<%= comment._id %>" name="replyId" id="replyId" >
-                  <input type="hidden" name="fromUid" value="<%= user._id %>" >
-                  <input type="hidden" name="toUid" value="<%= comment.author._id %>" id="toUid" >
-                  <input type="hidden" name="replyType" value="comment"  id="replyType">  <!-- [comment | reply] -->
+                  <input type="hidden" value="<%= comment._id %>" name="comment_id" >
+                  <input type="hidden" value="<%= comment._id %>" name="reply_id" id="replyId" >
+                  <input type="hidden" name="from_uid" value="<%= user._id %>" >
+                  <input type="hidden" name="to_uid" value="<%= comment.author._id %>" id="toUid" >
+                  <input type="hidden" name="reply_type" value="comment"  id="replyType">  <!-- [comment | reply] -->
                   <textarea type="text" name="content" placeholder="回复" id="replyIpt" ></textarea>
                   <input type="submit" class="sub-btn" value="提交" />
                 </form>
@@ -96,8 +96,8 @@ $(function() {
 <!-- 文章评论回复replies: [
 { _id: 5a2e421de23053219c2710f0,
 fromUid: 5a268a6da200260bacbc0a7f,
-commentId: 5a28f41438308027a0f558b4,
+comment_id: 5a28f41438308027a0f558b4,
 replyId: 5a28f41438308027a0f558b4,
-replyType: 'comment',
+reply_type: 'comment',
 content: '评论回复测试',
 toUid: 5a268a6da200260bacbc0a7f } ] -->

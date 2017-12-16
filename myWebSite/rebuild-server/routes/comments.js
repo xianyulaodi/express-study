@@ -7,7 +7,7 @@ const CommentModel = require('../models/comments')
 // POST /comments 创建一条留言
 router.post('/', checkLogin, function (req, res, next) {
   const author = req.session.user._id
-  const postId = req.fields.postId
+  const post_id = req.fields.post_id
   const content = req.fields.content
 
   // 校验参数
@@ -22,7 +22,7 @@ router.post('/', checkLogin, function (req, res, next) {
 
   const comment = {
     author: author,
-    postId: postId,
+    post_id: post_id,
     content: content
   }
 
@@ -35,12 +35,12 @@ router.post('/', checkLogin, function (req, res, next) {
     .catch(next)
 })
 
-// GET /comments/:commentId/remove 删除一条留言
-router.get('/:commentId/remove', checkLogin, function (req, res, next) {
-  const commentId = req.params.commentId
+// GET /comments/:comment_id/remove 删除一条留言
+router.get('/:comment_id/remove', checkLogin, function (req, res, next) {
+  const comment_id = req.params.comment_id
   const author = req.session.user._id
 
-  CommentModel.getCommentById(commentId)
+  CommentModel.getCommentById(comment_id)
     .then(function (comment) {
       if (!comment) {
         throw new Error('留言不存在')
@@ -48,7 +48,7 @@ router.get('/:commentId/remove', checkLogin, function (req, res, next) {
       if (comment.author.toString() !== author.toString()) {
         throw new Error('没有权限删除留言')
       }
-      CommentModel.delCommentById(commentId)
+      CommentModel.delCommentById(comment_id)
         .then(function () {
           req.flash('success', '删除留言成功')
           // 删除成功后跳转到上一页
@@ -60,12 +60,12 @@ router.get('/:commentId/remove', checkLogin, function (req, res, next) {
 
 // POST /comments/reply 创建一条评论回复
 router.post('/reply', checkLogin, function (req, res, next) {
-  const fromUid = req.session.user._id
-  const commentId = req.fields.commentId
-  const replyId = req.fields.replyId
-  const replyType = req.fields.replyType  // comment | reply
+  const from_uid = req.session.user._id
+  const comment_id = req.fields.comment_id
+  const reply_id = req.fields.reply_id
+  const reply_type = req.fields.reply_type  // comment | reply
   const content = req.fields.content
-  const toUid = req.fields.toUid
+  const to_uid = req.fields.to_uid
 
   // 校验参数
   try {
@@ -78,12 +78,12 @@ router.post('/reply', checkLogin, function (req, res, next) {
   }
 
   const comment = {
-    fromUid: fromUid,
-    commentId: commentId,
-    replyId: replyId,
-    replyType: replyType,
+    from_uid: from_uid,
+    comment_id: comment_id,
+    reply_id: reply_id,
+    reply_type: reply_type,
     content: content,
-    toUid: toUid
+    to_uid: to_uid
   }
   console.log('收到数据:',comment);
 

@@ -38,6 +38,8 @@ exports.Post = mongolass.model('Post', {
   title: { type: 'string' },
   content: { type: 'string' },
   type: { type: 'string' }, //文章类型
+  type: { type: 'string' }, //文章类型
+  // article_up 
   pv: { type: 'number' }
 })
 exports.Post.index({ author: 1, _id: -1 }).exec()// 按创建时间降序查看用户的文章列表
@@ -47,34 +49,34 @@ exports.Post.index({ author: 1, _id: -1 }).exec()// 按创建时间降序查看�
 exports.Comment = mongolass.model('Comment', {
   author: { type: Mongolass.Types.ObjectId },
   content: { type: 'string' },
-  postId: { type: Mongolass.Types.ObjectId }
+  post_id: { type: Mongolass.Types.ObjectId }
 })
-exports.Comment.index({ postId: 1, _id: 1 }).exec()// 通过文章 id 获取该文章下所有留言，按留言创建时间升序
+exports.Comment.index({ post_id: 1, _id: 1 }).exec()// 通过文章 id 获取该文章下所有留言，按留言创建时间升序
 
 
 //某条评论下的所有评论回复
 exports.CommentReply = mongolass.model('CommentReply',{
-  commentId: { type: Mongolass.Types.ObjectId }, //评论id
-  replyId: { type: Mongolass.Types.ObjectId }, // reply_id：表示回复目标的id，如果reply_type是comment的话，那么reply_id＝commit_id，如果reply_type是reply的话，这表示这条回复的父回复。
+  comment_id: { type: Mongolass.Types.ObjectId }, //评论id
+  reply_id: { type: Mongolass.Types.ObjectId }, // reply_id：表示回复目标的id，如果reply_type是comment的话，那么reply_id＝commit_id，如果reply_type是reply的话，这表示这条回复的父回复。
   content: { type: 'string' },
-  replyType: { type: 'string'},  // 是针对评论的回复(comment)，还是是针对回复的回复(reply)。
-  fromUid: { type: Mongolass.Types.ObjectId },  // 回复用户id
-  toUid: { type: Mongolass.Types.ObjectId }    //目标用户id
+  reply_type: { type: 'string'},  // 是针对评论的回复(comment)，还是是针对回复的回复(reply)。
+  from_uid: { type: Mongolass.Types.ObjectId },  // 回复用户id
+  to_uid: { type: Mongolass.Types.ObjectId }    //目标用户id
 })
-exports.CommentReply.index({ commentId: 1, fromUid: 1 }).exec()  // 通过评论 id 获取该评论下的所有评论回复
+exports.CommentReply.index({ comment_id: 1, from_uid: 1 }).exec()  // 通过评论 id 获取该评论下的所有评论回复
 
 
 // 文章收藏
 exports.Collect = mongolass.model('Collect',{
-  postId: { type: Mongolass.Types.ObjectId }, // 文章id
+  post_id: { type: Mongolass.Types.ObjectId }, // 文章id
   uid : { type: Mongolass.Types.ObjectId }   // 用户uid
 })
-exports.Collect.index({ postId: 1 }).exec()
+exports.Collect.index({ post_id: 1 }).exec()
 
 
 // 关注作者
 exports.Focus = mongolass.model('Focus', {
-  toUid: { type: Mongolass.Types.ObjectId },    // 被关注者id
-  fromUid : { type: Mongolass.Types.ObjectId }  // 关注者id
+  to_uid: { type: Mongolass.Types.ObjectId },    // 被关注者id
+  from_uid : { type: Mongolass.Types.ObjectId }  // 关注者id
 })
-exports.Focus.index({ toUid: 1 }).exec()
+exports.Focus.index({ to_uid: 1 }).exec()

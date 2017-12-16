@@ -124,14 +124,14 @@ router.get('/create', checkLogin, function (req, res, next) {
   res.render('create')
 })
 
-// GET /posts/:postId 文章详情页
-router.get('/:postId', function (req, res, next) {
-  const postId = req.params.postId
+// GET /posts/:post_id 文章详情页
+router.get('/:post_id', function (req, res, next) {
+  const post_id = req.params.post_id
   const uid = req.session.user ? req.session.user._id : '';
   Promise.all([
-    PostModel.getPostById(postId,uid), // 获取文章信息
-    CommentModel.getComments(postId), // 获取该文章所有留言
-    PostModel.incPv(postId)// pv 加 1
+    PostModel.getPostById(post_id,uid), // 获取文章信息
+    CommentModel.getComments(post_id), // 获取该文章所有留言
+    PostModel.incPv(post_id)// pv 加 1
   ])
     .then(function (result) {
       const post = result[0]
@@ -148,12 +148,12 @@ router.get('/:postId', function (req, res, next) {
     .catch(next)
 })
 
-// GET /posts/:postId/edit 更新文章页
-router.get('/:postId/edit', checkLogin, function (req, res, next) {
-  const postId = req.params.postId
+// GET /posts/:post_id/edit 更新文章页
+router.get('/:post_id/edit', checkLogin, function (req, res, next) {
+  const post_id = req.params.post_id
   const author = req.session.user._id
 
-  PostModel.getRawPostById(postId)
+  PostModel.getRawPostById(post_id)
     .then(function (post) {
       if (!post) {
         throw new Error('该文章不存在')
@@ -168,9 +168,9 @@ router.get('/:postId/edit', checkLogin, function (req, res, next) {
     .catch(next)
 })
 
-// POST /posts/:postId/edit 更新一篇文章
-router.post('/:postId/edit', checkLogin, function (req, res, next) {
-  const postId = req.params.postId
+// POST /posts/:post_id/edit 更新一篇文章
+router.post('/:post_id/edit', checkLogin, function (req, res, next) {
+  const post_id = req.params.post_id
   const author = req.session.user._id
   const title = req.fields.title
   const content = req.fields.content
@@ -188,7 +188,7 @@ router.post('/:postId/edit', checkLogin, function (req, res, next) {
     return res.redirect('back')
   }
 
-  PostModel.getRawPostById(postId)
+  PostModel.getRawPostById(post_id)
     .then(function (post) {
       if (!post) {
         throw new Error('文章不存在')
@@ -197,22 +197,22 @@ router.post('/:postId/edit', checkLogin, function (req, res, next) {
         throw new Error('没有权限')
       }
 
-      PostModel.updatePostById(postId, { title: title, content: content })
+      PostModel.updatePostById(post_id, { title: title, content: content })
         .then(function () {
           req.flash('success', '编辑文章成功')
           // 编辑成功后跳转到上一页
-          res.redirect(`/posts/${postId}`)
+          res.redirect(`/posts/${post_id}`)
         })
         .catch(next)
     })
 })
 
-// GET /posts/:postId/remove 删除一篇文章
-router.get('/:postId/remove', checkLogin, function (req, res, next) {
-  const postId = req.params.postId
+// GET /posts/:post_id/remove 删除一篇文章
+router.get('/:post_id/remove', checkLogin, function (req, res, next) {
+  const post_id = req.params.post_id
   const author = req.session.user._id
 
-  PostModel.getRawPostById(postId)
+  PostModel.getRawPostById(post_id)
     .then(function (post) {
       if (!post) {
         throw new Error('文章不存在')
@@ -220,7 +220,7 @@ router.get('/:postId/remove', checkLogin, function (req, res, next) {
       if (post.author._id.toString() !== author.toString()) {
         throw new Error('没有权限')
       }
-      PostModel.delPostById(postId)
+      PostModel.delPostById(post_id)
         .then(function () {
           req.flash('success', '删除文章成功')
           // 删除成功后跳转到主页

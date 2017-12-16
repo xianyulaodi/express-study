@@ -11,6 +11,9 @@ module.exports = function (app) {
   app.use('/focus', require('./focus'))
   app.use('/comments', require('./comments'))
 
+  // 后台管理模板
+  app.use('/admin', require('./admin/index'))
+
   // 404 page
   app.use(function (req, res) {
     if (!res.headersSent) {

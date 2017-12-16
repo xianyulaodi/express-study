@@ -8,15 +8,15 @@ const CollectModel = require('../models/collect')
 // eg: POST /collect
 router.post('/',checkLogin, function (req, res, next) {
   const uid = req.session.user._id
-  const postId = req.fields.postId //文章id
+  const post_id = req.fields.post_id //文章id
   const collect = {
     uid: uid,
-    postId: postId,
+    post_id: post_id,
   }
   CollectModel.addCollect(collect)
     .then(function (result) {
       req.flash('success', '收藏成功')
-      res.redirect(`/posts/${postId}`)
+      res.redirect(`/posts/${post_id}`)
     })
     .catch(next)
 })
@@ -24,11 +24,11 @@ router.post('/',checkLogin, function (req, res, next) {
 // POST /collect/remove 取消收藏
 // eg: get /collect/remove
 router.post('/remove',checkLogin, function (req, res, next) {
-  const postId = req.fields.postId
-  CollectModel.removeCollect(postId)
+  const post_id = req.fields.post_id
+  CollectModel.removeCollect(post_id)
     .then(function (result) {
       req.flash('success', '取消收藏成功')
-      res.redirect(`/posts/${postId}`)
+      res.redirect(`/posts/${post_id}`)
     })
     .catch(next)
 })
