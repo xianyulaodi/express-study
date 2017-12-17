@@ -1,0 +1,202 @@
+<%- include('header') %>
+
+<body data-type="widgets">
+    <script src="/admin/js/theme.js"></script>
+    <div class="am-g tpl-g">
+        <!-- 头部 -->
+        <%- include('components/nav-header') %>
+        <!-- 风格切换 -->
+        <%- include('components/tpl-skiner') %>
+        <!-- 侧边导航栏 -->
+        <%- include('components/side-bar') %>
+
+        <!-- 内容区域 -->
+        <div class="tpl-content-wrapper">
+            <div class="row-content am-cf">
+                <div class="row">
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title  am-cf">文章列表</div>
+
+
+                            </div>
+                            <div class="widget-body  am-fr">
+
+                                <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                                    <div class="am-form-group">
+                                        <div class="am-btn-toolbar">
+                                            <div class="am-btn-group am-btn-group-xs">
+                                                <button type="button" class="am-btn am-btn-default am-btn-warning">
+                                                    <a href="/admin/posts?home_show=1">
+                                                       <span class="am-icon-clock-o"></span> 审核中
+                                                    </a>
+                                                </button>
+                                                <button type="button" class="am-btn am-btn-default am-btn-primary">
+                                                    <a href="/admin/posts?home_show=2">
+                                                        <span class="am-icon-check"></span> 已通过
+                                                    </a>
+                                                </button>
+                                                <button type="button" class="am-btn am-btn-default am-btn-danger">
+                                                    <a href="/admin/posts?home_show=3">
+                                                        <span class="am-icon-close"></span> 不通过
+                                                    </a>
+                                                </button>
+                                                <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-trash-o"></span> 删除</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
+                                    <div class="am-form-group tpl-table-list-select">
+                                        <select data-am-selected="{btnSize: 'sm'}">
+                                          <option value="option1">所有类别</option>
+                                          <option value="option2">IT业界</option>
+                                          <option value="option3">数码产品</option>
+                                          <option value="option3">笔记本电脑</option>
+                                          <option value="option3">平板电脑</option>
+                                          <option value="option3">只能手机</option>
+                                          <option value="option3">超极本</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+                                    <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
+                                        <input type="text" class="am-form-field ">
+                                        <span class="am-input-group-btn">
+            <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="button"></button>
+          </span>
+                                    </div>
+                                </div>
+
+                                <div class="am-u-sm-12">
+                                    <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
+                                        <thead>
+                                            <tr>
+                                                <th>文章标题</th>
+                                                <th>作者</th>
+                                                <th>时间</th>
+                                                <th>状态</th>
+                                                <th width="230">操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="accordion">
+                                            <% posts.forEach(function (post,index) { %>
+                                                <tr class="gradeX">
+                                                    <td><a href="/posts/<%= post._id %>" target="_blank"><%= post.title %></a></td>
+                                                    <td><%= post.author.name %></td>
+                                                    <td><%= post.created_at %></td>
+                                                    <td>
+                                                      <% if(post.home_show == 1) { %>
+                                                       审核中
+                                                      <% } %>
+
+                                                      <% if(post.home_show == 2) { %>
+                                                       审核通过
+                                                      <% } %>
+
+                                                      <% if(post.home_show == 3) { %>
+                                                       审核不通过
+                                                      <% } %>
+                                                    </td>
+                                                    <td>
+                                                        <div class="tpl-table-black-operation">
+                                                            <div id="operate-btn-<%= index %>" class="am-panel-collapse am-collapse">
+                                                              <div class="am-btn-group am-btn-group-xs">
+                                                                <button type="button" class="am-btn am-btn-warning" data-home_show="1"   data-id="<%= post._id %>" >
+                                                                   <span class="am-icon-clock-o"></span>
+                                                                    审核中
+                                                                </button>
+                                                                <button type="button" class="am-btn am-btn-primary" data-home_show="2"  data-id="<%= post._id %>">
+                                                                   <span class="am-icon-check"></span>通过
+                                                                </button>
+                                                                <button type="button" class="am-btn am-btn-danger" data-home_show="3"  data-id="<%= post._id %>" >
+                                                                    <span class="am-icon-close"></span>不通过
+                                                                </button>
+                                                              </div>
+                                                            </div>
+                                                            <a data-am-collapse="{parent: '#accordion'}" href="#operate-btn-<%= index %>">
+                                                                <i class="am-icon-pencil"></i> 编辑
+                                                            </a>
+                                                            <a href="javascript:;" class="tpl-table-black-operation-del" data-id="<%= post._id %>">
+                                                                <i class="am-icon-trash"></i> 删除
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            <% }) %>
+                                            <!-- more data -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="am-u-lg-12 am-cf">
+
+                                    <div class="am-fr">
+                                        <ul class="am-pagination tpl-pagination">
+                                            <li class="am-disabled"><a href="#">«</a></li>
+                                            <li class="am-active"><a href="#">1</a></li>
+                                            <li><a href="#">2</a></li>
+                                            <li><a href="#">3</a></li>
+                                            <li><a href="#">4</a></li>
+                                            <li><a href="#">5</a></li>
+                                            <li><a href="#">»</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <form action="/admin/posts/edit" method="post" id="editForm">
+       <input type="hidden" name="post_id" value="" />
+       <input type="hidden" name="home_show" value="" />
+       <input type="submit" style="display: none;" id="editBtn">
+    </form>
+
+    <div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm">
+      <div class="am-modal-dialog">
+        <div class="am-modal-hd">提示</div>
+        <div class="am-modal-bd">
+          确定删除这篇文章吗？
+        </div>
+        <div class="am-modal-footer">
+          <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+          <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+        </div>
+      </div>
+    </div>
+
+</body>
+<%- include('footer') %>
+
+<script>
+$(function() {
+    $('#accordion').find('.tpl-table-black-operation-del').
+        on('click', function() {
+          $('#my-confirm').modal({
+            relatedTarget: this,
+            onConfirm: function(options) {
+                var articleId = $(this.relatedTarget).attr('data-id');
+                window.location.href = '/admin/posts/'+ articleId +'/remove';
+            },
+            onCancel: function() {
+            }
+          });
+    });
+    $('#accordion').on('click','.am-btn',function() {
+        var postId = $(this).attr('data-id');
+        var homeShow = $(this).attr('data-home_show');
+        $('#editForm input[name="post_id"]').val(postId);
+        $('#editForm input[name="home_show"]').val(homeShow);
+        console.log(postId);
+        console.log(homeShow);
+        $('#editBtn').trigger('click');
+
+    })
+});
+</script>

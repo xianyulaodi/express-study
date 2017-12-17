@@ -5,6 +5,7 @@ const eventproxy = require('eventproxy')
 const checkLogin = require('../middlewares/check').checkLogin
 const PostModel = require('../models/posts')
 const CommentModel = require('../models/comments')
+const HOMESHOWPASS = require('../lib/constants').HOMESHOWPASS
 
 // GET /posts 所有用户或者特定用户的文章页，以及热门文章
 //   eg: GET /posts?author=xxx
@@ -13,7 +14,7 @@ router.get('/', function (req, res, next) {
   let pageSize = Number(req.query.pageSize) || 10;
   let type = req.query.type;
   let ep=new eventproxy();
-  let query = {};
+  let query = {home_show: HOMESHOWPASS }; //通过首页的文章
 
   if(type) {
     query.type = type;
@@ -105,7 +106,10 @@ router.post('/create', checkLogin, function (req, res, next) {
     title: title,
     content: content,
     type: type,
-    pv: 0
+    pv: 0,
+    article_up: '0',
+    home_show: '1', // 首页展示，1： 审核中 2： 审核通过 3：审核不通过
+    is_recommend: '1'
   }
 
   PostModel.create(post)

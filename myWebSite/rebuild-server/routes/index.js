@@ -13,6 +13,7 @@ module.exports = function (app) {
 
   // 后台管理模板
   app.use('/admin', require('./admin/index'))
+  app.use('/admin/posts', require('./admin/posts'))
 
   // 404 page
   app.use(function (req, res) {

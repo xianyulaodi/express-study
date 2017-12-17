@@ -174,4 +174,6 @@ getComments: function getComments (postId) {
 或者用c来分别引用 a/b，而不是将两者互相引用
 
 
+5. 将 `app.set('views', path.join(__dirname, '/views'))` 改为 `app.set('views', path.join(__dirname, './views'))`.可以解决views里面设置多个文件夹的问题  比如 views/admin/index.ejs  views/article/index.ejs  
+
 5. https://www.cnblogs.com/aaron-leb/p/5706176.html  数据库设计

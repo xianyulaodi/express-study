@@ -9,7 +9,8 @@ exports.User = mongolass.model('User', {
   password: { type: 'string' },
   avatar: { type: 'string' },
   gender: { type: 'string', enum: ['m', 'f', 'x'] },
-  bio: { type: 'string' }
+  bio: { type: 'string' },
+  user_power: { type: 'number'} //用户权限，0:无，1:有
 })
 exports.User.index({ name: 1 }, { unique: true }).exec()// 根据用户名找到用户，用户名全局唯一
 
@@ -38,8 +39,9 @@ exports.Post = mongolass.model('Post', {
   title: { type: 'string' },
   content: { type: 'string' },
   type: { type: 'string' }, //文章类型
-  type: { type: 'string' }, //文章类型
-  // article_up 
+  article_up: { type: 'string'},  //'是否置顶:0为否，1为是'
+  home_show: { type: 'string'}, // 首页展示，1： 审核中 2： 审核通过 3：审核不通过
+  is_recommend: { type: 'string'},  //'是否推荐:0为否，1为是'
   pv: { type: 'number' }
 })
 exports.Post.index({ author: 1, _id: -1 }).exec()// 按创建时间降序查看用户的文章列表
