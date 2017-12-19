@@ -18,45 +18,36 @@
                         <div class="widget am-cf">
                             <div class="widget-head am-cf">
                                 <div class="widget-title  am-cf">文章列表</div>
-
-
                             </div>
                             <div class="widget-body  am-fr">
 
                                 <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
                                     <div class="am-form-group">
                                         <div class="am-btn-toolbar">
-                                            <div class="am-btn-group am-btn-group-xs">
-                                                <button type="button" class="am-btn am-btn-default am-btn-warning">
-                                                    <a href="/admin/posts?home_show=1">
-                                                       <span class="am-icon-clock-o"></span> 审核中
-                                                    </a>
+                                            <div class="am-btn-group am-btn-group-xs" id="homeShowType">
+                                                <button type="button" class="am-btn am-btn-default am-btn-warning" data-home_show="1" >
+                                                    <span class="am-icon-clock-o"></span> 审核中
                                                 </button>
-                                                <button type="button" class="am-btn am-btn-default am-btn-primary">
-                                                    <a href="/admin/posts?home_show=2">
-                                                        <span class="am-icon-check"></span> 已通过
-                                                    </a>
+                                                <button type="button" class="am-btn am-btn-default am-btn-primary" data-home_show="2"  >
+                                                    <span class="am-icon-check"></span> 已通过
                                                 </button>
-                                                <button type="button" class="am-btn am-btn-default am-btn-danger">
-                                                    <a href="/admin/posts?home_show=3">
-                                                        <span class="am-icon-close"></span> 不通过
-                                                    </a>
+                                                <button type="button" class="am-btn am-btn-default am-btn-danger" data-home_show="3">
+                                                    <span class="am-icon-close"></span> 不通过
                                                 </button>
-                                                <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-trash-o"></span> 删除</button>
+                                                <!-- <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-trash-o"></span> 删除</button> -->
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
                                     <div class="am-form-group tpl-table-list-select">
-                                        <select data-am-selected="{btnSize: 'sm'}">
-                                          <option value="option1">所有类别</option>
-                                          <option value="option2">IT业界</option>
-                                          <option value="option3">数码产品</option>
-                                          <option value="option3">笔记本电脑</option>
-                                          <option value="option3">平板电脑</option>
-                                          <option value="option3">只能手机</option>
-                                          <option value="option3">超极本</option>
+                                        <select data-am-selected="{btnSize: 'sm'}" id="articleType" >
+                                          <option value=" ">所有类别</option>
+                                          <option value="html" checked >html</option>
+                                          <option value="css">css</option>
+                                          <option value="javascript">javascript</option>
+                                          <option value="node">node</option>
+                                          <option value="other">其他</option>
                                         </select>
                                     </div>
                                 </div>
@@ -75,6 +66,7 @@
                                             <tr>
                                                 <th>文章标题</th>
                                                 <th>作者</th>
+                                                <th>文章类型</th>
                                                 <th>时间</th>
                                                 <th>状态</th>
                                                 <th width="230">操作</th>
@@ -85,6 +77,7 @@
                                                 <tr class="gradeX">
                                                     <td><a href="/posts/<%= post._id %>" target="_blank"><%= post.title %></a></td>
                                                     <td><%= post.author.name %></td>
+                                                    <td><%= post.type %></td>
                                                     <td><%= post.created_at %></td>
                                                     <td>
                                                       <% if(post.home_show == 1) { %>
@@ -151,7 +144,7 @@
         </div>
     </div>
     </div>
-
+    <!-- 编辑表单 -->
     <form action="/admin/posts/edit" method="post" id="editForm">
        <input type="hidden" name="post_id" value="" />
        <input type="hidden" name="home_show" value="" />
@@ -173,30 +166,71 @@
 
 </body>
 <%- include('footer') %>
-
+<script src="/admin/js/util.js"></script>
 <script>
 $(function() {
-    $('#accordion').find('.tpl-table-black-operation-del').
-        on('click', function() {
-          $('#my-confirm').modal({
-            relatedTarget: this,
-            onConfirm: function(options) {
-                var articleId = $(this.relatedTarget).attr('data-id');
-                window.location.href = '/admin/posts/'+ articleId +'/remove';
-            },
-            onCancel: function() {
-            }
-          });
-    });
-    $('#accordion').on('click','.am-btn',function() {
-        var postId = $(this).attr('data-id');
-        var homeShow = $(this).attr('data-home_show');
-        $('#editForm input[name="post_id"]').val(postId);
-        $('#editForm input[name="home_show"]').val(homeShow);
-        console.log(postId);
-        console.log(homeShow);
-        $('#editBtn').trigger('click');
+   post_init();
 
-    })
+    // $('select').find('option').eq(1).attr('selected', true);
 });
+var post_init = (function(win,$) {
+
+    function initPage() {
+       var type = util.getUrlParam('type');
+       if(type && type != '') {
+         $('#articleType').val(type);
+       }
+    }
+    initPage();
+
+    function changeUrlParam(name,value) {
+        var url = window.location.href;
+        url = util.delUrlParam(url,'page'); // 删掉页数
+        url = util.delUrlParam(url,'pageSize');
+        url = util.changeUrlArg(url, name, value);
+        return url;
+    }
+
+    function bindUi() {
+        // 删除文章
+        $('#accordion').find('.tpl-table-black-operation-del').
+            on('click', function() {
+              $('#my-confirm').modal({
+                relatedTarget: this,
+                onConfirm: function(options) {
+                    var articleId = $(this.relatedTarget).attr('data-id');
+                    window.location.href = '/admin/posts/'+ articleId +'/remove';
+                },
+                onCancel: function() {
+                }
+            });
+        });
+
+        // 编辑审核结果
+        $('#accordion').on('click','.am-btn',function() {
+            var postId = $(this).attr('data-id');
+            var homeShow = $(this).attr('data-home_show');
+            $('#editForm input[name="post_id"]').val(postId);
+            $('#editForm input[name="home_show"]').val(homeShow);
+            $('#editBtn').trigger('click');
+        });
+
+        // 选择类别
+        $('#articleType').change(function() {
+            var type = $(this).val();
+            var url = changeUrlParam('type', type);
+            window.location.href = url;
+        });
+
+        // 选择首页审核类别
+        $('#homeShowType').on('click','.am-btn',function() {
+            var homeShow = $(this).attr('data-home_show')
+            var url = changeUrlParam('home_show', homeShow);
+            window.location.href = url;
+        });
+    }
+
+    return bindUi;
+
+})(window,$);
 </script>
