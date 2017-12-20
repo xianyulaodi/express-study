@@ -173,5 +173,9 @@ module.exports = {
           return CommentModel.delCommentsByPostId(post_id)
         }
       })
+  },
+  // 获取总页数
+  getTotalPage: function getTotalPage (query) {
+    return Post.count(query).exec()
   }
 }

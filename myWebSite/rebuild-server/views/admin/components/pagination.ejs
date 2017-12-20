@@ -1,10 +1,58 @@
+<% if( total_page && total_page > 0 ) { %>
+    <ul class="am-pagination tpl-pagination">
+        <li><%= cur_page %>/<%= total_page %>&nbsp;&nbsp;</li>
+        <li <% if(cur_page == 1) { %> class="am-disabled" <% } %> >
+            <a href="javascript:pagination.prePage(<%= cur_page %>);">«</a>
+        </li>
+        <% for(var i = 0; i < total_page; i++) { 
+            var page = i +1;
+        %>
+            <% if( cur_page == page ) { %>
+                <li class="am-active" data-page="<%= page %>"><a href="javascript:void(0);"><%= page %></a></li>
+            <% } else { %>
+                <li data-page="<%= page %>"><a href="javascript:pagination.goto(<%= page %>);"><%= page %></a></li>
+            <% } %>
+        <% } %>
+        <li <% if(cur_page == total_page ) { %> class="am-disabled" <% } %> >
+            <a href="javascript:pagination.nextPage(<%= cur_page %>,<%= total_page %>);">»</a>
+        </li>
+    </ul>
+<% } %>
 
-<ul class="am-pagination tpl-pagination">
-    <li class="am-disabled"><a href="#">«</a></li>
-    <li class="am-active"><a href="#">1</a></li>
-    <li><a href="#">2</a></li>
-    <li><a href="#">3</a></li>
-    <li><a href="#">4</a></li>
-    <li><a href="#">5</a></li>
-    <li><a href="#">»</a></li>
-</ul>
+<script>
+
+var pagination = (function(win,$) {
+
+    function goto(page) {
+        var url = window.location.href;
+        url = util.changeUrlArg(url, 'page', page);
+        window.location.href = url;
+    }
+
+    function nextPage(cur_page,total_page) {
+        var cur_page = Number(cur_page);
+        if( cur_page < Number(total_page) ) {
+            goto( cur_page + 1 );
+        }
+        return false;
+    }
+
+    function prePage(cur_page) {
+        var cur_page = Number(cur_page);
+        if( cur_page != 1 ) {
+            goto(cur_page - 1);
+        }
+        return false;
+    }
+    
+
+    return {
+        goto: goto,
+        nextPage: nextPage,
+        prePage: prePage
+    }
+
+
+})(window,jQuery)
+
+</script>
