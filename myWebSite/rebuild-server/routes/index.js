@@ -14,6 +14,8 @@ module.exports = function (app) {
   // 后台管理模板
   app.use('/admin', require('./admin/index'))
   app.use('/admin/posts', require('./admin/posts'))
+  app.use('/admin/ad_manage', require('./admin/ad_manage'))
+
 
   // 404 page
   app.use(function (req, res) {
