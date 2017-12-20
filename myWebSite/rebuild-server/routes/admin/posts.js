@@ -38,7 +38,8 @@ router.get('/', function (req, res, next) {
     res.render('./admin/table-list', {
       posts: posts,
       total_page: total_page,
-      cur_page: page
+      cur_page: page,
+      home_show: home_show
     })
   })
 })

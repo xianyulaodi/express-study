@@ -25,13 +25,13 @@
                                     <div class="am-form-group">
                                         <div class="am-btn-toolbar">
                                             <div class="am-btn-group am-btn-group-xs" id="homeShowType">
-                                                <button type="button" class="am-btn am-btn-default am-btn-warning" data-home_show="1" >
+                                                <button type="button" class="am-btn am-btn-primary <% if(home_show == 1) { %> am-active <% } %>" data-home_show="1" >
                                                     <span class="am-icon-clock-o"></span> 审核中
                                                 </button>
-                                                <button type="button" class="am-btn am-btn-default am-btn-primary" data-home_show="2"  >
+                                                <button type="button" class="am-btn am-btn-primary <% if(home_show == 2) { %> am-active <% } %>" data-home_show="2"  >
                                                     <span class="am-icon-check"></span> 已通过
                                                 </button>
-                                                <button type="button" class="am-btn am-btn-default am-btn-danger" data-home_show="3">
+                                                <button type="button" class="am-btn am-btn-primary <% if(home_show == 3) { %>am-active <% } %>" data-home_show="3">
                                                     <span class="am-icon-close"></span> 不通过
                                                 </button>
                                                 <!-- <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-trash-o"></span> 删除</button> -->
