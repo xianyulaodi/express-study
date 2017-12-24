@@ -82,3 +82,15 @@ exports.Focus = mongolass.model('Focus', {
   from_uid : { type: Mongolass.Types.ObjectId }  // 关注者id
 })
 exports.Focus.index({ to_uid: 1 }).exec()
+
+
+// 广告管理
+exports.Ad = mongolass.model('Ad', {
+  link: { type: 'string' },
+  desc: { type: 'string' },
+  pic: { type: 'string' },
+  type: { type: 'string' },           //banner  side_1  side_2
+  offline_time: { type: 'string' },  //下架时间
+  is_show: { type: 'string' } 
+})
+exports.Ad.index({ type: 1 }).exec()
