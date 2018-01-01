@@ -4,6 +4,7 @@ const router = express.Router()
 const eventproxy = require('eventproxy')
 const checkLogin = require('../middlewares/check').checkLogin
 const PostModel = require('../models/posts')
+const AdModel = require('../models/ad')
 const CommentModel = require('../models/comments')
 const HOMESHOWPASS = require('../lib/constants').HOMESHOWPASS
 
@@ -20,6 +21,24 @@ router.get('/', function (req, res, next) {
     query.type = type;
   }
 
+  AdModel.getAdByQuery({ type: "banner", is_show: "1"})
+    .then(function(bannerAds) {
+      ep.emit('bannerAds', bannerAds);
+      /*
+      bannerAds[{
+        _id: 5a49a78e39bbf134801bb00c,
+        pic: 'upload_99e116b4434f50fc57863db8cfa56d34.jpg',
+        link: 'www.baidu.com22',
+        desc: '测试测试',
+        type: 'banner',
+        is_show: '1',
+        offline_time: '2018-01-10'
+      }]*/
+      console.log('bannerAds', bannerAds);
+    })
+    .catch(next)
+
+
   PostModel.getPosts(query,page,pageSize)
     .then(function (posts) {
       ep.emit('posts',posts);
@@ -33,10 +52,11 @@ router.get('/', function (req, res, next) {
     })
     .catch(next)
 
-  ep.all('posts','hotPosts',(posts,hotPosts) => {
+  ep.all('posts', 'hotPosts', 'bannerAds', (posts, hotPosts, bannerAds) => {
     res.render('posts', {
       posts: posts,
-      hotPosts: hotPosts
+      hotPosts: hotPosts,
+      bannerAds: bannerAds
     })
   })
 
