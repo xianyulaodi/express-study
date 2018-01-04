@@ -8,6 +8,7 @@ const routes = require('./routes')
 const pkg = require('./package')
 const winston = require('winston')
 const expressWinston = require('express-winston')
+var timeout = require('connect-timeout')
 
 const app = express()
 
@@ -66,8 +67,11 @@ app.use(expressWinston.logger({
     })
   ]
 }))
+app.use(timeout('5s')) //请求超时为5秒
+app.use(haltOnTimedout)
 // 路由
 routes(app)
+app.use(haltOnTimedout)
 // 错误请求的日志
 app.use(expressWinston.errorLogger({
   transports: [
@@ -80,6 +84,12 @@ app.use(expressWinston.errorLogger({
     })
   ]
 }))
+
+// Add your routes here, etc. 
+
+function haltOnTimedout(req, res, next) {
+  if (!req.timedout) next()
+}
 
 app.use(function (err, req, res, next) {
   console.error(err)

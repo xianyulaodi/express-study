@@ -73,8 +73,8 @@ todoList
 [] 加tocken防止 csrf
 [] 百度统计
 [] 缩进全部改为四个空格
-[] 设置请求超时  connect-timeout 打算用这个模块
-[] 登陆超时
+[x] 设置请求超时  connect-timeout 打算用这个模块
+[] 登陆超时 //把sesssion过期时间设置短一点就可以了
 
 10月11号任务: done
   web socket 来进行用户反馈的聊天
