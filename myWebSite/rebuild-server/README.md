@@ -2,7 +2,7 @@
 
 ## 开发环境
 
-- Node.js: `8.9.1`
+- Node.js: `8.9.1`  // 新装了系统，用supervisor 启动8.9.1的，会内存泄漏，何解？  6.1.0 版本的就不会
 - MongoDB: `3.4.10`
 - Express: `4.16.2`
 
@@ -88,7 +88,7 @@ todoList
 [x]  首页文章的审核，审核通过才可以发布到首页
 []  访问数据列表，每天网站有多少访问量的统计、访问的地方、渠道(比如手机访问还是浏览器，什么浏览器等、用户的访问时间)
 [] 权限访问控制、比如超级管理员什么的
-权限访问的模块： rbac 待定
+权限访问的模块： node_acl 待定
 https://github.com/OptimalBits/node_acl
 https://github.com/wuwanyu/node_aclDemo 
 
@@ -96,7 +96,8 @@ https://github.com/wuwanyu/node_aclDemo
 bugs
 [] 选择某个类型的文章，数据切换了，tab没切换
 [] 评论回复自己不能回复自己。考虑要不要修复
-
+[] node8.9.1版本的话，cpu占据的有点高，要检查一下哪里的cpu比较高
+所以暂时用回node 6.1.0版本
 
 在node中，child_process这个模块非常重要。掌握了它，等于在node的世界开启了一扇新的大门。
 https://segmentfault.com/a/1190000007735211  process_child这篇文章写的比较好
@@ -180,4 +181,13 @@ getComments: function getComments (postId) {
 
 5. 将 `app.set('views', path.join(__dirname, '/views'))` 改为 `app.set('views', path.join(__dirname, './views'))`.可以解决views里面设置多个文件夹的问题  比如 views/admin/index.ejs  views/article/index.ejs  
 
-5. https://www.cnblogs.com/aaron-leb/p/5706176.html  数据库设计
+6. https://www.cnblogs.com/aaron-leb/p/5706176.html  数据库设计
+
+7. 高效升级插件npm-check-updates
+   
+  全局安装： npm install -g npm-check-updates
+  执行命令： ncu  查看有哪些包是可以更新的
+  执行命令： ncu -a  将可以升级的包全部升级 
+
+8. crypto 已是node中的一个内置项目，可以直接饮用，无需再安装npm包
+
